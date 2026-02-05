@@ -67,7 +67,7 @@ class Scan_Model extends CI_Model{
 	{
 		$this->db->select('*');
 		$this->db->from('customer_scans');
-		// $this->db->where('customer_scans.status', 'completed');
+		$this->db->where('customer_scans.status', 'completed');
 		$this->db->where('customer_scans.customer_id', $customer_id);
 		$this->db->limit($rowperpage, $rowno);
 		$this->db->order_by('id', 'DESC');
@@ -116,7 +116,7 @@ class Scan_Model extends CI_Model{
 	{
 		$this->db->select('*');
 		$this->db->from('customer_scans');
-		// $this->db->where('customer_scans.status', 'completed');
+		$this->db->where('customer_scans.status', 'completed');
 		$this->db->where('customer_scans.customer_id', $customer_id);
 		return $this->db->get()->num_rows();
 	}
@@ -199,5 +199,77 @@ class Scan_Model extends CI_Model{
             ->get('customer_scans')
             ->result();
     }
+
+    private function bulk_scan_base_query($search = '', $month = '', $status = '')
+	{
+		$customer_id  = $this->session->userdata('logged_in_customer')['id'];
+
+	    $this->db->from('customer_scans cs');
+
+	    $this->db->join('customer_uploads cu', 'cu.id = cs.customer_uploads_id', 'left');
+
+	    $this->db->where('cs.customer_id', $customer_id);
+	    // Search
+	    if (!empty($search)) {
+	        $this->db->like('cs.title', $search);
+	    }
+
+	    // Month
+	    if (!empty($month)) {
+	        $monthNum = str_pad((int)$month, 2, '0', STR_PAD_LEFT);
+	        $currentYear = date('Y');
+
+	        $this->db->where('DATE_FORMAT(cs.created_at, "%Y-%m") =', $currentYear . '-' . $monthNum);
+	    }
+
+	    // Status
+	    if (!empty($status)) {
+	        $this->db->where('cs.status', $status);
+	    }
+	}
+
+
+    public function get_bulk_scan_datatable($start, $length, $search = '', $month = '', $status = '')
+	{
+	    $this->db->select('
+	        cs.*,
+	        cu.id as upload_id,
+	        cu.original_name,
+	        cu.formatted_file,
+	        cu.created_at as upload_created_at
+	    ');
+
+	    $this->bulk_scan_base_query($search, $month, $status);
+
+	    // priority sort
+	    $this->db->order_by("cs.status = 'pending'", 'DESC', false);
+	    $this->db->order_by('cs.id', 'DESC');
+
+	    if ($length != -1) {
+	        $this->db->limit($length, $start);
+	    }
+	    return $this->db->get()->result();
+	}
+
+
+	public function count_bulk_scan_filtered($search, $month = '', $status = '')
+	{
+	    $this->bulk_scan_base_query($search, $month, $status);
+
+	    return $this->db->count_all_results();
+	}
+
+	public function count_bulk_scan_all()
+	{
+	    $customer_id = $this->session->userdata('logged_in_customer')['id'];
+
+	    $this->db->where('customer_id', $customer_id);
+
+	    return $this->db->count_all_results('customer_scans');
+	}
+
+
+
+
 
 }

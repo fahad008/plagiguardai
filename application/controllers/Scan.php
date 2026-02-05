@@ -19,13 +19,177 @@ class scan extends CI_Controller
         $this->load->model('Subscription_Model', 'subscription_model');
         $this->load->model('Scan_Model', 'scan_model');
         $this->load->model('Upload_Model', 'upload_model');
+        $this->load->model('Apikey_Model', 'apikey_model');
         $this->load->model('Settings_Model', 'settings_model');
         $this->load->library('scanner');
         $this->load->library('url_encrypt');
+        $this->load->helper('scan');
 	}
 
+    public function index()
+    {
+        if($this->input->post()){
 
-	public function index()
+            $customer_id = $this->session->userdata('logged_in_customer')['id'];
+            $customer_credits = $this->subscription_model->get_customer_credits($customer_id);
+            if ($customer_credits < $this->input->post('estimated_credits')) {
+                $credits_needed = intval($this->input->post('estimated_credits')) - $customer_credits;
+                $response =  array(
+                  "status" => 'error',
+                  "message" => 'Not enough credits to continue. <br> You need <b>'.$credits_needed.'</b> more credits to proceed. <br>Please Contact your reseller to upgrade.',
+                );
+                echo json_encode($response);
+                exit();
+            }
+
+            // echo "<pre>";print_r($this->input->post('title')); die;
+
+            $text = $this->input->post('text');
+            $title = $this->input->post('title');
+            $estimated_credits = $this->input->post('estimated_credits');
+            $word_count = $this->input->post('word_count');
+            $customer_uploads_id = $this->input->post('customer_uploads_id');
+
+            $payload = [
+                "title"                   => $title,
+                "check_ai"                => true,
+                "check_plagiarism"        => true,
+                "check_facts"             => false,
+                "check_readability"       => false,
+                "check_grammar"           => false,
+                "check_contentOptimizer"  => false,
+                "optimizerQuery"          => "Mobile Hotspot",
+                "optimizerCountry"        => "United States",
+                "optimizerDevice"         => "Desktop",
+                "storeScan"               => false,
+                "aiModelVersion"          => "lite",
+                "excludedUrls" => [],
+                "content" => $text,
+            ];
+
+            $maxRetries = $this->apikey_model->countActiveKeys();
+            if ($maxRetries == 0) {
+                $maxRetries = 1;
+            }
+
+            $result = $this->scanner->instantScan($payload, $estimated_credits, $maxRetries);
+
+            if ($result['status'] != 'success') {
+
+                if ($result['api_key'] != '') {
+                    $scan_info = array(
+                        "customer_id" => $customer_id,
+                        "api_id" => $result['api_key'],
+                        "customer_uploads_id" => $customer_uploads_id,
+                        "title" => $title,
+                        "estimated_credits" => $estimated_credits,
+                        "word_count" => $word_count,
+                        'status' => 'failed',
+                        'error_message' => $result['error_message'],
+                        'admin_error_message' => $result['admin_error_message'],
+                        'created_at' => date('y-m-d H:m:s'),
+                        'updated_at' => date('y-m-d H:m:s'),
+                    );
+
+                    $scan_id = $this->scan_model->save_scan($scan_info);
+                }
+
+                $response = [
+                    "status"  => "error",
+                    "message" => $error_message,
+                    "http_code" => $result['http_code'] ?? 500
+                ];
+                echo json_encode($response);
+                exit();
+            }
+
+            // upadte credits
+            $remaining_credits = $customer_credits - $this->input->post('estimated_credits');
+            $credits = array(
+                'credits' => $remaining_credits,
+                'updated_at' => date('y-m-d H:m:s'),
+            );
+            $this->subscription_model->update_customer_credits($customer_id, $credits);
+
+            // $scan_results = $result['data']['results'];
+            $properties = $result['data']['results']['properties'];
+            $credits = $result['data']['results']['credits'];
+            $ai = $result['data']['results']['ai'];
+            $plagiarism = $result['data']['results']['plagiarism'];
+            // echo "<pre>";print_r($scan_results);echo "</pre>";
+
+            // save formated file name
+            $formated_file = save_formatted_content($customer_id, $properties['privateID'], $properties['formattedContent']);
+
+            if ($customer_uploads_id) {
+
+                $upload_info = array(
+                    'formatted_file' => $formated_file,
+                    'scanned_at' => date('y-m-d H:m:s'),
+                    'status' => 'scanned',
+                );
+                $this->upload_model->update_uploads($customer_uploads_id, $upload_info);
+
+            }else{
+
+                $expiry_time = get_expiry();
+                $upload_info = array(
+                    'customer_id' => $customer_id,
+                    'file_type' => 'txt',
+                    'file_name' => $formated_file,
+                    'formatted_file' => $formated_file,
+                    'expiry_time' => $expiry_time,
+                    'scanned_at' => date('y-m-d H:m:s'),
+                    'created_at' => date('y-m-d H:m:s'),
+                    'status' => 'scanned',
+                );
+                $customer_uploads_id = $this->upload_model->save_uploads($upload_info);
+            }
+
+            $scan_expiry_days = $this->settings_model->get_scan_expiry_days();
+            $expire_at = get_scan_expiry_date($scan_expiry_days);
+            //save scan info
+            $scan_info = array(
+                "customer_id" => $customer_id,
+                "private_id" => $properties['privateID'],
+                "api_id" => $properties['id'],
+                "customer_uploads_id" => $customer_uploads_id,
+                "ai_classification" => json_encode($ai['classification'] ?? [], JSON_UNESCAPED_UNICODE),
+                "ai_confidence" => json_encode($ai['confidence'] ?? [], JSON_UNESCAPED_UNICODE),
+                "plagiarism_score" => json_encode($plagiarism ?? [], JSON_UNESCAPED_UNICODE),
+                "title" => $properties['title'],
+                "public_link" => $properties['publicLink'],
+                "credits_used" => $credits['used'],
+                "estimated_credits" => $this->input->post('estimated_credits'),
+                "word_count" => $word_count,
+                'expire_at' => $expire_at,
+                'status' => 'completed',
+                'created_at' => date('y-m-d H:m:s'),
+                'updated_at' => date('y-m-d H:m:s'),
+            );
+
+            $scan_id = $this->scan_model->save_scan($scan_info);
+
+            // echo "<pre>";print_r($scan_results);die;
+
+            $response = [
+                "status" => "success",
+                "scan_id" => $scan_id,
+                "message"   => 'Your scan is successfull.'
+            ];
+            echo json_encode($response);
+
+        }else{
+            $response =  array(
+              "status" => 'error',
+              "message" => 'Access denied!',
+            );
+            echo json_encode($response);
+        }
+    }
+
+
+	public function indexNew()
     {
         if($this->input->post()){
 
@@ -113,142 +277,7 @@ class scan extends CI_Controller
         }
     }
 
-    public function index_old()
-    {
-        if($this->input->post()){
-
-            $customer_id = $this->session->userdata('logged_in_customer')['id'];
-            $customer_credits = $this->subscription_model->get_customer_credits($customer_id);
-            if ($customer_credits < $this->input->post('estimated_credits')) {
-                $credits_needed = intval($this->input->post('estimated_credits')) - $customer_credits;
-                $response =  array(
-                  "status" => 'error',
-                  "message" => 'Not enough credits to continue. <br> You need <b>'.$credits_needed.'</b> more credits to proceed. <br>Please Contact your reseller to upgrade.',
-                );
-                echo json_encode($response);
-                exit();
-            }
-
-            // echo "<pre>";print_r($this->input->post('title')); die;
-
-            $text = $this->input->post('text');
-            $title = $this->input->post('title');
-            $estimated_credits = $this->input->post('estimated_credits');
-            $word_count = $this->input->post('word_count');
-            $customer_uploads_id = $this->input->post('customer_uploads_id');
-
-            $payload = [
-                "title"                   => $title,
-                "check_ai"                => true,
-                "check_plagiarism"        => true,
-                "check_facts"             => false,
-                "check_readability"       => false,
-                "check_grammar"           => false,
-                "check_contentOptimizer"  => false,
-                "optimizerQuery"          => "Mobile Hotspot",
-                "optimizerCountry"        => "United States",
-                "optimizerDevice"         => "Desktop",
-                "storeScan"               => false,
-                "aiModelVersion"          => "lite",
-                "excludedUrls" => [],
-                "content" => $text,
-            ];
-
-            $result = $this->scanner->scanContent($payload);
-
-            if (!$result['status']) {
-                $response = [
-                    "status"  => "error",
-                    "message" => isset($result['message']) ? $result['message'] : 'Scan failed!',
-                    "http_code" => $result['http_code'] ?? 500
-                ];
-                echo json_encode($response);
-                exit();
-            }
-
-            // upadte credits
-            $remaining_credits = $customer_credits - $this->input->post('estimated_credits');
-            $credits = array(
-                'credits' => $remaining_credits,
-                'updated_at' => date('y-m-d H:m:s'),
-            );
-            $this->subscription_model->update_customer_credits($customer_id, $credits);
-
-            // $scan_results = $result['data']['results'];
-            $properties = $result['data']['results']['properties'];
-            $credits = $result['data']['results']['credits'];
-            $ai = $result['data']['results']['ai'];
-            $plagiarism = $result['data']['results']['plagiarism'];
-            // echo "<pre>";print_r($scan_results);echo "</pre>";
-
-            // save formated file name
-            $formated_file = save_formatted_content($properties['privateID'], $properties['formattedContent'], $customer_id);
-
-            if ($customer_uploads_id) {
-
-                $upload_info = array(
-                    'formatted_file' => $formated_file,
-                    'scanned_at' => date('y-m-d H:m:s'),
-                    'status' => 'scanned',
-                );
-                $this->upload_model->update_uploads($customer_uploads_id, $upload_info);
-
-            }else{
-
-                $expiry_time = get_expiry();
-                $upload_info = array(
-                    'customer_id' => $customer_id,
-                    'file_type' => 'txt',
-                    'file_name' => $formated_file,
-                    'formatted_file' => $formated_file,
-                    'expiry_time' => $expiry_time,
-                    'scanned_at' => date('y-m-d H:m:s'),
-                    'created_at' => date('y-m-d H:m:s'),
-                    'status' => 'scanned',
-                );
-                $customer_uploads_id = $this->upload_model->save_uploads($upload_info);
-            }
-
-            $scan_expiry_days = $this->settings_model->get_scan_expiry_days();
-            $expire_at = get_scan_expiry_date($scan_expiry_days);
-            //save scan info
-            $scan_info = array(
-                "customer_id" => $customer_id,
-                "private_id" => $properties['privateID'],
-                "api_id" => $properties['id'],
-                "customer_uploads_id" => $customer_uploads_id,
-                "ai_classification" => json_encode($ai['classification'] ?? [], JSON_UNESCAPED_UNICODE),
-                "ai_confidence" => json_encode($ai['confidence'] ?? [], JSON_UNESCAPED_UNICODE),
-                "plagiarism_score" => json_encode($plagiarism ?? [], JSON_UNESCAPED_UNICODE),
-                "title" => $properties['title'],
-                "public_link" => $properties['publicLink'],
-                "credits_used" => $credits['used'],
-                "estimated_credits" => $this->input->post('estimated_credits'),
-                "word_count" => $word_count,
-                'expire_at' => $expire_at,
-                'created_at' => date('y-m-d H:m:s'),
-                'updated_at' => date('y-m-d H:m:s'),
-            );
-
-            $scan_id = $this->scan_model->save_scan($scan_info);
-
-            // echo "<pre>";print_r($scan_results);die;
-
-            $response = [
-                "status" => "success",
-                "scan_id" => $scan_id,
-                "message"   => 'Your scan is successfull.'
-            ];
-            echo json_encode($response);
-
-        }else{
-            $response =  array(
-              "status" => 'error',
-              "message" => 'Access denied!',
-            );
-            echo json_encode($response);
-        }
-    }
+    
 
     public function get_classification_scan(){
         
@@ -487,7 +516,7 @@ class scan extends CI_Controller
                 $this->scan_model->update_scan($this->input->post('scan_id'), $scan_info);
 
                 $response =  array(
-                    "status" => 'success', "message" => 'Title has been updated successfully.', "row_title_id" => $row_title_id, "new_title" => $this->input->post('title')
+                    "status" => 'success', "message" => 'Title has been updated successfully.', "row_title_id" => $row_title_id, "new_title" => $this->input->post('title'), "scan_id" => $this->input->post('scan_id')
                 );
                 echo json_encode($response);
 

@@ -85,6 +85,81 @@ class Scanner
         ];
     }
 
+    public function instantScan(array $payload, $estimated_credits, $maxRetries=3, $retry = 0)
+    {
+        if ($retry >= $maxRetries) {
+            return [
+                'status' => 'error',
+                'api_key' => '',
+                'error_message' => 'Currently, System has reached its usage limit. We&#39;re actively resolving this.</br>Please try again in a few minutes or contact support for assistance.',
+                'admin_error_message' => 'No active API keys available'
+            ];
+        }
+
+        $key = $this->CI->apikey_model->getActiveKey();
+
+        if (!$key) {
+            return [
+                'status' => 'error',
+                'api_key' => '',
+                'error_message' => 'Currently, system has reached its usage limit. We&#39;re actively resolving this.</br>Please try again in a few minutes or contact support for assistance.',
+                'admin_error_message' => 'All API keys exhausted. Please try later.'
+            ];
+        }
+
+        // echo "<pre>";print_r($key);die;
+        // prepare cURL
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => $this->api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST  => 'POST',
+            CURLOPT_TIMEOUT        => 60,
+            CURLOPT_HTTPHEADER     => [
+                'X-OAI-API-KEY: ' . $key->api_key,
+                'Content-Type: application/json'
+            ],
+            CURLOPT_POSTFIELDS     => json_encode($payload)
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+            curl_close($ch);
+
+            return [
+                'status' => 'error',
+                'api_key' => $key->id,
+                'error_message' => 'PlagiGuardAI is unable to complete your request at the moment. Please try again shortly!',
+                'admin_error_message' => 'cURL Error: ' . $error
+            ];
+        }
+
+        curl_close($ch);
+        // handle key exhausted or rate limited
+        if ($httpCode != 200) {
+            $this->CI->apikey_model->markExhausted($key->id);
+            // $this->CI->keymanager->markExhausted($key->id);
+
+            // retry with next key
+            return $this->scanContent($payload, $estimated_credits, $maxRetries, $retry + 1);
+        }
+
+        $remaining = $key->credits_remaining - $estimated_credits;
+
+        $this->CI->apikey_model->set_credits($key->id, $remaining);
+
+        return [
+            'status' => 'success',
+            'http_code' => $httpCode,
+            'api_key' => $key->id,
+            'data' => json_decode($response, true)
+        ];
+    }
+
+
     public function getBalance($apiKey)
     {
         $ch = curl_init($this->balance_api_url);
@@ -134,49 +209,42 @@ class Scanner
         $data['total_credits'] = $data['credits'] + $data['subscriptionCredits'];
         return $data;
     }
+
+    public function scanContentold(array $payload)
+    {
+        $ch = curl_init();
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => $this->api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST  => 'POST',
+            CURLOPT_TIMEOUT        => 60,
+            CURLOPT_HTTPHEADER     => [
+                'X-OAI-API-KEY: ' . $this->api_key,
+                'Content-Type: application/json'
+            ],
+            CURLOPT_POSTFIELDS     => json_encode($payload)
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+            curl_close($ch);
+
+            return [
+                'status'  => false,
+                'message' => 'cURL Error: ' . $error
+            ];
+        }
+
+        curl_close($ch);
+
+        return [
+            'status'    => ($httpCode === 200),
+            'http_code' => $httpCode,
+            'data'      => json_decode($response, true)
+        ];
+    }
 }
-
-
-// class Scanner
-// {
-//     protected $api_url = SCAN_URL;
-//     protected $api_key = SCAN_API_KEY;
-
-//     public function scanContent(array $payload)
-//     {
-//         $ch = curl_init();
-
-//         curl_setopt_array($ch, [
-//             CURLOPT_URL            => $this->api_url,
-//             CURLOPT_RETURNTRANSFER => true,
-//             CURLOPT_CUSTOMREQUEST  => 'POST',
-//             CURLOPT_TIMEOUT        => 60,
-//             CURLOPT_HTTPHEADER     => [
-//                 'X-OAI-API-KEY: ' . $this->api_key,
-//                 'Content-Type: application/json'
-//             ],
-//             CURLOPT_POSTFIELDS     => json_encode($payload)
-//         ]);
-
-//         $response = curl_exec($ch);
-//         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-//         if (curl_errno($ch)) {
-//             $error = curl_error($ch);
-//             curl_close($ch);
-
-//             return [
-//                 'status'  => false,
-//                 'message' => 'cURL Error: ' . $error
-//             ];
-//         }
-
-//         curl_close($ch);
-
-//         return [
-//             'status'    => ($httpCode === 200),
-//             'http_code' => $httpCode,
-//             'data'      => json_decode($response, true)
-//         ];
-//     }
-// }

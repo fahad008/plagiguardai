@@ -15,7 +15,10 @@ class File_manager extends CI_Controller
 		$this->load->model('Subscription_Model', 'subscription_model');
 		$this->load->model('Scan_Model', 'scan_model');
 		$this->load->model('Upload_Model', 'upload_model');
+		$this->load->model('Settings_Model', 'settings_model');
 		$this->load->helper('download');
+		$this->load->helper('scan');
+		$this->load->helper('string');
 	}
 
 
@@ -227,5 +230,168 @@ class File_manager extends CI_Controller
 		}
 	}
 
+	public function bulk_uploads()
+    {
+    	$customer_id  = $this->session->userdata('logged_in_customer')['id'];
+    	$customer_credits = $this->subscription_model->get_customer_credits($customer_id);
+    	if ($customer_credits <= 0) {
+    		echo json_encode(array("status" => 'error', "message" => 'No credits left. Contact your reseller to upgrade.'));
+			exit();
+    	}
+    	// echo "<pre>";print_r($_FILES);die;
+    	if ($_FILES) {
+    		$file_name = $_FILES['file']['name'];
+    		$extension = pathinfo($file_name, PATHINFO_EXTENSION);
+			$extension = strtolower($extension);
+			$title = pathinfo($file_name, PATHINFO_FILENAME);
+			// echo $title;die;
+
+    		// if (in_array($extension, ['doc', 'docx'])) {
+    		if (in_array($extension, ['docx'])) {
+
+    			$upload_to = FCPATH . 'uploads/customer/docs/';
+
+    			if (!is_dir($upload_to)) {
+
+				    mkdir($upload_to, 0755, true);
+
+				}
+
+				$file_info = $this->upload_file($upload_to, $extension);
+
+				if ($file_info['status']) {
+
+					$extraction_response = $this->docx_reader->extract_text($file_info['full_path']);
+
+					if ($extraction_response['status'] == 'success' ) {
+
+						$expiry_time = get_expiry();
+
+						$save_file = array(
+							"customer_id" => $customer_id,
+							"file_type" => $extension,
+							"file_name" => $file_info['file_name'],
+							"original_name" => $file_info['client_name'],
+							"expiry_time" => $expiry_time,
+							"created_at" => date('y-m-d H:m:s'),
+						);
+
+						$customer_uploads_id = $this->upload_model->save_uploads($save_file);
+
+						if ($customer_uploads_id) {
+							$unlink_original = FCPATH . 'uploads/customer/docs/'.$file_info['file_name'];
+							unlink($unlink_original);
+						}
+
+						echo json_encode(array("status" => 'success', "message" => 'Your file text is ready. Click ‘Scan’ to continue.', "text" => $extraction_response['text'], "title" => $title, "customer_uploads_id" => $customer_uploads_id));
+
+					}else{
+						
+						echo json_encode(array("status" => 'error', "message" => $extraction_response['message']));
+						exit();
+					}
+					
+				}else{
+					echo json_encode(array("status" => 'error', "message" => $file_info['message']));
+					exit();
+				}
+				
+    		}elseif ($extension == 'txt') {
+
+    			$upload_to = FCPATH . 'uploads/customer/text/';
+
+    			if (!is_dir($upload_to)) {
+
+				    mkdir($upload_to, 0755, true);
+
+				}
+
+				$file_info = $this->upload_file($upload_to, $extension);
+				if ($file_info['status']) {
+
+					$extraction_response = extract_file_text($file_info['full_path']);
+					
+					if ($extraction_response['status'] == 'success') {
+						$random_number = random_string('numeric', 8);
+						$formated_file = save_formatted_content($customer_id, $random_number, $extraction_response['text']);
+
+						$expiry_time = get_expiry();
+
+						$save_file = array(
+							"customer_id" => $customer_id,
+							"file_type" => $extension,
+							"file_name" => $file_info['file_name'],
+							"formatted_file" => $formated_file,
+							"original_name" => $file_info['client_name'],
+							"expiry_time" => $expiry_time,
+							"created_at" => date('y-m-d H:m:s'),
+						);
+
+						$customer_uploads_id = $this->upload_model->save_uploads($save_file);
+
+						if ($customer_uploads_id) {
+							$unlink_original = FCPATH . 'uploads/customer/text/'.$file_info['file_name'];
+							unlink($unlink_original);
+						}
+
+						$result = $this->add_uploads_to_que($customer_uploads_id, $customer_id);
+
+						if ($result['status'] == 'success') {
+							echo json_encode(array("status" => 'success', "message" => 'Your content has been successfully queued for scanning. The system will process it shortly, and the results will be available in your dashboard once completed.'));
+						}else{
+							echo json_encode(array("status" => 'error', "message" => 'We are unable to add your file to scan que, please try again shortly.'));
+						}
+
+						
+					}else{
+						echo json_encode(array("status" => 'error', "message" => $extraction_response['message']));
+					}
+				}else{
+					echo json_encode(array("status" => 'error', "message" => $file_info['message']));
+					exit();	
+				}
+
+    		}else{
+    			echo json_encode(array("status" => 'error', "message" => 'Please upload a TXT or DOCX file to proceed.'));
+				exit();
+    		}
+    	}else{
+    		echo json_encode(array("status" => 'error', "message" => 'Please select a file to continue.'));
+			exit();	
+    	}
+
+    }
+
+    private function add_uploads_to_que($uploads_id, $customer_id){
+
+    	$upload_info = $this->upload_model->get_scan_upload($uploads_id);
+    	$scan_text = get_scan_text($customer_id, $upload_info['formatted_file']);
+    	$word_count = countWords($scan_text);
+    	$settings = $this->settings_model->get_settings(1);
+    	$estimated_credits = calculateCredits(intval($word_count),intval($settings['block_length']));
+        $expire_at = get_scan_expiry_date($settings['scans_expiry']);
+
+        $scan_info = array(
+            "customer_id" => $customer_id,
+            "customer_uploads_id" => $uploads_id,
+            "title" => pathinfo($upload_info['original_name'], PATHINFO_FILENAME),
+            "estimated_credits" => $estimated_credits,
+            "word_count" => $word_count,
+            'expire_at' => $expire_at,
+            'status' => 'pending',
+            'created_at' => date('y-m-d H:m:s'),
+            'updated_at' => date('y-m-d H:m:s'),
+        );
+
+        $scan_id = $this->scan_model->save_scan($scan_info);
+
+        if ($scan_id) {
+        	$response = ["status" => 'success', "scan_id" => $scan_id];
+        }else{
+        	$response = ["status" => 'error', "scan_id" => ''];
+        }
+
+        return $response;
+    }
 
 }

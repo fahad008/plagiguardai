@@ -35,7 +35,7 @@
 							</div>
 							<!--end::Aside mobile toggle-->
 							<!--begin::Logo-->
-							<a href="../../demo3/dist/index.html" class="d-flex align-items-center">
+							<a href="<?php echo base_url(); ?>" class="d-flex align-items-center">
 								<img alt="Logo" src="assets/media/logos/logo-demo3-default.svg" class="h-20px" />
 							</a>
 							<!--end::Logo-->
@@ -76,7 +76,7 @@
 							<!--begin::Card header-->
 							<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_signin_method">
 								<div class="card-title m-0">
-									<h3 class="fw-bolder m-0">Attachments</h3>
+									<h3 class="fw-bolder m-0">Instant Scan</h3>
 								</div>
 							</div>
 							<!--end::Card header-->
@@ -359,16 +359,16 @@
 		      	}).then(function(response){
 		      		console.log(response);
 			      	if (response.status == 'success') {
-			      		// loadAIResults(response.scan_id);
-			      		Swal.fire({
-						    html: response.message,
-						    icon: "success",
-						    buttonsStyling: false,
-						    confirmButtonText: "ok",
-						    customClass: {
-						        confirmButton: "btn btn-success"
-						    }
-						});
+			      		loadAIResults(response.scan_id);
+			   //    		Swal.fire({
+						//     html: response.message,
+						//     icon: "success",
+						//     buttonsStyling: false,
+						//     confirmButtonText: "ok",
+						//     customClass: {
+						//         confirmButton: "btn btn-success"
+						//     }
+						// });
 
 			      	}else{
 			      		Swal.fire({
@@ -702,6 +702,7 @@
 		        }
 		    }
 		});
+
 
 		function setTextareaValue(selector, text) {
 		    const textarea = document.querySelector(selector);

@@ -295,3 +295,11 @@ textarea[data-kt-autosize="true"] {
 .svg-icon-Diamond svg [fill]:not(.permanent):not(g){transition:fill .3s ease;fill:#00F0FF}
 .svg-icon-Elite svg [fill]:not(.permanent):not(g){transition:fill .3s ease;fill:#8B0000}
 .svg-icon-Legend svg [fill]:not(.permanent):not(g){transition:fill .3s ease;fill:#FF2E2E}
+
+.dz-error {
+    text-align: center !important;
+    cursor: pointer !important;
+    border: 1px dashed #f70000 !important;
+    background-color: #fff1f1 !important;
+    border-radius: .65rem !important;
+}

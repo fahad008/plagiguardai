@@ -21,6 +21,18 @@ class Upload_Model extends CI_Model{
 		return $return;
 	}
 
+	public function get_scan_upload($id)
+	{
+		$query = $this->db->select('*');
+		$query = $this->db->from('customer_uploads');
+		$this->db->where('customer_uploads.id', $id);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->row_array();
+		}
+		return false;
+	}
+
 	public function get_formatted_file($id='')
 	{
 		if ($id) {

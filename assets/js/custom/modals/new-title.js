@@ -66,7 +66,7 @@ var KTModalNewTitle = function () {
 	                            if (response.status === 'success') {
 	                            	$("#scan-id-input").val('');
 	                            	$("#scan-title-modal-input").val('');
-	                            	$(response.row_title_id).text(response.new_title);
+	                            	$(response.row_title_id).html('<a href="javascript: void(0)" onclick="show_title_poppup(this)" data-id="'+response.scan_id+'" data-title="'+response.new_title+'" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">'+response.new_title+'</a></div>');
 	                            	modal.hide();
 	                                Swal.fire({
 	                                    text: response.message,
@@ -104,7 +104,7 @@ var KTModalNewTitle = function () {
 		// Public functions
 		init: function () {
 			// Elements
-			modalEl = document.querySelector('.kt_modal_new_title');
+			modalEl = document.querySelector('#kt_modal_new_title');
 
 			if (!modalEl) {
 				return;
