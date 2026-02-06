@@ -121,6 +121,15 @@ class Scan_Model extends CI_Model{
 		return $this->db->get()->num_rows();
 	}
 
+	public function get_pending_scan_count($customer_id)
+	{
+		$this->db->select('*');
+		$this->db->from('customer_scans');
+		$this->db->where('customer_scans.status', 'pending');
+		$this->db->where('customer_scans.customer_id', $customer_id);
+		return $this->db->get()->num_rows();
+	}
+
 	public function get_classification_scan($id)
 	{
 		$query = $this->db->select('customer_scans.id, customer_scans.ai_classification, customer_scans.title, customer_scans.created_at');
@@ -267,6 +276,19 @@ class Scan_Model extends CI_Model{
 
 	    return $this->db->count_all_results('customer_scans');
 	}
+
+	public function get_que_limit($customer_id)
+	{
+		$this->db->select('p.queue_limit');
+		$this->db->from('customer_subscriptions cs');
+		$this->db->join('plans p', 'cs.plan_id = p.id');
+		$this->db->where('cs.customer_id', $customer_id);
+		$query = $this->db->get();
+
+		return $queue_limit = $query->row()->queue_limit ?? 0;
+
+	}
+
 
 
 

@@ -70,6 +70,7 @@ var KTscansList = function () {
     var handleFilterDatatable = () => {
         // Select filter options
         filterMonth = $('[data-kt-customer-table-filter="month"]');
+        filterPayment = document.querySelectorAll('[data-kt-customer-table-filter="status"] [name="status"]');
         const filterButton = document.querySelector('[data-kt-customer-table-filter="filter"]');
 
         // Filter datatable on submit

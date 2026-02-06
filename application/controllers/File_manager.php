@@ -233,17 +233,25 @@ class File_manager extends CI_Controller
 	public function bulk_uploads()
     {
     	$customer_id  = $this->session->userdata('logged_in_customer')['id'];
-    	$customer_credits = $this->subscription_model->get_customer_credits($customer_id);
-    	if ($customer_credits <= 0) {
-    		echo json_encode(array("status" => 'error', "message" => 'No credits left. Contact your reseller to upgrade.'));
+    	$pending_scans = $this->scan_model->get_pending_scan_count($customer_id);
+    	$que_limit = $this->scan_model->get_que_limit($customer_id);
+    	if ($pending_scans >= $que_limit) {
+    		echo json_encode(array("status" => 'que_limit', "message" => 'Your upload queue is full. You can add more files once your current uploads have finished scanning.'));
 			exit();
     	}
-    	// echo "<pre>";print_r($_FILES);die;
+    	
     	if ($_FILES) {
     		$file_name = $_FILES['file']['name'];
     		$extension = pathinfo($file_name, PATHINFO_EXTENSION);
 			$extension = strtolower($extension);
 			$title = pathinfo($file_name, PATHINFO_FILENAME);
+
+			
+	    	$customer_credits = $this->subscription_model->get_customer_credits($customer_id);
+	    	if ($customer_credits <= 0) {
+	    		echo json_encode(array("status" => 'error', "message" => 'No credits left. Contact your reseller to upgrade.', "file_name" => $file_name));
+				exit();
+	    	}
 			// echo $title;die;
 
     		// if (in_array($extension, ['doc', 'docx'])) {
@@ -265,12 +273,25 @@ class File_manager extends CI_Controller
 
 					if ($extraction_response['status'] == 'success' ) {
 
+						$word_count = countWords($extraction_response['text']);
+						if ($word_count < 100 || $word_count > 6000) {
+
+							$unlink_original = FCPATH . 'uploads/customer/docs/'.$file_info['file_name'];
+							unlink($unlink_original);
+							echo json_encode(array("status" => 'error', "message" => 'Word count must be between 100 and 6000 words.', "file_name" => $file_name));
+							exit();
+							
+						}
+
+						$random_number = random_string('numeric', 8);
+						$formated_file = save_formatted_content($customer_id, $random_number, $extraction_response['text']);
 						$expiry_time = get_expiry();
 
 						$save_file = array(
 							"customer_id" => $customer_id,
 							"file_type" => $extension,
 							"file_name" => $file_info['file_name'],
+							"formatted_file" => $formated_file,
 							"original_name" => $file_info['client_name'],
 							"expiry_time" => $expiry_time,
 							"created_at" => date('y-m-d H:m:s'),
@@ -283,16 +304,23 @@ class File_manager extends CI_Controller
 							unlink($unlink_original);
 						}
 
-						echo json_encode(array("status" => 'success', "message" => 'Your file text is ready. Click ‘Scan’ to continue.', "text" => $extraction_response['text'], "title" => $title, "customer_uploads_id" => $customer_uploads_id));
+						$result = $this->add_uploads_to_que($customer_uploads_id, $customer_id);
+
+						if ($result['status'] == 'success') {
+							echo json_encode(array("status" => 'success', "message" => 'File uploaded successfully.', "file_name" => $file_name));
+							// echo json_encode(array("status" => 'success', "message" => 'Your content has been successfully queued for scanning. The system will process it shortly, and the results will be available in your dashboard once completed.'));
+						}else{
+							echo json_encode(array("status" => 'error', "message" => 'We are unable to add your file to scan que, please try again shortly.', "file_name" => $file_name));
+						}
 
 					}else{
 						
-						echo json_encode(array("status" => 'error', "message" => $extraction_response['message']));
+						echo json_encode(array("status" => 'error', "message" => $extraction_response['message'], "file_name" => $file_name));
 						exit();
 					}
 					
 				}else{
-					echo json_encode(array("status" => 'error', "message" => $file_info['message']));
+					echo json_encode(array("status" => 'error', "message" => $file_info['message'], "file_name" => $file_name));
 					exit();
 				}
 				
@@ -312,6 +340,16 @@ class File_manager extends CI_Controller
 					$extraction_response = extract_file_text($file_info['full_path']);
 					
 					if ($extraction_response['status'] == 'success') {
+
+						$word_count = countWords($extraction_response['text']);
+						if ($word_count < 100 || $word_count > 6000) {
+
+							$unlink_original = FCPATH . 'uploads/customer/text/'.$file_info['file_name'];
+							unlink($unlink_original);
+							echo json_encode(array("status" => 'error', "message" => 'Word count must be between 100 and 6000 words.', "file_name" => $file_name));
+							exit();
+
+						}
 						$random_number = random_string('numeric', 8);
 						$formated_file = save_formatted_content($customer_id, $random_number, $extraction_response['text']);
 
@@ -337,22 +375,22 @@ class File_manager extends CI_Controller
 						$result = $this->add_uploads_to_que($customer_uploads_id, $customer_id);
 
 						if ($result['status'] == 'success') {
-							echo json_encode(array("status" => 'success', "message" => 'Your content has been successfully queued for scanning. The system will process it shortly, and the results will be available in your dashboard once completed.'));
+							echo json_encode(array("status" => 'success', "message" => 'File uploaded successfully.', "file_name" => $file_name));
 						}else{
-							echo json_encode(array("status" => 'error', "message" => 'We are unable to add your file to scan que, please try again shortly.'));
+							echo json_encode(array("status" => 'error', "message" => 'We are unable to add your file to scan que, please try again shortly.', "file_name" => $file_name));
 						}
 
 						
 					}else{
-						echo json_encode(array("status" => 'error', "message" => $extraction_response['message']));
+						echo json_encode(array("status" => 'error', "message" => $extraction_response['message'], "file_name" => $file_name));
 					}
 				}else{
-					echo json_encode(array("status" => 'error', "message" => $file_info['message']));
+					echo json_encode(array("status" => 'error', "message" => $file_info['message'], "file_name" => $file_name));
 					exit();	
 				}
 
     		}else{
-    			echo json_encode(array("status" => 'error', "message" => 'Please upload a TXT or DOCX file to proceed.'));
+    			echo json_encode(array("status" => 'error', "message" => 'Please upload a TXT or DOCX file to proceed.', "file_name" => $file_name));
 				exit();
     		}
     	}else{

@@ -109,6 +109,9 @@
 		<?php if ($active == 'blogs' or $active == 'pricing' or $active == 'contact_us') { ?>
 			<link href="assets/css/external-pages.css" rel="stylesheet" type="text/css" />
 		<?php } ?>
+		<?php if ($active == 'bulk_uploads') { ?>
+			<link href="assets/css/toastr.min.css" rel="stylesheet" type="text/css" />
+		<?php } ?>
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->

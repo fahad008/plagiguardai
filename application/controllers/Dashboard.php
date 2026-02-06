@@ -86,6 +86,7 @@ class dashboard extends CI_Controller
         $data['customer_credits'] = 0;
         $data['customer_plan'] = '';
         $data['customer_subscription'] = '';
+        $data['cron_exhausted'] = 0;
         $customer_id  = $this->session->userdata('logged_in_customer')['id'];
         $encoded_id = '';
         if (isset($_GET['scan_id']) && !empty($_GET['scan_id'])) {
@@ -121,7 +122,11 @@ class dashboard extends CI_Controller
                 $data['customer_credits'] = $this->subscription_model->get_customer_credits($customer_id);
             }
         }
-        
+        $data['pending_scans'] = $this->scan_model->get_pending_scan_count($customer_id);
+        $data['que_limit'] = $this->scan_model->get_que_limit($customer_id);
+        if ($data['pending_scans'] >= $data['que_limit']) {
+            $data['cron_exhausted'] = 1;
+        }
         // echo "<pre>";print_r($data);die;
         $this->template->load('pipeline', 'pipeline', $data);
     }
