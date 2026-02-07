@@ -86,43 +86,68 @@
 								<div class="card-body border-top align-items-center p-3">
 								<!--Path::Svg Icon | path: icons/duotune/general/gen048.svg-->
 								<div id="dropzone-error"></div>
-								<!--begin::Input group-->
-									<div class="fv-row mb-0">
-										<!--begin::Dropzone-->
-										<div class="dropzone" id="kt_modal_create_ticket_attachments">
-											<!--begin::Message-->
-											<div class="dz-message needsclick align-items-center">
-												<!--begin::Icon-->
-												<!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
-												<span class="svg-icon svg-icon-3hx svg-icon-primary">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 12.6L12.7 9.3C12.3 8.9 11.7 8.9 11.3 9.3L8 12.6H11V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18V12.6H16Z" fill="black" />
-														<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
-													</svg>
-												</span>
-												<!--end::Svg Icon-->
-												<!--end::Icon-->
-												<!--begin::Info-->
-												<div class="ms-4">
-													<h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop file here or click to upload.</h3>
-													<span class="fw-bold fs-7 text-gray-400"><b class="text-dark">Accepted:</b> .TXT, .DOCX</span><br>
-													<span class="fw-bold fs-7 text-gray-400"><b class="text-dark">Max file size:</b> 5MB</span>
-												</div>
-												<!--end::Info-->
-											</div>
+								<?php if (isset($customer_credits) && $customer_credits <= 1) {  ?>
+								<!--begin::Dropzone-->
+								<div class="dropzone dropzone-disabled" id="kt_modal_create_ticket_attachments">
+									<!--begin::Message-->
+									<div class="dz-message needsclick align-items-center">
+										<!--begin::Icon-->
+										<!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
+										<span class="svg-icon svg-icon-3hx svg-icon-danger">
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path opacity="0.3" d="M19 18C20.7 18 22 16.7 22 15C22 13.3 20.7 12 19 12C18.9 12 18.9 12 18.8 12C18.9 11.7 19 11.3 19 11C19 9.3 17.7 8 16 8C15.4 8 14.8 8.2 14.3 8.5C13.4 7 11.8 6 10 6C7.2 6 5 8.2 5 11C5 11.3 5.00001 11.7 5.10001 12H5C3.3 12 2 13.3 2 15C2 16.7 3.3 18 5 18H19Z" fill="black"/>
+											</svg>
+										</span>
+										<!--end::Svg Icon-->
+										<!--end::Icon-->
+										<!--begin::Info-->
+										<div class="ms-4 text-danger">
+											<h3 class="fs-5 fw-bolder text-danger mb-2">Your credit balance is 0.</h3>
+											<span class="text-800 fw-bold">To continue using the service, please click <a href="<?php echo base_url().'home/pricing/'; ?>">here</a> to contact your reseller and recharge your account.</span>
 										</div>
-										<!--end::Dropzone-->
+										<!--end::Info-->
 									</div>
-									<!--end::Input group-->
-									<!--begin::Separator-->
-									<div class="separator separator-dashed my-3"></div>
-									<!--end::Separator-->
-									<div id="textarea-error"></div>
-									<div class="mb-5">
-										<label class="fs-6 form-label fw-bolder text-dark">Title</label>
-										<input id="scan-title-input" type="text" class="form-control form-control form-control-solid" name="title" value="<?php if(isset($title) && $title != ''){ echo $title; }else{ echo 'Untitled Draft'; } ?>">
+								</div>
+								<!--end::Dropzone-->
+								<?php }else{ ?>
+								<!--begin::Input group-->
+								<div class="fv-row mb-0">
+									<!--begin::Dropzone-->
+									<div class="dropzone" id="kt_modal_create_ticket_attachments">
+										<!--begin::Message-->
+										<div class="dz-message needsclick align-items-center">
+											<!--begin::Icon-->
+											<!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
+											<span class="svg-icon svg-icon-3hx svg-icon-primary">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 12.6L12.7 9.3C12.3 8.9 11.7 8.9 11.3 9.3L8 12.6H11V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18V12.6H16Z" fill="black" />
+													<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
+												</svg>
+											</span>
+											<!--end::Svg Icon-->
+											<!--end::Icon-->
+											<!--begin::Info-->
+											<div class="ms-4">
+												<h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop file here or click to upload.</h3>
+												<span class="fw-bold fs-7 text-gray-400"><b class="text-dark">Accepted:</b> .TXT, .DOCX</span><br>
+												<span class="fw-bold fs-7 text-gray-400"><b class="text-dark">Max file size:</b> 5MB</span>
+											</div>
+											<!--end::Info-->
+										</div>
 									</div>
-									<textarea id="textarea-input" placeholder="Enter text here..." rows=10 class="form-control form-control form-control-solid" data-kt-autosize="true"><?php echo $text_area; ?></textarea>
+									<!--end::Dropzone-->
+								</div>
+								<!--end::Input group-->
+								<?php } ?>
+								<!--begin::Separator-->
+								<div class="separator separator-dashed my-3"></div>
+								<!--end::Separator-->
+								<div id="textarea-error"></div>
+								<div class="mb-5">
+									<label class="fs-6 form-label fw-bolder text-dark">Title</label>
+									<input id="scan-title-input" type="text" class="form-control form-control form-control-solid" name="title" value="<?php if(isset($title) && $title != ''){ echo $title; }else{ echo 'Untitled Draft'; } ?>">
+								</div>
+								<textarea id="textarea-input" placeholder="Enter text here..." rows=10 class="form-control form-control form-control-solid" data-kt-autosize="true"><?php echo $text_area; ?></textarea>
 
 									<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
 									<div id="word-vs-credit">
@@ -737,6 +762,7 @@
 			}
 		});
 
+		
 
 		var myDropzone = new Dropzone("#kt_modal_create_ticket_attachments", {
 		    url: "<?php echo base_url().'File_manager/'; ?>",
@@ -797,6 +823,11 @@
 		        }
 		    }
 		});
+
+		var customerCredits = '<?php echo (int)$customer_credits; ?>';
+		if (customerCredits <= 1) {
+			myDropzone.disable();
+		}
 
 
 		function setTextareaValue(selector, text) {

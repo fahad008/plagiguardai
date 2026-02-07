@@ -166,9 +166,9 @@
 									<!--begin::Wrapper-->
 									<div class="d-flex flex-stack flex-grow-1">
 										<!--begin::Content-->
-										<div class="fw-bold">
-											<h4 class="text-gray-900 fw-bolder">We need your attention!</h4>
-											<div class="fs-6 text-gray-700">You’re not subscribed to a plan yet. Reach out to your reseller to activate the best option for you.</div>
+										<div class="fw-bold text-danger">
+											<h4 class="text-danger fw-bolder">We need your attention!</h4>
+											<div class="fs-6 text-800 fw-bold">You’re not subscribed to a plan yet. click <a href="<?php echo base_url().'home/pricing/'; ?>">here</a> and reach out to your reseller to activate the best option for you.</div>
 										</div>
 										<!--end::Content-->
 									</div>

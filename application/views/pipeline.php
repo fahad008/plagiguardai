@@ -83,7 +83,7 @@
 								<form method="post" enctype="multipart/form-data" class="form" action="<?php echo base_url().'file_manager/bulk_upload/'; ?>" id="kt_bulk_upload_form">
 									<!--begin::Input group-->
 									<div class="fv-row mb-0">
-										<?php if (isset($customer_credits) && $customer_credits <= 0) {  ?>
+										<?php if (isset($customer_credits) && $customer_credits <= 1) {  ?>
 										<!--begin::Dropzone-->
 										<div class="dropzone dropzone-disabled" id="kt_modal_bulk_attachments">
 											<!--begin::Message-->
@@ -98,8 +98,9 @@
 												<!--end::Svg Icon-->
 												<!--end::Icon-->
 												<!--begin::Info-->
-												<div class="ms-4">
-													<h3 class="fs-5 fw-bolder text-gray-900 mb-1">Your credit balance is 0.<br> Please reach out to your reseller to recharge your account.</h3>
+												<div class="ms-4 text-danger">
+													<h3 class="fs-5 fw-bolder text-danger mb-2">Your credit balance is 0.</h3>
+													<span class="text-800 fw-bold">To continue using the service, please click <a href="<?php echo base_url().'home/pricing/'; ?>">here</a> to contact your reseller and recharge your account.</span>
 												</div>
 												<!--end::Info-->
 											</div>
@@ -120,8 +121,9 @@
 												<!--end::Svg Icon-->
 												<!--end::Icon-->
 												<!--begin::Info-->
-												<div class="ms-4">
-													<h3 class="fs-5 fw-bolder text-gray-900 mb-1">Your upload queue is full.<br> You can add more files once your current uploads have finished scanning.</h3>
+												<div class="ms-4 text-danger">
+													<h3 class="fs-5 fw-bolder text-danger mb-2">Your upload queue is full.</h3>
+													<span class="text-800 fw-bold">You can add more files once your current uploads have finished scanning.</span>
 												</div>
 												<!--end::Info-->
 											</div>
@@ -508,7 +510,7 @@
 		// showPageLoader();
 		var customerCredits = '<?php echo (int)$customer_credits; ?>';
 		var cron_exhausted = '<?php echo (int)$cron_exhausted; ?>';
-		if (customerCredits <= 0) {
+		if (customerCredits <= 1) {
 			bulkDropzone.disable();
 		}
 		if (cron_exhausted >= 1) {
