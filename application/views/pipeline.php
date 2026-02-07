@@ -303,7 +303,7 @@
 								</thead>
 								<!--end::Table head-->
 								<!--begin::Table body-->
-								<tbody class="fw-bold text-gray-600" data-action="<?php echo base_url().'dashboard/ajax_bulk_scans/'; ?>">
+								<tbody class="fw-bold text-gray-600" data-action="<?php echo base_url().'scan/ajax_bulk_scans/'; ?>">
 								</tbody>
 								<!--end::Table body-->
 							</table>
@@ -413,7 +413,7 @@
 <script src="assets/plugins/global/plugins.bundle.js"></script>
 <script src="assets/js/scripts.bundle.js"></script>
 <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<script src="assets/js/custom/customer/list.js"></script>
+<script src="assets/js/custom/scans/all.js"></script>
 <script src="assets/js/custom/widgets.js"></script>
 <script src="assets/js/custom/detection-charts.js"></script>
 <!--end::Page Custom Javascript-->

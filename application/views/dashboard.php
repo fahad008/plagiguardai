@@ -176,8 +176,128 @@
 						</div>
 						<div id="pagination"></div>
 						<!--end::Tables Widget 13-->
+						<div class="card mb-5 mb-xl-8">
+						<!--begin::Card header-->
+						<div class="card-header border-0 pt-6">
+							<!--begin::Card title-->
+							<div class="card-title">
+								<!--begin::Search-->
+								<div class="d-flex align-items-center position-relative my-1">
+									<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+									<span class="svg-icon svg-icon-1 position-absolute ms-6">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+											<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+										</svg>
+									</span>
+									<!--end::Svg Icon-->
+									<input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Scans" />
+								</div>
+								<!--end::Search-->
+							</div>
+							<!--begin::Card title-->
+							<!--begin::Card toolbar-->
+							<div class="card-toolbar">
+								<!--begin::Toolbar-->
+								<div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+									<!--begin::Filter-->
+									<button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="top">
+									<!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+									<span class="svg-icon svg-icon-2">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black" />
+										</svg>
+									</span>
+									<!--end::Svg Icon-->Filter</button>
+									<!--begin::Menu 1-->
+									<div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
+										<!--begin::Header-->
+										<div class="px-7 py-5">
+											<div class="fs-4 text-dark fw-bolder">Filter Options</div>
+										</div>
+										<!--end::Header-->
+										<!--begin::Separator-->
+										<div class="separator border-gray-200"></div>
+										<!--end::Separator-->
+										<!--begin::Content-->
+										<div class="px-7 py-5">
+											<!--begin::Input group-->
+											<div class="mb-10">
+												<!--begin::Label-->
+												<label class="form-label fs-5 fw-bold mb-3">Month:</label>
+												<!--end::Label-->
+												<!--begin::Input-->
+												<select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-customer-table-filter="month" data-dropdown-parent="#kt-toolbar-filter">
+													<option></option>
+													<?php $months = getMonthsTillCurrent(); ?>
+													<?php if (isset($months) && !empty($months)) {
+													foreach ($months as $key => $value) { ?>
+														<option value="<?php echo $value['number']; ?>"><?php echo $value['name']; ?></option>
+													<?php } ?>
+													<?php } ?>
+												</select>
+												<!--end::Input-->
+											</div>
+											<!--end::Input group-->
+											<!--begin::Actions-->
+											<div class="d-flex justify-content-end">
+												<button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-customer-table-filter="reset">Reset</button>
+												<button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-customer-table-filter="filter">Apply</button>
+											</div>
+											<!--end::Actions-->
+										</div>
+										<!--end::Content-->
+									</div>
+									<!--end::Menu 1-->
+									<!--end::Filter-->
+								</div>
+								<!--end::Toolbar-->
+								<!--begin::Group actions-->
+								<div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
+									<div class="fw-bolder me-5">
+									<span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected</div>
+									<button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected" data-kt-batch-delete-action="<?php echo base_url().'scan/batch_delete'; ?>">Delete Selected</button>
+								</div>
+								<!--end::Group actions-->
+							</div>
+							<!--end::Card toolbar-->
+						</div>
+						<!--end::Card header-->
+						<!--begin::Card body-->
+						<div class="card-body pt-0">
+							<!--begin::Table-->
+							<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_scans_table">
+								<!--begin::Table head-->
+								<thead>
+									<!--begin::Table row-->
+									<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+										<th class="w-10px pe-2 sorting_disabled" aria-label="Select all">
+											<div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+												<input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_scans_table .form-check-input" value="1" />
+											</div>
+										</th>
+										<th class="min-w-80px">Title</th>
+										<th class="min-w-150px">Plagiarism Score</th>
+										<th class="min-w-150px">AI Confidence</th>
+										<th class="min-w-150px">AI Classification</th>
+										<th class="min-w-50px">File</th>
+										<th class="min-w-50px">Expiry</th>
+										<th class="text-end min-w-50px">Actions</th>
+									</tr>
+									<!--end::Table row-->
+								</thead>
+								<!--end::Table head-->
+								<!--begin::Table body-->
+								<tbody class="fw-bold text-gray-600" data-action="<?php echo base_url().'scan/ajax_completed_scans/'; ?>">
+								</tbody>
+								<!--end::Table body-->
+							</table>
+							<!--end::Table-->
+						</div>
+						<!--end::Card body-->
+						</div>
 						<!--begin::Modal - New Address-->
-						<div class="modal fade kt_modal_new_title" tabindex="-1" aria-hidden="true">
+						<div class="modal fade" id="kt_modal_new_title" tabindex="-1" aria-hidden="true">
 							<!--begin::Modal dialog-->
 							<div class="modal-dialog modal-dialog-centered mw-650px">
 								<!--begin::Modal content-->
@@ -256,25 +376,7 @@
 	<!--end::Root-->
 	<input type="hidden" name="customer_uploads_id" value="" id="customer_uploads_id">
 	<input type="hidden" value="<?php if(isset($scan_id) && $scan_id != ''){ echo $scan_id; } ?>" id="scan_id">
-	<!--begin::Drawers-->
-	<!--begin::Activities drawer-->
-	<!-- <?php //$this->load->view('drawers/activities'); ?> -->
-	<!--end::Activities drawer-->
-	<!--begin::Chat drawer-->
-	<!-- <?php //$this->load->view('drawers/chat'); ?> -->
-	<!--end::Chat drawer-->
-	<!--begin::Exolore drawer toggle-->
-	<!-- <?php //$this->load->view('drawers/explore'); ?> -->
-	<!--end::Exolore drawer toggle-->
-	<!--begin::Exolore drawer-->
-	<!-- <?php //$this->load->view('drawers/explorer'); ?> -->
-	<!--end::Exolore drawer-->
-	<!--end::Drawers-->
-	<!--begin::Modals-->
-	<!--begin::Modal - Invite Friends-->
-	<!-- <?php //$this->load->view('modals/invite_friends'); ?> -->
-	<!--end::Modal - Invite Friend-->
-	<!--begin::Modal - Create App-->
+
 	<?php $this->load->view('modals/create_app'); ?>
 	<!--end::Modal - Create App-->
 	<!--begin::Modal - Upgrade plan-->
@@ -301,17 +403,10 @@
 	<script src="assets/plugins/global/plugins.bundle.js"></script>
 	<script src="assets/js/scripts.bundle.js"></script>
 	<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-	<!--end::Global Javascript Bundle-->
-	<!--begin::Page Vendors Javascript(used by this page)-->
-	<!-- <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script> -->
-	<!--end::Page Vendors Javascript-->
-	<!--begin::Page Custom Javascript(used by this page)-->
+	<script src="assets/js/custom/scans/completed.js"></script>
+
 	<script src="assets/js/custom/widgets.js"></script>
 	<script src="assets/js/custom/detection-charts.js"></script>
-	<!-- <script src="assets/js/custom/apps/chat/chat.js"></script> -->
-	<!-- <script src="assets/js/custom/modals/create-app.js"></script> -->
-	<script src="assets/js/custom/modals/upgrade-plan.js"></script>
-	<!--end::Page Custom Javascript-->
 	<script src="assets/js/custom/modals/new-title.js"></script>
 	<!--end::Javascript-->
 	<script>
@@ -330,11 +425,11 @@
 			    });
 		    }, 1000);
 			
-			$('#pagination').on('click','a',function(e){
-		       e.preventDefault(); 
-		       var pageno = $(this).attr('data-ci-pagination-page');
-		       loadScanOverview(pageno);
-		     });
+			// $('#pagination').on('click','a',function(e){
+		 //       e.preventDefault(); 
+		 //       var pageno = $(this).attr('data-ci-pagination-page');
+		 //       loadScanOverview(pageno);
+		 //     });
 
 			var btnStatus = 'paused';
 			var requiredCredits = 0;
@@ -452,29 +547,29 @@
 			            }, 50);
 		      		}
 
-		      		loadScanOverview(0);
-		      		
-		      	});
-		    }
-
-		    function loadScanOverview(pagno=0) {
-		    	showPageLoader();
-	      		$.ajax({
-		        	url : "<?php echo base_url(); ?>scan/get_scan_overview/"+pagno,
-			        method : 'get' ,
-			        dataType : 'json',
-		      	}).then(function(response){
-		      		if (response.status == 'success') {
-			      		$("#scan-overview").html(response.scan_overview);
-			      		$('#pagination').html(response.page_links.pagination);
-		      		}else{
-
-		      		}
-
 		      		hidePageLoader();
 		      		
 		      	});
 		    }
+
+		    // function loadScanOverview(pagno=0) {
+		    // 	showPageLoader();
+	     //  		$.ajax({
+		    //     	url : "<?php //echo base_url(); ?>scan/get_scan_overview/"+pagno,
+			   //      method : 'get' ,
+			   //      dataType : 'json',
+		    //   	}).then(function(response){
+		    //   		if (response.status == 'success') {
+			   //    		$("#scan-overview").html(response.scan_overview);
+			   //    		$('#pagination').html(response.page_links.pagination);
+		    //   		}else{
+
+		    //   		}
+
+		    //   		hidePageLoader();
+		      		
+		    //   	});
+		    // }
 
 		   	$(document).on('click', '#get-scan-results', function(event) {
 		   		var scan_id   = $(this).data('scan-id');
@@ -822,42 +917,50 @@
 			});
 		}
 
-		function delete_scan(el){
-			// showPageLoader();
-			const scan_id = el.dataset.id;
-			$.ajax({
-		        	url : "<?php echo base_url().'scan/delete_scan/'; ?>",
-			        method : 'POST' ,
-			        dataType : 'json',
-			        data: { scan_id: scan_id }
-		      	}).then(function(response){
-		      		console.log(response);
-			      	if (response.status == 'success') {
-			      		loadScanOverview(0);
-			      		Swal.fire({
-						    html: response.message,
-						    icon: "success",
-						    buttonsStyling: false,
-						    confirmButtonText: "ok",
-						    customClass: {
-						        confirmButton: "btn btn-success"
-						    }
-						});
+		// function delete_scan(el){
+		// 	// showPageLoader();
+		// 	const scan_id = el.dataset.id;
+		// 	$.ajax({
+		//         	url : "<?php echo base_url().'scan/delete_scan/'; ?>",
+		// 	        method : 'POST' ,
+		// 	        dataType : 'json',
+		// 	        data: { scan_id: scan_id }
+		//       	}).then(function(response){
+		//       		console.log(response);
+		// 	      	if (response.status == 'success') {
+		// 	      		// loadScanOverview(0);
+		// 	      		Swal.fire({
+		// 				    html: response.message,
+		// 				    icon: "success",
+		// 				    buttonsStyling: false,
+		// 				    confirmButtonText: "ok",
+		// 				    customClass: {
+		// 				        confirmButton: "btn btn-success"
+		// 				    }
+		// 				});
 
-			      	}else{
-			      		Swal.fire({
-						    html: response.message,
-						    icon: "error",
-						    buttonsStyling: false,
-						    confirmButtonText: "Continue",
-						    customClass: {
-						        confirmButton: "btn btn-danger"
-						    }
-						});
+		// 	      	}else{
+		// 	      		Swal.fire({
+		// 				    html: response.message,
+		// 				    icon: "error",
+		// 				    buttonsStyling: false,
+		// 				    confirmButtonText: "Continue",
+		// 				    customClass: {
+		// 				        confirmButton: "btn btn-danger"
+		// 				    }
+		// 				});
 
-			      	}
-			      	hidePageLoader();
-		      	});
+		// 	      	}
+		// 	      	hidePageLoader();
+		//       	});
+		// }
+
+		function show_title_poppup(el){
+			const id = el.dataset.id;
+			const title = el.dataset.title;
+			$("#scan-id-input").val(id);
+			$("#scan-title-modal-input").val(title);
+			$("#kt_modal_new_title").modal('show');
 		}
 
 

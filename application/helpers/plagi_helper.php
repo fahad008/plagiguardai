@@ -1462,6 +1462,66 @@ function getScanOverviewData($scan=[]) {
     return $data;
 }
 
+function getScanOverviewObj(object $scan): object
+{
+    $data = [];
+
+    if ($scan->status === 'completed') {
+
+        $ai_classification = json_decode($scan->ai_classification, true);
+        $data['one_ai'] = $ai_classification['AI'] * 100;
+        $data['one_or'] = $ai_classification['Original'] * 100;
+
+        $classificationData = getClassificationOverview($data['one_ai'], $data['one_or']);
+        $data = array_merge($data, $classificationData);
+
+
+        $ai_confidence = json_decode($scan->ai_confidence, true);
+        $data['two_ai'] = $ai_confidence['AI'] * 100;
+        $data['two_or'] = $ai_confidence['Original'] * 100;
+
+        $confidenceData = getConfidenceOverview($data['two_ai'], $data['two_or']);
+        $data = array_merge($data, $confidenceData);
+
+
+        $plagiarism_score = json_decode($scan->plagiarism_score, true);
+        $data['three_pl'] = $plagiarism_score['score'];
+        $data['three_or'] = 100 - $plagiarism_score['score'];
+
+        $PlagiarismData = getPlagiarismOverview($data['three_pl'], $data['three_or']);
+        $data = array_merge($data, $PlagiarismData);
+
+    } else {
+
+        $data = [
+            'one_ai' => 0,
+            'one_or' => 0,
+            'one_do_text' => '-',
+            'one_do_color' => 'text-default',
+            'one_do_icon' => 'svg-icon-default',
+            'one_do_score' => 0,
+
+            'two_ai' => 0,
+            'two_or' => 0,
+            'two_do_text' => '-',
+            'two_do_color' => 'text-default',
+            'two_do_icon' => 'svg-icon-default',
+            'two_do_score' => 0,
+
+            'three_pl' => 0,
+            'three_or' => 0,
+            'three_do_text' => '-',
+            'three_do_color' => 'text-default',
+            'three_do_icon' => 'svg-icon-default',
+            'three_do_score' => 0
+        ];
+    }
+
+    // return as object instead of array
+    return (object) $data;
+}
+
+
 function getClassificationOverview($ai=0, $or=0) {
 
     $classification_info = [];

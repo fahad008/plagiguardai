@@ -16,11 +16,11 @@
 			<thead>
 				<tr class="fw-bolder text-muted">
 					<th class="min-w-150px">Title</th>
-					<th class="min-w-100px">Date</th>
 					<th class="min-w-140px">Plagiarism Score</th>
 					<th class="min-w-140px">AI Confidence</th>
 					<th class="min-w-140px">AI Classification</th>
 					<th class="min-w-50px">File</th>
+					<th class="min-w-50px">Expiry</th>
 					<th class="min-w-100px">Actions</th>
 				</tr>
 			</thead>

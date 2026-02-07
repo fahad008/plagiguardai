@@ -114,6 +114,28 @@
 .text-default {
     color: #7e8299;
 }
+
+.original-hover:hover {
+    color: #28a745 !important;
+}
+.low-hover:hover {
+    color: #8bc34a !important;
+}
+.medium-hover:hover {
+    color: #ffc107 !important;
+}
+.likely-hover:hover {
+    color: #fd7e14 !important;
+}
+.high-hover:hover {
+    color: #ff5722 !important;
+}
+.very-high-hover:hover {
+    color: #dc3545 !important;
+}
+.default-hover:hover {
+    color: #7e8299 !important;
+}
 .badge-light-Silver {
     color: #B0B0B0;
     background-color: #f5f8fa !important;

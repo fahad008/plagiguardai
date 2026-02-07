@@ -30,7 +30,7 @@
 					</a>
 				</div>
 				<div class="menu-item">
-					<a class="menu-link <?php if($active == 'bulk_uploads'){ echo 'active'; } ?>" href="<?php echo base_url().'dashboard/pipeline'; ?>">
+					<a class="menu-link <?php if($active == 'bulk_uploads'){ echo 'active'; } ?>" href="<?php echo base_url().'scan/pipeline'; ?>">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
 							<span class="svg-icon svg-icon-5">
