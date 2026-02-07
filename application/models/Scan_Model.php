@@ -286,9 +286,57 @@ class Scan_Model extends CI_Model{
 		$query = $this->db->get();
 
 		return $queue_limit = $query->row()->queue_limit ?? 0;
-
 	}
 
+	public function get_scan_uploads($scan_id)
+	{
+		$this->db->select('cs.id as scan_id, cs.customer_id as customer_id, cu.id as customer_uploads_id, cu.formatted_file');
+		$this->db->from('customer_scans cs');
+		$this->db->join('customer_uploads cu', 'cs.customer_uploads_id = cu.id', 'left');
+		$this->db->where('cs.id', $scan_id);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->row_array();
+		}else{
+			return false;
+		}
+	}
+
+	public function delete_customer_uploads($customer_uploads_id)
+	{
+		$this->db->select('*');
+		$this->db->from('customer_uploads');
+		$this->db->where('id', $customer_uploads_id);
+		$query = $this->db->get();
+		if($query->num_rows() >0)
+		{
+			$this->db->where('id',$customer_uploads_id); 
+			$this->db->delete('customer_uploads'); 
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public function delete_customer_scans($scan_id)
+	{
+		$this->db->select('*');
+		$this->db->from('customer_scans');
+		$this->db->where('id', $scan_id);
+		$query = $this->db->get();
+		if($query->num_rows() >0)
+		{
+			$this->db->where('id',$scan_id); 
+			$this->db->delete('customer_scans'); 
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 
 

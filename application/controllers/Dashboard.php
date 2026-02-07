@@ -151,6 +151,8 @@ class dashboard extends CI_Controller
         $data = [];
         foreach ($list as $scan) {
             $scan_link = '';
+            $delete_link = base_url().'scan/delete/';
+            $error_message = '';
             if ($scan->status == 'completed') {
                 $status = '<span class="badge badge-light-success">'.ucfirst($scan->status).'</span>';
                 $encoded_scan_url = base_url().'dashboard?scan_id='.rawurlencode($this->url_encrypt->encode_id($scan->id));
@@ -168,6 +170,12 @@ class dashboard extends CI_Controller
                 $status = '<span class="badge badge-light-warning">'.ucfirst($scan->status).'</span>';
             }else if ($scan->status == 'failed') {
                 $status = '<span class="badge badge-light-danger">'.ucfirst($scan->status).'</span>';
+                if ($scan->error_message) {
+                    $error_message = '<span class="text-danger fw-bold d-block fs-7">'.$scan->error_message.'</span>';
+                }else{
+                    $error_message = '<span class="text-danger fw-bold d-block fs-7">Scan failed!</span>';
+                }
+                
             }else{
                 $status = '<span class="badge badge-light-primary">'.ucfirst($scan->status).'</span>';
             }
@@ -175,8 +183,7 @@ class dashboard extends CI_Controller
             $file = '<a href="javascript: void(0)">
                         <span class="svg-icon svg-icon-danger svg-icon-4x">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM13.4 14L15.5 11.9C15.9 11.5 15.9 10.9 15.5 10.5C15.1 10.1 14.5 10.1 14.1 10.5L12 12.6L9.89999 10.5C9.49999 10.1 8.9 10.1 8.5 10.5C8.1 10.9 8.1 11.5 8.5 11.9L10.6 14L8.5 16.1C8.1 16.5 8.1 17.1 8.5 17.5C8.7 17.7 9.00001 17.8 9.20001 17.8C9.40001 17.8 9.69999 17.7 9.89999 17.5L12 15.4L14.1 17.5C14.3 17.7 14.6 17.8 14.8 17.8C15 17.8 15.3 17.7 15.5 17.5C15.9 17.1 15.9 16.5 15.5 16.1L13.4 14Z" fill="black"/>
-                            <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black"/>
+                            <path opacity="0.3" d="M19 18C20.7 18 22 16.7 22 15C22 13.3 20.7 12 19 12C18.9 12 18.9 12 18.8 12C18.9 11.7 19 11.3 19 11C19 9.3 17.7 8 16 8C15.4 8 14.8 8.2 14.3 8.5C13.4 7 11.8 6 10 6C7.2 6 5 8.2 5 11C5 11.3 5.00001 11.7 5.10001 12H5C3.3 12 2 13.3 2 15C2 16.7 3.3 18 5 18H19Z" fill="black"/>
                             </svg>
                         </span>
                     </a>';
@@ -190,9 +197,9 @@ class dashboard extends CI_Controller
                     $file = '<a href="'.base_url().'file_manager/download/'.$scan->customer_uploads_id.'">
                                 <span class="svg-icon svg-icon-success svg-icon-4x">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.3" d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" fill="black"/>
-                                    <path d="M20 8L14 2V6C14 7.10457 14.8954 8 16 8H20Z" fill="black"/>
-                                    <path d="M10.3629 14.0084L8.92108 12.6429C8.57518 12.3153 8.03352 12.3153 7.68761 12.6429C7.31405 12.9967 7.31405 13.5915 7.68761 13.9453L10.2254 16.3488C10.6111 16.714 11.215 16.714 11.6007 16.3488L16.3124 11.8865C16.6859 11.5327 16.6859 10.9379 16.3124 10.5841C15.9665 10.2565 15.4248 10.2565 15.0789 10.5841L11.4631 14.0084C11.1546 14.3006 10.6715 14.3006 10.3629 14.0084Z" fill="black"/>
+                                    <path opacity="0.3" d="M19 15C20.7 15 22 13.7 22 12C22 10.3 20.7 9 19 9C18.9 9 18.9 9 18.8 9C18.9 8.7 19 8.3 19 8C19 6.3 17.7 5 16 5C15.4 5 14.8 5.2 14.3 5.5C13.4 4 11.8 3 10 3C7.2 3 5 5.2 5 8C5 8.3 5 8.7 5.1 9H5C3.3 9 2 10.3 2 12C2 13.7 3.3 15 5 15H19Z" fill="black"/>
+                                    <path d="M13 17.4V12C13 11.4 12.6 11 12 11C11.4 11 11 11.4 11 12V17.4H13Z" fill="black"/>
+                                    <path opacity="0.3" d="M8 17.4H16L12.7 20.7C12.3 21.1 11.7 21.1 11.3 20.7L8 17.4Z" fill="black"/>
                                     </svg>
                                 </span>
                             </a>';
@@ -209,7 +216,7 @@ class dashboard extends CI_Controller
                     </div>
                 ',
 
-                'title' => '<div id="table-title-'.$scan->id.'"><a href="javascript: void(0)" onclick="show_title_poppup(this)" data-id="'.$scan->id.'" data-title="'.$scan->title.'" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">'.$scan->title.'</a></div>',
+                'title' => '<div id="table-title-'.$scan->id.'"><a href="javascript: void(0)" onclick="show_title_poppup(this)" data-id="'.$scan->id.'" data-title="'.$scan->title.'" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">'.$scan->title.'</a>'.$error_message.'</div>',
 
                 'estimated_credits' => '<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">'.$scan->estimated_credits.'</span>',
 
@@ -219,7 +226,7 @@ class dashboard extends CI_Controller
 
                 'file' => $file,
 
-                'actions' => '<a href="javascript: void(0)" onclick="delete_scan(this)" data-id="'.$scan->id.'" class="btn btn-icon bg-light-danger btn-active-color-danger btn-sm m-2">
+                'actions' => '<a href="javascript: void(0)" data-action="'.$delete_link.'" data-kt-customer-table-filter="delete_row" data-id="'.$scan->id.'" class="btn btn-icon bg-light-danger btn-active-color-danger btn-sm m-2">
                             <span class="svg-icon svg-icon-3 svg-icon-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />

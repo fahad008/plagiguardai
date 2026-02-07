@@ -538,19 +538,76 @@ class scan extends CI_Controller
         }
     }
 
-    public function delete_scan(){
+    public function delete(){
         if ($this->input->post()) {
-            echo "<pre>";print_r($this->input->post());die;
+            // echo "<pre>";print_r($this->input->post());die;
             if ($this->input->post('scan_id')) {
-                $row_title_id = '#table-title-'.$this->input->post('scan_id');
-                $scan_info = array(
-                    "title" => $this->input->post('title'),
-                    "updated_at" => date('y-m-d H:m:s'),
+
+                $scan_uploads_info = $this->scan_model->get_scan_uploads($this->input->post('scan_id'));
+
+                // echo "<pre>";print_r($scan_uploads_info);die;
+
+                if (isset($scan_uploads_info) && !empty($scan_uploads_info)) {
+                    $file_path = FCPATH . 'uploads/scans/customer_' . $scan_uploads_info['customer_id'].'/'.$scan_uploads_info['formatted_file'];
+                    if (file_exists($file_path)) {
+                        unlink($file_path);
+                    }
+                    $this->scan_model->delete_customer_uploads($scan_uploads_info['customer_uploads_id']);
+                    $this->scan_model->delete_customer_scans($scan_uploads_info['scan_id']);
+
+                }
+                
+                $response =  array(
+                    "status" => 'success', "message" => 'scan deleted successfully.'
                 );
-                $this->scan_model->update_scan($this->input->post('scan_id'), $scan_info);
+                echo json_encode($response);
+
+            }else{
 
                 $response =  array(
-                    "status" => 'success', "message" => 'Title has been updated successfully.', "row_title_id" => $row_title_id, "new_title" => $this->input->post('title')
+                  "status" => 'error', "message" => 'Sorry, looks like there are some errors detected, please try again.'
+                );
+                echo json_encode($response);
+            }
+            
+        }else{
+
+            $response =  array(
+              "status" => 'error', "message" => 'Access denied!'
+            );
+            echo json_encode($response);
+
+        }
+    }
+
+    public function batch_delete(){
+        if ($this->input->post()) {
+            // echo "<pre>";print_r($this->input->post());die;
+            if ($this->input->post('scan_ids')) {
+                $scan_ids = $this->input->post('scan_ids');
+
+                foreach ($scan_ids as $key => $scan_id) {
+                    $scan_uploads_info = [];
+                    $scan_uploads_info = $this->scan_model->get_scan_uploads($scan_id);
+
+                    // echo "<pre>";print_r($scan_uploads_info);die;
+
+                    if (isset($scan_uploads_info) && !empty($scan_uploads_info)) {
+                        if ($scan_uploads_info['formatted_file'] != '') {
+                            $file_path = FCPATH . 'uploads/scans/customer_' . $scan_uploads_info['customer_id'].'/'.$scan_uploads_info['formatted_file'];
+                            if (file_exists($file_path)) {
+                                unlink($file_path);
+                            }
+                        }
+                        $this->scan_model->delete_customer_uploads($scan_uploads_info['customer_uploads_id']);
+                        $this->scan_model->delete_customer_scans($scan_uploads_info['scan_id']);
+
+                    }
+                }
+                
+                
+                $response =  array(
+                    "status" => 'success', "message" => 'Scans deleted successfully.'
                 );
                 echo json_encode($response);
 

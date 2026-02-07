@@ -102,15 +102,15 @@ var KTscansList = function () {
                 const parent = e.target.closest('tr');
 
                 // Get customer name
-                // const customerName = parent.querySelectorAll('td')[1].innerText;
-                const customerName = parent.querySelectorAll('td')[1].querySelector('a').innerText;
+                // const scanTitle = parent.querySelectorAll('td')[1].innerText;
+                const scanTitle = parent.querySelectorAll('td')[1].querySelector('a').innerText;
 
-                let customer_id = this.getAttribute('data-id');
+                let scan_id = this.getAttribute('data-id');
                 let del_url = this.getAttribute('data-action');
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "Are you sure you want to delete " + customerName + "?",
+                    text: "Are you sure you want to delete " + scanTitle + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
@@ -127,13 +127,13 @@ var KTscansList = function () {
                             type: 'POST',
                             dataType: 'json',
                             data: {
-                                customer_id: customer_id
+                                scan_id: scan_id
                             },
                             success: function(response) {
 
                                 if (response.status == 'success') {
                                     Swal.fire({
-                                        text: "You have deleted " + customerName + "!.",
+                                        html: "You have deleted <b>" + scanTitle + "</b>!",
                                         icon: "success",
                                         buttonsStyling: false,
                                         confirmButtonText: "Ok, got it!",
@@ -150,7 +150,7 @@ var KTscansList = function () {
                         
                     } else if (result.dismiss === 'cancel') {
                         Swal.fire({
-                            text: customerName + " was not deleted.",
+                            text: scanTitle + " was not deleted.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
@@ -229,7 +229,7 @@ var KTscansList = function () {
                         type: 'POST',
                         dataType: 'json',
                         data: {
-                            customer_ids: selectedIds
+                            scan_ids: selectedIds
                         },
                         success: function(response) {
 

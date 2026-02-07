@@ -136,9 +136,9 @@
 												<!--begin::Icon-->
 												<!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
 												<span class="svg-icon svg-icon-3hx svg-icon-primary">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 12.6L12.7 9.3C12.3 8.9 11.7 8.9 11.3 9.3L8 12.6H11V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18V12.6H16Z" fill="black" />
-														<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
+													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path opacity="0.3" d="M5 16C3.3 16 2 14.7 2 13C2 11.3 3.3 10 5 10H5.1C5 9.7 5 9.3 5 9C5 6.2 7.2 4 10 4C11.9 4 13.5 5 14.3 6.5C14.8 6.2 15.4 6 16 6C17.7 6 19 7.3 19 9C19 9.4 18.9 9.7 18.8 10C18.9 10 18.9 10 19 10C20.7 10 22 11.3 22 13C22 14.7 20.7 16 19 16H5ZM8 13.6H16L12.7 10.3C12.3 9.89999 11.7 9.89999 11.3 10.3L8 13.6Z" fill="black"/>
+													<path d="M11 13.6V19C11 19.6 11.4 20 12 20C12.6 20 13 19.6 13 19V13.6H11Z" fill="black"/>
 													</svg>
 												</span>
 												<!--end::Svg Icon-->
@@ -272,7 +272,7 @@
 								<div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
 									<div class="fw-bolder me-5">
 									<span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected</div>
-									<button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected" data-kt-batch-delete-action="<?php echo base_url().'admin/resellers/batch_delete'; ?>">Delete Selected</button>
+									<button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected" data-kt-batch-delete-action="<?php echo base_url().'scan/batch_delete'; ?>">Delete Selected</button>
 								</div>
 								<!--end::Group actions-->
 							</div>
@@ -296,7 +296,7 @@
 										<th class="min-w-100px">Est. Credits</th>
 										<th class="min-w-100px">Words</th>
 										<th class="min-w-100px">Status</th>
-										<th class="min-w-100px">Expiry</th>
+										<th class="min-w-100px">File</th>
 										<th class="text-end min-w-70px">Actions</th>
 									</tr>
 									<!--end::Table row-->
