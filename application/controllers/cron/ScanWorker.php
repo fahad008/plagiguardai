@@ -23,13 +23,13 @@ class ScanWorker extends CI_Controller {
     {
         $jobs = $this->scan_model->get_pending_jobs(5);
         if (empty($jobs)) {
-            log_cron('info', "No scans found to expire today!");
+            log_cron('info', "No scans found to procedd with!");
             die;
         }
         // echo "<pre>";print_r($jobs);die;
         foreach ($jobs as $job) {
 
-            // $this->scan_model->set_status($job->id, 'processing');
+            $this->scan_model->set_status($job->id, 'processing');
 
             try {
                 $maxRetries = $this->apikey_model->countActiveKeys();
@@ -84,13 +84,15 @@ class ScanWorker extends CI_Controller {
                 }
 
                 // deduct credits
-                $customer_credits = $this->subscription_model->get_customer_credits($job->customer_id);
-                (int)$remaining_credits = (int)$customer_credits - (int)$job->estimated_credits;
-                $credits = array(
-                    'credits' => $remaining_credits,
-                    'updated_at' => date('y-m-d H:m:s'),
-                );
-                $this->subscription_model->update_customer_credits($job->customer_id, $credits);
+                // $customer_credits = $this->subscription_model->get_customer_credits($job->customer_id);
+                // (int)$remaining_credits = (int)$customer_credits - (int)$job->estimated_credits;
+                // $credits = array(
+                //     'credits' => $remaining_credits,
+                //     'updated_at' => date('y-m-d H:m:s'),
+                // );
+
+                // deduct new
+                $this->subscription_model->deduct($job->customer_id, $job->estimated_credits);
 
                 $properties = [];
                 $credits = [];

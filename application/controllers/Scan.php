@@ -186,7 +186,7 @@ class scan extends CI_Controller
         }
     }
 
-        public function pipeline()
+    public function pipeline()
     {
         $data = array();
         $data['scan_id'] = '';
@@ -839,18 +839,28 @@ class scan extends CI_Controller
 
             $delete_link = base_url().'scan/delete/';
             $scan_link = '';
-            $encoded_scan_url = '';
-            $encoded_scan_url = base_url().'dashboard?scan_id='.rawurlencode($this->url_encrypt->encode_id($scan->id));
-            $scan_link = '<a href="'.$encoded_scan_url.'" class="btn btn-icon bg-light-success btn-sm m-2">
-                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-                        <span class="svg-icon svg-icon-3 svg-icon-success">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-                                <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </a>';
+            if ($scan->status == 'completed') {
+                $encoded_scan_url = '';
+                $encoded_scan_url = base_url().'dashboard?scan_id='.rawurlencode($this->url_encrypt->encode_id($scan->id));
+                $scan_link = '<a href="'.$encoded_scan_url.'" class="btn btn-icon bg-light-success btn-sm m-2">
+                            <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                            <span class="svg-icon svg-icon-3 svg-icon-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
+                                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </a>';
+                $lite_status = '<span class="badge badge-light-success">'.ucfirst($scan->status).'</span>';
+            }else if($scan->status == 'failed'){
+                $lite_status = '<span class="badge badge-light-danger">'.ucfirst($scan->status).'</span>';
+            }else if($scan->status == 'processing'){
+                $lite_status = '<span class="badge badge-light-warning">'.ucfirst($scan->status).'</span>';
+            }else{
+                $lite_status = '<span class="badge badge-light-info">'.ucfirst($scan->status).'</span>';
+            }
+           
 
             $file = '<a href="javascript: void(0)">
                         <span class="svg-icon svg-icon-danger svg-icon-4x">
@@ -894,7 +904,7 @@ class scan extends CI_Controller
 
                 'word_count' => '<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">'.$scan->word_count.'</span>',
 
-                'status' => $status,
+                'status' => $lite_status,
 
                 'file' => $file,
 
