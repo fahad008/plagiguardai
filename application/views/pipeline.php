@@ -164,6 +164,7 @@
 						</div>
 						<!--end::Content-->
 						<div class="separator separator-dashed my-3"></div>
+
 						<!--begin::Card header-->
 						<div class="card-header border-0 pt-6">
 							<!--begin::Card title-->
@@ -334,63 +335,35 @@
 <input type="hidden" value="<?php if(isset($scan_id) && $scan_id != ''){ echo $scan_id; } ?>" id="scan_id">
 <!-- <?php //$this->load->view('modals/create_app'); ?> -->
 <!--begin::Modal - New Address-->
-<div class="modal fade" id="kt_modal_new_title" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="kt_modal_scan_detail" tabindex="-1" aria-hidden="true">
 	<!--begin::Modal dialog-->
-	<div class="modal-dialog modal-dialog-centered mw-650px">
+	<div class="modal-dialog modal-dialog-centered mw-1000px">
 		<!--begin::Modal content-->
 		<div class="modal-content">
-			<!--begin::Form-->
-			<form class="form" method="post" action="<?php echo base_url().'scan/update_title'; ?>" id="kt_modal_new_title_form">
-				<!--begin::Modal header-->
-				<div class="modal-header">
-					<!--begin::Modal title-->
-					<h2>Update Title</h2>
-					<!--end::Modal title-->
-					<!--begin::Close-->
-					<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-						<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-						<span class="svg-icon svg-icon-1">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-								<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-							</svg>
-						</span>
-						<!--end::Svg Icon-->
-					</div>
-					<!--end::Close-->
+			<!--begin::Modal header-->
+			<div class="modal-header">
+				<!--begin::Modal title-->
+				<h2>Scan Insights</h2>
+				<!--end::Modal title-->
+				<!--begin::Close-->
+				<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+					<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+					<span class="svg-icon svg-icon-1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+							<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+						</svg>
+					</span>
+					<!--end::Svg Icon-->
 				</div>
-				<!--end::Modal header-->
-				<!--begin::Modal body-->
-				<div class="modal-body py-10 px-lg-17">
-					<!--begin::Input group-->
-					<div class="d-flex flex-column mb-5 fv-row">
-						<!--begin::Label-->
-						<label class="fs-5 fw-bold mb-2">New Title</label>
-						<!--end::Label-->
-						<!--begin::Input-->
-						<input type="hidden" name="scan_id" id="scan-id-input" />
-						<input class="form-control form-control-solid" placeholder="" name="title" id="scan-title-modal-input" />
-						<!--end::Input-->
-					</div>
-					<!--end::Input group-->
-				</div>
-				<!--end::Modal body-->
-				<!--begin::Modal footer-->
-				<div class="modal-footer flex-center">
-					<!--begin::Button-->
-					<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Discard</button>
-					<!--end::Button-->
-					<!--begin::Button-->
-					<button type="submit" id="kt_modal_new_title_submit" class="btn btn-primary">
-						<span class="indicator-label">Submit</span>
-						<span class="indicator-progress">Please wait...
-						<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-					</button>
-					<!--end::Button-->
-				</div>
-				<!--end::Modal footer-->
-			</form>
-			<!--end::Form-->
+				<!--end::Close-->
+			</div>
+			<!--end::Modal header-->
+			<!--begin::Modal body-->
+			<div class="modal-body py-10 px-lg-17" id="scan-detail-html">
+				
+			</div>
+			<!--end::Modal body-->
 		</div>
 	</div>
 </div>
@@ -647,6 +620,35 @@ var errorOptions = {
 		$("#kt_modal_new_title").modal('show');
 	}
 
+
+function scan_details(el) {
+    const scan_id = el.getAttribute('data-id');
+    $.ajax({
+        url: "<?php echo base_url().'scan/detail/'; ?>",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            scan_id: scan_id
+        },
+        success: function(response) {
+
+            if (response.status == 'success') {
+            	console.log(response);
+            	$("#scan-detail-html").html(response.html);
+            	$("#kt_modal_scan_detail").modal('show');
+            } else {
+            	Swal.fire({
+				    text: response.message,
+				    icon: "error",
+				    confirmButtonText: "OK",
+				    customClass: {
+				        confirmButton: "btn btn-danger"
+				    }
+				});
+            }
+        }
+    });
+}
 </script>
 </body>
 <!--end::Body-->

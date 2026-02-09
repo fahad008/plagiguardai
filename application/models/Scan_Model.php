@@ -29,7 +29,7 @@ class Scan_Model extends CI_Model{
 			$this->db->where('customer_scans.id', $id);
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
-				return $query->result_array()[0];
+				return $query->row_array();
 			}
 		}
 		return false;
@@ -106,7 +106,7 @@ class Scan_Model extends CI_Model{
 			$this->db->where('customer_uploads.id', $customer_uploads_id);
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
-				return $query->result_array()[0];
+				return $query->row_array();
 			}
 		}
 		return false;

@@ -94,25 +94,47 @@
 }
 
 .text-original {
-    color: #28a745;
+    color: #28a745 !important;
 }
 .text-low {
-    color: #8bc34a;
+    color: #8bc34a !important;
 }
 .text-medium {
-    color: #ffc107;
+    color: #ffc107 !important;
 }
 .text-likely {
-    color: #fd7e14;
+    color: #fd7e14 !important;
 }
 .text-high {
-    color: #ff5722;
+    color: #ff5722 !important;
 }
 .text-very-high {
-    color: #dc3545;
+    color: #dc3545 !important;
 }
 .text-default {
-    color: #7e8299;
+    color: #7e8299 !important;
+}
+
+.original-card-bg {
+    background-color: #28a745 !important;
+}
+.low-card-bg {
+    background-color: #8bc34a !important;
+}
+.medium-card-bg {
+    background-color: #ffc107 !important;
+}
+.likely-card-bg {
+    background-color: #fd7e14 !important;
+}
+.high-card-bg {
+    background-color: #ff5722 !important;
+}
+.very-high-card-bg {
+    background-color: #dc3545 !important;
+}
+.default-card-bg {
+    background-color: #7e8299 !important;
 }
 
 .original-hover:hover {
