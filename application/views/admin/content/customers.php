@@ -846,6 +846,47 @@
 	        });
 		}
 
+		function activate_subscription(el) {
+		    const customer_id = el.getAttribute('data-customerId');
+		    console.log(customer_id); 
+		    $.ajax({
+	            url: "<?php echo base_url().'admin/subscription/activate_now/'; ?>",
+	            type: 'POST',
+	            dataType: 'json',
+	            data: {
+	                customer_id: customer_id
+	            },
+	            success: function(response) {
+
+	                if (response.status == 'success') {
+	                	Swal.fire({
+							text: response.message,
+							icon: "success",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn btn-success"
+							}
+						}).then(function (result) {
+								if (result.isConfirmed) {
+									location.reload();
+								}
+							});
+	                } else {
+	                	Swal.fire({
+							text: response.message,
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn btn-danger"
+							}
+						});
+	                }
+	            }
+	        });
+		}
+
 		function copy_pass(el) {
 		    let password = el.getAttribute('data-password');
 

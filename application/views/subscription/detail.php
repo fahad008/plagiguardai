@@ -144,7 +144,7 @@
 								<!--end::Label-->
 								<!--begin::Col-->
 								<div class="col-lg-8">
-									<span class="badge badge-light-info fw-bolder me-auto px-4 py-3"><?php if(isset($customer_credits) && $customer_credits != ''){ echo intval($customer_credits); } ?></span>
+									<span class="badge badge-light-info fw-bolder me-auto px-4 py-3"><?php if(isset($customer_credits) && $customer_credits != ''){ echo intval($customer_credits); }else{ echo '0'; } ?></span>
 								</div>
 								<!--end::Col-->
 							</div>

@@ -211,6 +211,9 @@ class Subscription extends CI_Controller
             if (isset($data['invoice_info']) && is_array($data['invoice_info']) && !empty($data['invoice_info'])) {
 
 				$data['invoice_info']['per_credit'] = getPerCreditPrice(intval($data['invoice_info']['total']), intval($data['invoice_info']['credits']));
+                $data['invoice_info']['customer_subscription'] = $this->subscription_model->get_subscription_info($data['invoice_info']['subscription_id']);
+                $data['invoice_info']['customer_plan'] = $this->plan_model->get_plan($data['invoice_info']['plan_id']);
+                $data['invoice_info']['reseller_info'] = $this->customer_model->get_reseller($data['invoice_info']['reseller_id']);
 	            // echo "<pre>";print_r($data);die;
 				$this->template->load('subscription/invoice', 'subscription/invoice', $data);
 

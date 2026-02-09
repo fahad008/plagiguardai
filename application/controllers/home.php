@@ -10,6 +10,7 @@ class Home extends CI_Controller
 		parent::__construct();
         $this->load->model('Plan_Model', 'plan_model');
         $this->load->model('Admin_Model', 'admin_model');
+        $this->load->model('Reseller_Model', 'reseller_model');
 	}
 
 
@@ -84,7 +85,8 @@ class Home extends CI_Controller
 
         $data['monthly_plans'] = $this->plan_model->get_plans_by_duration('30');
         $data['yearly_plans'] = $this->plan_model->get_plans_by_duration('365');
-
+        $data['reseller_list'] = $this->reseller_model->get_reseller_list();
+        // echo "<pre>";print_r($data['reseller_list']);die;
         $this->template->load('home/pricing', 'home/pricing', $data);
     }
 

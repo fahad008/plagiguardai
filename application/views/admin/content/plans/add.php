@@ -99,7 +99,7 @@
 						<!--begin::Content-->
 						<div id="kt_add_plan_area" class="collapse show">
 							<!--begin::Form-->
-							<form id="kt_plan_form" class="form" action="<?php echo base_url().'admin/plans/add_plan/' ?>">
+							<form id="kt_plan_form" class="form" action="<?php echo base_url().'admin/plans/add_plan/'; ?>">
 								<!--begin::Card body-->
 								<div class="card-body border-top p-9">
 									<!--begin::Input group-->

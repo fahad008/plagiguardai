@@ -23,6 +23,20 @@ class Reseller_Model extends CI_Model{
 		return false;
 	}
 
+	public function get_reseller_list()
+	{
+		$query = $this->db->select('*');
+		$query = $this->db->from('admin');
+		$this->db->where('admin.role_id', 3);
+		$this->db->where('admin.status', 1);
+		$this->db->where('deleted_at IS NULL', null, false);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->result_array();
+		}
+		return false;
+	}
+
 	public function get_customers_by_reseller_datatable($reseller_id, $start, $length)
 	{
 	    $this->db->select('customer.*');

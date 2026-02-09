@@ -100,7 +100,7 @@
 												<!--begin::Info-->
 												<div class="ms-4 text-danger">
 													<h3 class="fs-5 fw-bolder text-danger mb-2">Your credit balance is 0.</h3>
-													<span class="text-800 fw-bold">To continue using the service, please click <a href="<?php echo base_url().'home/pricing/'; ?>">here</a> to contact your reseller and recharge your account.</span>
+													<span class="text-800 fw-bold">To continue using the service, please click <a href="<?php echo base_url().'home/pricing/'; ?>">here</a> to contact our team and recharge your account.</span>
 												</div>
 												<!--end::Info-->
 											</div>

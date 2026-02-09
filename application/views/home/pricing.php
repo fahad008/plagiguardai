@@ -236,7 +236,11 @@
 															<!--end::Item-->
 														</div>
 														<!--end::Features-->
-														<?php if (!$this->session->userdata('logged_in_customer')) { ?>
+														<?php if ($this->session->userdata('logged_in_customer')) { ?>
+														<!--begin::Select-->
+														<a href="Javascript: void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users" class="btn btn-sm btn-primary">Buy Credits</a>
+														<!--end::Select-->
+														<?php }else{ ?>
 														<!--begin::Select-->
 														<a href="<?php echo base_url(); ?>" class="btn btn-sm btn-primary">Join Us</a>
 														<!--end::Select-->
@@ -400,7 +404,11 @@
 															<!--end::Item-->
 														</div>
 														<!--end::Features-->
-														<?php if (!$this->session->userdata('logged_in_customer')) { ?>
+														<?php if ($this->session->userdata('logged_in_customer')) { ?>
+														<!--begin::Select-->
+														<a href="Javascript: void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users" class="btn btn-sm btn-primary">Buy Credits</a>
+														<!--end::Select-->
+														<?php }else{ ?>
 														<!--begin::Select-->
 														<a href="<?php echo base_url(); ?>" class="btn btn-sm btn-primary">Join Us</a>
 														<!--end::Select-->
@@ -422,6 +430,129 @@
 							<!--end::Body-->
 						</div>
 						<!--end::Home card-->
+						<!--begin::Modal - View Users-->
+							<div class="modal fade" id="kt_modal_view_users" tabindex="-1" aria-hidden="true">
+								<!--begin::Modal dialog-->
+								<div class="modal-dialog mw-650px">
+									<!--begin::Modal content-->
+									<div class="modal-content">
+										<!--begin::Modal header-->
+										<div class="modal-header pb-0 border-0 justify-content-end">
+											<!--begin::Close-->
+											<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+												<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+												<span class="svg-icon svg-icon-1">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+														<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+											</div>
+											<!--end::Close-->
+										</div>
+										<!--begin::Modal header-->
+										<!--begin::Modal body-->
+										<div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+											<!--begin::Heading-->
+											<div class="text-center mb-13">
+												<!--begin::Title-->
+												<h2 class="mb-3">Need More Credits?</h2>
+												<!--end::Title-->
+												<!--begin::Description-->
+												<div class="text-muted fw-bold fs-5">Get in touch with our team to quickly recharge your account.</div>
+												<!--end::Description-->
+											</div>
+											<!--end::Heading-->
+											<!--begin::Users-->
+											<div class="mb-15">
+												<!--begin::List-->
+												<div class="mh-375px scroll-y me-n7 pe-7">
+													<?php if (isset($reseller_list) && !empty($reseller_list)) {
+														foreach ($reseller_list as $key => $reseller) { ?>
+													<!--begin::User-->
+													<div class="d-flex flex-stack py-5 border-bottom border-gray-300 border-bottom-dashed">
+														<!--begin::Details-->
+														<div class="d-flex align-items-center">
+															<?php $avatar = ''; if ($reseller['profile_picture'] != '') {
+													            $avatar_path = FCPATH . 'uploads/avatar/admin/'.$reseller['profile_picture'];
+													            if (file_exists($avatar_path)) {
+													                $avatar = base_url() . 'uploads/avatar/admin/'.$reseller['profile_picture'];
+													            }
+													        } ?>
+													        <?php if ($avatar != '') { ?>
+															<!--begin::Avatar-->
+															<div class="symbol symbol-50px symbol-circle">
+																<img alt="<?php echo $reseller['full_name']; ?>" src="<?php echo $avatar; ?>" />
+															</div>
+															<!--end::Avatar-->
+															<?php }else{ ?>
+															<!--begin::Avatar-->
+															<div class="symbol symbol-50px symbol-circle">
+																<span class="symbol-label bg-light-success text-success fw-bold"><?php echo $first = strtoupper(substr($reseller['first_name'], 0, 1)); ?></span>
+															</div>
+															<!--end::Avatar-->
+															<?php } ?>
+															<!--begin::Details-->
+															<div class="ms-6">
+																<!--begin::Name-->
+																<a href="Javascript: void(0)" class="d-flex align-items-center fs-5 fw-bolder text-dark text-hover-primary"><?php echo $reseller['full_name']; ?><span class="badge badge-light fs-8 fw-bold ms-2">Corporate Finance</span></a>
+																<!--end::Name-->
+																<!--begin::Email-->
+																<div class="fw-bold text-muted">
+																	<?php echo $reseller['email']; ?>
+																	
+																</div>
+																<?php if ($reseller['contact_number'] != '') { ?>
+																<div class="fw-bold text-muted">
+																	<?php echo $reseller['contact_number']; ?>
+																		
+																</div>
+																<?php } ?>
+																<!--end::Email-->
+															</div>
+															<!--end::Details-->
+														</div>
+														<!--end::Details-->
+														<!--begin::Stats-->
+														<div class="d-flex">
+															<!--begin::Sales-->
+															<div class="text-end d-grid">
+																<button type="button" onclick="copy_email(this)" data-email="<?php echo $reseller['email']; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm m-1">
+																		<span class="svg-icon svg-icon-3">
+																			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path opacity="0.5" d="M18 2H9C7.34315 2 6 3.34315 6 5H8C8 4.44772 8.44772 4 9 4H18C18.5523 4 19 4.44772 19 5V16C19 16.5523 18.5523 17 18 17V19C19.6569 19 21 17.6569 21 16V5C21 3.34315 19.6569 2 18 2Z" fill="black"></path>
+																			<path fill-rule="evenodd" clip-rule="evenodd" d="M14.7857 7.125H6.21429C5.62255 7.125 5.14286 7.6007 5.14286 8.1875V18.8125C5.14286 19.3993 5.62255 19.875 6.21429 19.875H14.7857C15.3774 19.875 15.8571 19.3993 15.8571 18.8125V8.1875C15.8571 7.6007 15.3774 7.125 14.7857 7.125ZM6.21429 5C4.43908 5 3 6.42709 3 8.1875V18.8125C3 20.5729 4.43909 22 6.21429 22H14.7857C16.5609 22 18 20.5729 18 18.8125V8.1875C18 6.42709 16.5609 5 14.7857 5H6.21429Z" fill="black"></path>
+																			</svg>
+																		</span>
+																	</button>
+																	<a href="javascript: void(0)" onclick="copy_phone(this)" data-phone="<?php echo $reseller['contact_number']; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm ms-1">
+																		<span class="svg-icon svg-icon-3">
+																			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path opacity="0.5" d="M18 2H9C7.34315 2 6 3.34315 6 5H8C8 4.44772 8.44772 4 9 4H18C18.5523 4 19 4.44772 19 5V16C19 16.5523 18.5523 17 18 17V19C19.6569 19 21 17.6569 21 16V5C21 3.34315 19.6569 2 18 2Z" fill="black"></path>
+																			<path fill-rule="evenodd" clip-rule="evenodd" d="M14.7857 7.125H6.21429C5.62255 7.125 5.14286 7.6007 5.14286 8.1875V18.8125C5.14286 19.3993 5.62255 19.875 6.21429 19.875H14.7857C15.3774 19.875 15.8571 19.3993 15.8571 18.8125V8.1875C15.8571 7.6007 15.3774 7.125 14.7857 7.125ZM6.21429 5C4.43908 5 3 6.42709 3 8.1875V18.8125C3 20.5729 4.43909 22 6.21429 22H14.7857C16.5609 22 18 20.5729 18 18.8125V8.1875C18 6.42709 16.5609 5 14.7857 5H6.21429Z" fill="black"></path>
+																			</svg>
+																		</span>
+																	</a>
+															</div>
+															<!--end::Sales-->
+														</div>
+														<!--end::Stats-->
+													</div>
+													<!--end::User-->
+													<?php } } ?>
+												</div>
+												<!--end::List-->
+											</div>
+											<!--end::Users-->
+										</div>
+										<!--end::Modal body-->
+									</div>
+									<!--end::Modal content-->
+								</div>
+								<!--end::Modal dialog-->
+							</div>
+							<!--end::Modal - View Users-->
 					</div>
 					<!--end::Container-->
 				</div>
@@ -455,6 +586,61 @@
 	<script src="assets/plugins/global/plugins.bundle.js"></script>
 	<script src="assets/js/scripts.bundle.js"></script>
 	<script src="assets/js/custom/pages/company/pricing.js"></script>
+	<script>
+
+		function copy_email(el) {
+		    const email = el.dataset.email;
+
+		    if (!email) return;
+
+		    // Modern browsers
+		    if (navigator.clipboard && window.isSecureContext) {
+		        navigator.clipboard.writeText(email).then(() => {
+		            // alert('Password copied!');
+		        }).catch(err => {
+		            console.error('Copy failed:', err);
+		        });
+		    } 
+		    // Fallback for older browsers
+		    else {
+		        const tempInput = document.createElement("input");
+		        tempInput.value = email;
+		        document.body.appendChild(tempInput);
+		        tempInput.select();
+		        tempInput.setSelectionRange(0, 99999);
+		        document.execCommand("copy");
+		        document.body.removeChild(tempInput);
+		        // alert('Password copied!');
+		    }
+		}
+
+
+		function copy_phone(el) {
+		    const phone = el.dataset.phone;
+
+		    if (!phone) return;
+
+		    // Modern browsers
+		    if (navigator.clipboard && window.isSecureContext) {
+		        navigator.clipboard.writeText(phone).then(() => {
+		            // alert('Password copied!');
+		        }).catch(err => {
+		            console.error('Copy failed:', err);
+		        });
+		    } 
+		    // Fallback for older browsers
+		    else {
+		        const tempInput = document.createElement("input");
+		        tempInput.value = phone;
+		        document.body.appendChild(tempInput);
+		        tempInput.select();
+		        tempInput.setSelectionRange(0, 99999);
+		        document.execCommand("copy");
+		        document.body.removeChild(tempInput);
+		        // alert('Password copied!');
+		    }
+		}
+	</script>
 </body>
 <!--end::Body-->
 </html>

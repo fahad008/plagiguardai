@@ -103,7 +103,7 @@
 										<!--begin::Info-->
 										<div class="ms-4 text-danger">
 											<h3 class="fs-5 fw-bolder text-danger mb-2">Your credit balance is 0.</h3>
-											<span class="text-800 fw-bold">To continue using the service, please click <a href="<?php echo base_url().'home/pricing/'; ?>">here</a> to contact your reseller and recharge your account.</span>
+											<span class="text-800 fw-bold">To continue using the service, please click <a href="<?php echo base_url().'home/pricing/'; ?>">here</a> to contact our team and recharge your account.</span>
 										</div>
 										<!--end::Info-->
 									</div>
@@ -459,6 +459,7 @@
 			var btnStatus = 'paused';
 			var requiredCredits = 0;
 			var wordCount = 0;
+
 			$('#scan-btn').on('click',function(event){
 				// console.log(btnStatus);
 				if (btnStatus == 'paused') {
@@ -479,17 +480,11 @@
 		      	}).then(function(response){
 		      		console.log(response);
 			      	if (response.status == 'success') {
+			      		var datatable = KTscansList.getDatatable();
+			            if (datatable) {
+			                datatable.ajax.reload(null, false); // refresh without resetting page
+			            }
 			      		loadAIResults(response.scan_id);
-			   //    		Swal.fire({
-						//     html: response.message,
-						//     icon: "success",
-						//     buttonsStyling: false,
-						//     confirmButtonText: "ok",
-						//     customClass: {
-						//         confirmButton: "btn btn-success"
-						//     }
-						// });
-
 			      	}else{
 			      		Swal.fire({
 						    html: response.message,
@@ -947,44 +942,6 @@
 			    }
 			});
 		}
-
-		// function delete_scan(el){
-		// 	// showPageLoader();
-		// 	const scan_id = el.dataset.id;
-		// 	$.ajax({
-		//         	url : "<?php echo base_url().'scan/delete_scan/'; ?>",
-		// 	        method : 'POST' ,
-		// 	        dataType : 'json',
-		// 	        data: { scan_id: scan_id }
-		//       	}).then(function(response){
-		//       		console.log(response);
-		// 	      	if (response.status == 'success') {
-		// 	      		// loadScanOverview(0);
-		// 	      		Swal.fire({
-		// 				    html: response.message,
-		// 				    icon: "success",
-		// 				    buttonsStyling: false,
-		// 				    confirmButtonText: "ok",
-		// 				    customClass: {
-		// 				        confirmButton: "btn btn-success"
-		// 				    }
-		// 				});
-
-		// 	      	}else{
-		// 	      		Swal.fire({
-		// 				    html: response.message,
-		// 				    icon: "error",
-		// 				    buttonsStyling: false,
-		// 				    confirmButtonText: "Continue",
-		// 				    customClass: {
-		// 				        confirmButton: "btn btn-danger"
-		// 				    }
-		// 				});
-
-		// 	      	}
-		// 	      	hidePageLoader();
-		//       	});
-		// }
 
 		function show_title_poppup(el){
 			const id = el.dataset.id;

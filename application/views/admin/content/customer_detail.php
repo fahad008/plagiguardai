@@ -367,30 +367,85 @@
 								<h2 class="fw-bolder">Credit Balance</h2>
 							</div>
 							<!--end::Card title-->
-							<?php if (isset($reseller_info) && !empty($reseller_info)) { 
-								if($reseller_info->id != ''){ ?>
 							<!--begin::Card toolbar-->
 							<div class="card-toolbar">
-								<!--begin::Filter-->
-								<button type="button" class="btn btn-sm btn-flex btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_reseller_detail">
-								<!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
-								<span class="svg-icon svg-icon-3">
-									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="black"/>
-									<rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="black"/>
-									</svg>
-								</span>
-								<!--end::Svg Icon-->Reseller</button>
-								<!--end::Filter-->
+								<?php if (isset($reseller_info) && !empty($reseller_info)) { 
+									if($reseller_info->id != ''){ ?>
+								
+									<!--begin::Filter-->
+									<button type="button" class="btn btn-sm btn-flex btn-light-primary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_reseller_detail">
+									<!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+									<span class="svg-icon svg-icon-3">
+										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="black"/>
+										<rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="black"/>
+										</svg>
+									</span>
+									<!--end::Svg Icon-->Reseller</button>
+									<!--end::Filter-->
+							<?php } } ?>
 							</div>
 							<!--end::Card toolbar-->
-						<?php } } ?>
 						</div>
 						<!--end::Card header-->
 						<!--begin::Card body-->
 						<div class="card-body pt-0">
 							<div class="fw-bolder fs-2"><?php echo $customer_credits; ?>
 							<div class="fs-7 fw-normal text-muted">The following value reflects the customer’s current available credits</div></div>
+						</div>
+						<!--end::Card body-->
+					</div>
+					<!--end::Card-->
+					<!--begin::Card-->
+					<div class="card pt-4 mb-6 mb-xl-9">
+						<!--begin::Card header-->
+						<div class="card-header border-0">
+							<!--begin::Card title-->
+							<div class="card-title">
+								<h2 class="fw-bolder">Add Topup</h2>
+							</div>
+							<!--end::Card title-->
+						</div>
+						<!--end::Card header-->
+						<!--begin::Card body-->
+						<div class="card-body pt-0">
+							<form class="form fv-plugins-bootstrap5 fv-plugins-framework" action="<?php echo base_url().'admin/subscription/add_topup'; ?>" id="topupform">
+								<input type="hidden" name="customer_id" value="<?php if(isset($customer_info) && !empty($customer_info)){ echo $customer_info['id']; } ?>">
+								<input type="hidden" name="subscription_id" value="<?php if(isset($customer_subscription) && !empty($customer_subscription)){ echo $customer_subscription['id']; } ?>">
+								<!--begin::Input group-->
+								<div class="row mb-5">
+									<!--begin::Col-->
+									<div class="col-md-6 fv-row fv-plugins-icon-container">
+										<!--begin::Label-->
+										<label class="required fs-5 fw-bold mb-2">credits</label>
+										<!--end::Label-->
+										<!--begin::Input-->
+										<input type="number" name="credits" class="form-control form-control-lg form-control-solid" min="1" placeholder="Enter credits here" value="" onkeydown="return event.key !== '-' &amp;&amp; event.key !== 'e' &amp;&amp; event.key !== 'E' &amp;&amp; event.key !== '.'" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.replace(/^0+/, '')">
+										<!--end::Input-->
+									<div class="fv-plugins-message-container invalid-feedback"></div></div>
+									<!--end::Col-->
+									<!--begin::Col-->
+									<div class="col-md-6 fv-row fv-plugins-icon-container">
+										<!--end::Label-->
+										<label class="required fs-5 fw-bold mb-2">expire in</label>
+										<!--end::Label-->
+										<!--end::Input-->
+										<input type="number" name="days" class="form-control form-control-lg form-control-solid" min="1" max="365" placeholder="Enter days here" value="" onkeydown="return event.key !== '-' &amp;&amp; event.key !== 'e' &amp;&amp; event.key !== 'E' &amp;&amp; event.key !== '.'" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.replace(/^0+/, '')">
+										<!--end::Input-->
+									<div class="fv-plugins-message-container invalid-feedback"></div></div>
+									<!--end::Col-->
+								</div>
+								<!--end::Input group-->
+								<button type="button" class="btn btn-sm btn-flex btn-primary" id="kt_topup_submit" style="float: right !important;">
+									<!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+									<span class="svg-icon svg-icon-3">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+											<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+										</svg>
+									</span>
+									<!--end::Svg Icon-->Add</button>
+							</form>
 						</div>
 						<!--end::Card body-->
 					</div>
@@ -489,7 +544,7 @@
 												<div class="text-gray-600"><?php if(isset($reseller_info) && !empty($reseller_info) && $reseller_info->contact_number != ''){ echo $reseller_info->contact_number; }else{ echo '-----------'; } ?></div>
 
 												<div class="fw-bolder mt-5">Country</div>
-												<div class="text-gray-600"><?php if(isset($reseller_country) && $reseller_country != ''){ echo $reseller_country; }else{ echo '-----------'; } ?></div>
+												<div class="text-gray-600"><?php if(isset($reseller_country) && !empty($reseller_country)){ echo $reseller_country['name']; }else{ echo '-----------'; } ?></div>
 												<!--begin::Details item-->
 												<!--begin::Details item-->
 												<div class="fw-bolder mt-5">Email  Status</div>

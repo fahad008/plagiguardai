@@ -60,26 +60,6 @@ class Customers extends Admin_Controller
 	    $plan_id = $this->input->post('plan_id') ?? '';
 
 	    $list = $this->customer_model->get_customers_datatable($start, $length, $search, $month, $plan_id);
-	    if (isset($list) && !empty($list)) {
-	    	foreach ($list as $key => $customer) {
-	    		if (!empty($customer->plan_id)) {
-
-		            $plan = $this->db->get_where('plans', ['id' => $customer->plan_id])->row();
-		            
-		            if ($plan) {    
-		                $customer->plan_title = $plan->title;
-		                $customer->plan_color = $plan->color;
-		            } else {
-		                $customer->plan_title = 'Guest';
-		                $customer->plan_color = 'Guest';
-		            }
-		        } else {
-		            $customer->plan_title = 'Guest';
-		            $customer->plan_color = 'Guest';
-		        }
-	    	}
-	    }
-	    // die;
      	// echo "<pre>";print_r($list);die;
 	    $total = $this->customer_model->count_all();
 	    // echo "<pre>";print_r($total);die;
@@ -88,6 +68,53 @@ class Customers extends Admin_Controller
 
 	    $data = [];
 	    foreach ($list as $customer) {
+
+	    	$customer_credits = 0;
+	    	$plan_title = 'Guest';
+	    	$plan_color = 'Guest';
+	    	$plan = '';
+			$sub_state = $this->subscription_model->get_subscription_status($customer->id);
+
+			if ($sub_state == 'active') {
+
+				$plan_info = $this->db->get_where('plans', ['id' => $customer->plan_id])->row();
+				$plan_title = $plan_info->title;
+				$plan_color = $plan_info->color;
+
+				$plan = '<div class="d-flex align-items-center">
+	    					<div id="bage-'.$customer->id.'" class="text-center me-3"><span class="badge badge-light-'.$plan_color.' p-3">'.$plan_title.'</span></div>
+							<div class="symbol symbol-45px">
+								<a href="javascript: void(0)" onclick="fetch_reseller(this)" data-id="'.$customer->id.'" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+									<span class="svg-icon svg-icon-3">
+										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="black"/>
+										<rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="black"/>
+										</svg>
+									</span>
+								</a>
+							</div>
+						</div>';
+
+			}else if($sub_state == 'inactive'){
+
+				if (has_access(['super_admin'])) {
+		    		$plan = '<div id="bage-'.$customer->id.'" class="d-flex align-items-center"><a href="javascript: void(0)"  onclick="activate_subscription(this)" class="btn btn-primary er fs-7 px-3 py-2" data-customerId="'.$customer->id.'" data-customerName="'.$customer->full_name.'">Activate Now</a></div>';
+		    	}else{
+		    		$plan = '<div id="bage-'.$customer->id.'" class="d-flex align-items-center"><a href="javascript: void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_access_denied" class="btn btn-primary er fs-7 px-3 py-2">Activate Now</a></div>';
+		    	}
+
+			}else{
+
+				if (has_access(['super_admin'])) {
+		    		$plan = '<div id="bage-'.$customer->id.'" class="d-flex align-items-center"><a href="#" class="btn btn-primary er fs-7 px-3 py-2" data-bs-toggle="modal" data-bs-customerId="'.$customer->id.'" data-bs-customerName="'.$customer->full_name.'" data-bs-target="#kt_modal_offer_a_deal">Create Subscription</a></div>';
+		    	}else{
+		    		$plan = '<div id="bage-'.$customer->id.'" class="d-flex align-items-center"><a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_access_denied" class="btn btn-primary er fs-7 px-3 py-2">Create Subscription</a></div>';
+		    	}
+
+			}
+			
+
+
 	    	$customer_encoded_id = rawurlencode($this->url_encrypt->encode_id($customer->id));
 	    	$delete_action = base_url().'admin/customers/delete';
 	    	if ($customer->creator_id) {
@@ -140,27 +167,7 @@ class Customers extends Admin_Controller
 		                    </a>
 		                </div>';
 	    	}
-	    	if($customer->plan_color == 'Guest'){
-	    		if (has_access(['super_admin'])) {
-		    		$plan = '<div id="bage-'.$customer->id.'" class="d-flex align-items-center"><a href="#" class="btn btn-primary er fs-7 px-3 py-2" data-bs-toggle="modal" data-bs-customerId="'.$customer->id.'" data-bs-customerName="'.$customer->full_name.'" data-bs-target="#kt_modal_offer_a_deal">Create Subscription</a></div>';
-		    	}else{
-		    		$plan = '<div id="bage-'.$customer->id.'" class="d-flex align-items-center"><a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_access_denied" class="btn btn-primary er fs-7 px-3 py-2">Create Subscription</a></div>';
-		    	}
-	    	}else {
-	    		$plan = '<div class="d-flex align-items-center">
-	    					<div id="bage-'.$customer->id.'" class="text-center me-3"><span class="badge badge-light-'.$customer->plan_color.' p-3">'.$customer->plan_title.'</span></div>
-							<div class="symbol symbol-45px">
-								<a href="javascript: void(0)" onclick="fetch_reseller(this)" data-id="'.$customer->id.'" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-									<span class="svg-icon svg-icon-3">
-										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="black"/>
-										<rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="black"/>
-										</svg>
-									</span>
-								</a>
-							</div>
-						</div>';
-	    	}
+
 
 	    	if ($customer->contact_number) {
 	    		$phone = $customer->contact_number;
@@ -306,7 +313,8 @@ class Customers extends Admin_Controller
 			"1" => 'assets/js/custom/apps/customers/list/invoices.js',
 			"2" => 'assets/js/custom/apps/customers/view/payment-table.js',
 			"3" => 'assets/js/custom/apps/customers/update.js',
-			"4" => 'assets/js/custom/widgets.js',
+			"4" => 'assets/js/custom/admin/topup.js',
+			"5" => 'assets/js/custom/widgets.js',
 		);
 		
 		$admin_id = $this->session->userdata('admin_id');
@@ -349,12 +357,12 @@ class Customers extends Admin_Controller
 		        	$data['customer_plan'] = $this->plan_model->get_plan($data['customer_subscription']['plan_id']);
 		        }
 		        $data['reseller_avatar'] = 'assets/media/avatars/blank.png';
-		        $data['reseller_country'] = '-----------';
+		        $data['reseller_country'] = [];
 	        	$data['reseller_info'] = $this->customer_model->get_reseller_by_customer_id($customer_id);
-		        if (is_array($data['reseller_info']) && !empty($data['reseller_info']) && $data['reseller_info']->profile_picture != '') {
-		            $avatar_path = FCPATH . 'uploads/avatar/customer_'.(int)$customer_id.'/'.$data['reseller_info']->profile_picture;
+		        if (!empty($data['reseller_info']) && $data['reseller_info']->profile_picture != '') {
+		            $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['reseller_info']->profile_picture;
 		            if (file_exists($avatar_path)) {
-		                $data['reseller_avatar'] = base_url() . 'uploads/avatar/customer_'.(int)$customer_id.'/'.$data['reseller_info']->profile_picture;
+		                $data['reseller_avatar'] = base_url() . 'uploads/avatar/admin/'.$data['reseller_info']->profile_picture;
 		            }
 		            $data['reseller_country'] = getCountryByCode($data['reseller_info']->country);
 		        }

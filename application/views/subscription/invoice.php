@@ -176,7 +176,7 @@
 															<tbody>
 																<tr class="fw-bolder text-gray-700 fs-5 text-end">
 																	<td class="d-flex align-items-center pt-6">
-																	<i class="fa fa-genderless text-<?php if (isset($customer_plan) && !empty($customer_plan)) { echo $customer_plan['color']; } ?> fs-2 me-2"></i><?php if (isset($customer_plan) && !empty($customer_plan)) { echo $customer_plan['title']; } ?></td>
+																	<i class="fa fa-genderless text-<?php if (isset($invoice_info['customer_plan']) && !empty($invoice_info['customer_plan'])) { echo $invoice_info['customer_plan']['color']; } ?> fs-2 me-2"></i><?php if (isset($invoice_info['customer_plan']) && !empty($invoice_info['customer_plan'])) { echo $invoice_info['customer_plan']['title']; } ?></td>
 																	<td class="pt-6"><?php echo intval($invoice_info['credits']); ?></td>
 																	<td class="pt-6"><?php echo intval($invoice_info['per_credit']); ?></td>
 																	<td class="pt-6 text-dark fw-boldest"><?php echo intval($invoice_info['total']); ?>PKR</td>
@@ -270,49 +270,49 @@
 											<!--begin::Item-->
 											<div class="mb-6">
 												<div class="fw-bold text-gray-600 fs-7">Start Date</div>
-												<div class="fw-bolder fs-6 text-gray-800"><?php echo $start = date('d M Y', strtotime($customer_subscription['start_date'])); ?></div>
+												<div class="fw-bolder fs-6 text-gray-800"><?php echo $start = date('d M Y', strtotime($invoice_info['customer_subscription']['start_date'])); ?></div>
 											</div>
 											<!--end::Item-->
 											<!--begin::Item-->
 											<div class="mb-6">
 												<div class="fw-bold text-gray-600 fs-7">Expiry Date</div>
-												<div class="fw-bolder fs-6 text-gray-800"><?php echo $created = date('d M Y', strtotime($customer_subscription['end_date'])); ?></div>
+												<div class="fw-bolder fs-6 text-gray-800"><?php echo $created = date('d M Y', strtotime($invoice_info['customer_subscription']['end_date'])); ?></div>
 											</div>
 											<!--end::Item-->
 											<!--begin::Item-->
 											<div class="mb-6">
 												<div class="fw-bold text-gray-600 fs-7">Status</div>
-												<?php if ($customer_subscription['status'] == 'active') { ?>
-													<span class="badge badge-success"><?php echo ucfirst($customer_subscription['status']); ?></span>
-												<?php }else if ($customer_subscription['status'] == 'inactive') { ?>
-													<span class="badge badge-warning"><?php echo ucfirst($customer_subscription['status']); ?></span>
+												<?php if ($invoice_info['customer_subscription']['status'] == 'active') { ?>
+													<span class="badge badge-success"><?php echo ucfirst($invoice_info['customer_subscription']['status']); ?></span>
+												<?php }else if ($invoice_info['customer_subscription']['status'] == 'inactive') { ?>
+													<span class="badge badge-warning"><?php echo ucfirst($invoice_info['customer_subscription']['status']); ?></span>
 												<?php }else{ ?>
-													<span class="badge badge-danger"><?php echo ucfirst($customer_subscription['status']); ?></span>
+													<span class="badge badge-danger"><?php echo ucfirst($invoice_info['customer_subscription']['status']); ?></span>
 												<?php } ?>
 											</div>
 											<!--end::Item-->
-											<?php if (isset($reseller_info) && !empty($reseller_info)) { ?>
+											<?php if (isset($invoice_info['reseller_info']) && !empty($invoice_info['reseller_info'])) { ?>
 											<!--begin::Title-->
 											<h6 class="mb-8 fw-boldest text-gray-600 text-hover-primary">RESELLER DETAILS</h6>
 											<!--end::Title-->
 											<!--begin::Item-->
 											<div class="mb-6">
 												<div class="fw-bold text-gray-600 fs-7">Name</div>
-													<div class="fw-bolder fs-6 text-gray-800"><?php echo ucfirst($reseller_info->full_name); ?>
+													<div class="fw-bolder fs-6 text-gray-800"><?php echo ucfirst($invoice_info['reseller_info']['full_name']); ?>
 												</div>
 											</div>
 											<!--end::Item-->
 											<!--begin::Item-->
 											<div class="mb-6">
 												<div class="fw-bold text-gray-600 fs-7">Email:</div>
-												<div class="fw-bolder text-gray-800 fs-6"><?php echo $reseller_info->email; ?></div>
+												<div class="fw-bolder text-gray-800 fs-6"><?php echo $invoice_info['reseller_info']['email']; ?></div>
 											</div>
 											<!--end::Item-->
 											<!--begin::Item-->
 											<div class="m-0">
 												<div class="fw-bold text-gray-600 fs-7">Phone:</div>
-												<div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center"><?php if ($reseller_info->contact_number) {
-													echo $reseller_info->contact_number; }else{ echo '-----------'; } ?></div>
+												<div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center"><?php if ($invoice_info['reseller_info']['contact_number'] != '') {
+													echo $invoice_info['reseller_info']['contact_number']; }else{ echo '-----------'; } ?></div>
 											</div>
 											<!--end::Item-->
 											<?php } ?>

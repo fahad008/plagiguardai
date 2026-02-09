@@ -43,20 +43,12 @@ class Invoices extends Admin_Controller
 		if (isset($data['invoice_info']) && is_array($data['invoice_info']) && !empty($data['invoice_info'])) {
 
 			$data['invoice_info']['per_credit'] = getPerCreditPrice(intval($data['invoice_info']['total']), intval($data['invoice_info']['credits']));
-			$data['customer_subscription'] = '';
-			$data['customer_plan'] = '';
-			$data['reseller_info'] = '';
 
 			$data['customer_info'] = $this->customer_model->get_customer($data['invoice_info']['customer_id']);
 
-			if($data['customer_info']['plan_type'] != 'Guest'){
-		        $data['customer_subscription'] = $this->subscription_model->get_customer_subscription($data['invoice_info']['customer_id']);
-		        if (isset($data['customer_subscription']) && !empty($data['customer_subscription'])) {
-		        	$data['customer_plan'] = $this->plan_model->get_plan($data['customer_subscription']['plan_id']);
-		        }
-	        	$data['reseller_info'] = $this->customer_model->get_reseller_by_customer_id($data['invoice_info']['customer_id']);
-		        
-	        }
+			$data['customer_subscription'] = $this->subscription_model->get_subscription_info($data['invoice_info']['subscription_id']);
+	       	$data['customer_plan'] = $this->plan_model->get_plan($data['invoice_info']['plan_id']);
+        	$data['reseller_info'] = $this->customer_model->get_reseller_by_customer_id($data['invoice_info']['customer_id']);
 
 	        // echo "<pre>";print_r($data);die;
 

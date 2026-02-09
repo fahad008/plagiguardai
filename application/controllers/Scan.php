@@ -9,12 +9,7 @@ class scan extends CI_Controller
 	{
 		parent::__construct();
         if (!$this->session->userdata('logged_in_customer')) {
-            $response =  array(
-              "status" => 'error',
-              "message" => 'Your session has expired due to inactivity. Please sign in again to proceed.',
-              "redirect" => base_url().'login/',
-            );
-            echo json_encode($response);
+            redirect(base_url().'login/');
         }
         $this->load->model('Subscription_Model', 'subscription_model');
         $this->load->model('Customer_Model', 'customer_model');
@@ -105,20 +100,21 @@ class scan extends CI_Controller
                 exit();
             }
 
-            // upadte credits
-            $remaining_credits = $customer_credits - $this->input->post('estimated_credits');
-            $credits = array(
-                'credits' => $remaining_credits,
-                'updated_at' => date('y-m-d H:m:s'),
-            );
-            $this->subscription_model->update_customer_credits($customer_id, $credits);
+            // new way to update credits
+            $this->subscription_model->deduct($customer_id, $estimated_credits);
 
-            // $scan_results = $result['data']['results'];
+            // old way to update credits
+            // $remaining_credits = $customer_credits - $this->input->post('estimated_credits');
+            // $credits = array(
+            //     'credits' => $remaining_credits,
+            //     'updated_at' => date('y-m-d H:m:s'),
+            // );
+            // $this->subscription_model->update_customer_credits($customer_id, $credits);
+
             $properties = $result['data']['results']['properties'];
             $credits = $result['data']['results']['credits'];
             $ai = $result['data']['results']['ai'];
             $plagiarism = $result['data']['results']['plagiarism'];
-            // echo "<pre>";print_r($scan_results);echo "</pre>";
 
             // save formated file name
             $formated_file = save_formatted_content($customer_id, $properties['privateID'], $properties['formattedContent']);

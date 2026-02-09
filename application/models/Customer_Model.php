@@ -23,6 +23,23 @@ class Customer_Model extends CI_Model{
 		return false;
 	}
 
+	public function get_reseller($id='')
+	{
+		if ($id) {
+			$query = $this->db->select('*');
+			$query = $this->db->from('admin');
+			$this->db->where('admin.id', $id);
+			$this->db->where('role_id', '3');
+			$this->db->where('deleted_at IS NULL', null, false);
+			$query = $this->db->get();
+	        // echo $this->db->last_query(); die;
+			if($query->num_rows() > 0){
+				return $query->row_array();
+			}
+		}
+		return false;
+	}
+
 	public function update_member($id,$data)
 	{
 		if (is_array($data) && !empty($data)) {
