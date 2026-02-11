@@ -465,6 +465,24 @@ class scan extends CI_Controller
         }
     }
 
+    public function get_scan_report_test($scan_id){
+
+            echo $scan_id = $this->url_encrypt->encode_id($scan_id);die;
+            $scan = $this->scan_model->get_scans($scan_id);
+            // echo "<pre>";print_r($scan);die;
+            if (isset($scan) && is_array($scan) && !empty($scan)) {
+
+                $data = getBlackBoxData($scan);
+
+            }else{
+
+                $data = getDefaultBlackBoxData();
+
+            }
+
+            echo "<pre>";print_r($data);die;
+    }
+
     public function get_scan_overview($rowno=0){
 
         // if ($this->input->post()) {
@@ -951,9 +969,12 @@ class scan extends CI_Controller
             $data['scan_file'] = '';
             $data['scan_info'] = $this->scan_model->get_scans($scan_id);
             if (isset($data['scan_info']) && !empty($data['scan_info'])) {
-                $data['scan_score'] = $scan_obj = getScanOverviewData($data['scan_info']);
+                $data['scan_report'] = getBlackBoxData($data['scan_info']);
+                // $data['scan_score'] = $scan_obj = getScanOverviewData($data['scan_info']);
                 $data['scan_file'] = $this->scan_model->get_scan_file($data['scan_info']['customer_uploads_id']);
+                // $data['plagiarism_sources'] = formatPhraseSimilarityResults(json_decode($data['scan_info']['plagiarism_score'], true));
             }
+
             // echo "<pre>";print_r($data);die;
             $view_to_pass = $this->load->view('chunks/scan_report',$data,TRUE);
             $response =  array(

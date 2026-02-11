@@ -1,13 +1,12 @@
 <?php if (isset($scan_info) && !empty($scan_info)) { ?>
 	<div class="">
 		<input type="hidden" value="<?php echo $scan_info['title']; ?>" id="scan_info_title">
-		<?php if (isset($scan_score) && !empty($scan_score)) {?>
 		<div class="row g-5 g-xl-8">
 			<div class="col-xl-4">
 				<?php 
-					$three_card_bg = substr($scan_score['three_do_color'], strrpos($scan_score['three_do_color'], '-') + 1).'-card-bg'; 
-					$two_card_bg = substr($scan_score['two_do_color'], strrpos($scan_score['two_do_color'], '-') + 1).'-card-bg'; 
-					$one_card_bg = substr($scan_score['one_do_color'], strrpos($scan_score['one_do_color'], '-') + 1).'-card-bg'; 
+					$three_card_bg = substr($scan_report['three_do_color'], strrpos($scan_report['three_do_color'], '-') + 1).'-card-bg'; 
+					$two_card_bg = substr($scan_report['two_do_color'], strrpos($scan_report['two_do_color'], '-') + 1).'-card-bg'; 
+					$one_card_bg = substr($scan_report['one_do_color'], strrpos($scan_report['one_do_color'], '-') + 1).'-card-bg'; 
 				?>
 				<!--begin::Statistics Widget 5-->
 				<a href="javascript: void(0)" class="card <?php echo $three_card_bg; ?> hoverable card-xl-stretch mb-xl-8">
@@ -22,7 +21,7 @@
 						</span>
 						<!--end::Svg Icon-->
 						<div class="text-white fw-bolder fs-2 mb-2 mt-5">Plagiarism Score</div>
-						<div class="fw-bold text-white">Outcome: <?php echo $scan_score['three_do_text']; ?></div>
+						<div class="fw-bold text-white">Outcome: <?php echo $scan_report['three_do_text']; ?></div>
 					</div>
 					<!--end::Body-->
 				</a>
@@ -30,7 +29,7 @@
 			</div>
 			<div class="col-xl-4">
 				<!--begin::Statistics Widget 5-->
-				<a href="#" class="card <?php echo $two_card_bg; ?> hoverable card-xl-stretch mb-xl-8">
+				<a href="javascript: void(0)" class="card <?php echo $two_card_bg; ?> hoverable card-xl-stretch mb-xl-8">
 					<!--begin::Body-->
 					<div class="card-body">
 						<!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm008.svg-->
@@ -42,7 +41,7 @@
 						</span>
 						<!--end::Svg Icon-->
 						<div class="text-white fw-bolder fs-2 mb-2 mt-5">AI Confidence</div>
-						<div class="fw-bold text-white">Outcome: <?php echo $scan_score['two_do_text']; ?></div>
+						<div class="fw-bold text-white">Outcome: <?php echo $scan_report['two_do_text']; ?></div>
 					</div>
 					<!--end::Body-->
 				</a>
@@ -50,7 +49,7 @@
 			</div>
 			<div class="col-xl-4">
 				<!--begin::Statistics Widget 5-->
-				<a href="#" class="card <?php echo $one_card_bg; ?> hoverable card-xl-stretch mb-5 mb-xl-8">
+				<a href="javascript: void(0)" class="card <?php echo $one_card_bg; ?> hoverable card-xl-stretch mb-5 mb-xl-8">
 					<!--begin::Body-->
 					<div class="card-body">
 						<!--begin::Svg Icon | path: icons/duotune/graphs/gra005.svg-->
@@ -62,15 +61,14 @@
 						</span>
 						<!--end::Svg Icon-->
 						<div class="text-white fw-bolder fs-2 mb-2 mt-5">AI Classification</div>
-						<div class="fw-bold text-white">Outcome: <?php echo $scan_score['one_do_text']; ?></div>
+						<div class="fw-bold text-white">Outcome: <?php echo $scan_report['one_do_text']; ?></div>
 					</div>
 					<!--end::Body-->
 				</a>
 				<!--end::Statistics Widget 5-->
 			</div>
 		</div>
-		<?php } ?>
-		<div class="row g-5">
+		<div class="row g-5 g-xl-8">
 		    <!-- Left info -->
 		    <div class="col-lg-4">
 		      	<div class="card card-flush">
@@ -121,25 +119,116 @@
 		            <tbody>
 		              <tr>
 		                <td>Plagiarism Assessment</td>
-		                <td class="<?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['three_do_color']; } ?> fw-bold"><?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['three_do_score']; } ?>%</td>
-		                <td><?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['three_do_text']; } ?></td>
+		                <td class="<?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['three_do_color']; } ?> fw-bold"><?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['three_do_score']; } ?>%</td>
+		                <td><?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['three_do_text']; } ?></td>
 		              </tr>
 		              <tr>
 		                <td>AI Confidence</td>
-		                <td class="<?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['two_do_color']; } ?> fw-bold"><?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['two_do_score']; } ?>%</td>
-		                <td><?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['two_do_text']; } ?></td>
+		                <td class="<?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['two_do_color']; } ?> fw-bold"><?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['two_do_score']; } ?>%</td>
+		                <td><?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['two_do_text']; } ?></td>
 		              </tr>
 		              <tr>
 		                <td>AI Classification</td>
-		                <td class="<?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['one_do_color']; } ?> fw-bold"><?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['one_do_score']; } ?>%</td>
-		                <td><?php if (isset($scan_score) && !empty($scan_score)) { echo $scan_score['one_do_text']; } ?></td>
+		                <td class="<?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['one_do_color']; } ?> fw-bold"><?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['one_do_score']; } ?>%</td>
+		                <td><?php if (isset($scan_report) && !empty($scan_report)) { echo $scan_report['one_do_text']; } ?></td>
 		              </tr>
 		            </tbody>
 		          </table>
 		        </div>
 		      </div>
 		    </div>
+		    
 	  	</div>
+	  	 <?php if (isset($scan_report['plagiarism_sources']) && is_array($scan_report['plagiarism_sources']) && !empty($scan_report['plagiarism_sources'])) { ?>
+	  	<div class="row g-5 g-xl-8">
+		   
+			<div class="d-flex flex-column flex-row-fluid pe-0 mb-5">
+
+				<span class="text-gray-1000 fw-bolder fs-6 mb-5">Matched Resources:</span>
+
+				
+				<?php foreach ($scan_report['plagiarism_sources'] as $key => $value) {
+				?>
+
+			    <!--begin::Item-->
+			    <span class="text-gray-800 fw-bolder fs-6">Similarity Text:</span>
+		        <span class="text-gray-700 fw-bold d-block mb-3"><?php echo $value['phrase']; ?></span>
+
+		        <?php if (isset($value['sources']) && is_array($value['sources']) && !empty($value['sources'])) {
+		        	foreach ($value['sources'] as $key => $source) {
+		        		$key = $key + 1;
+	        	?>
+
+			    <div class="fs-6 fw-bold mb-2 p-3 border-start border-5 rounded-start-sm mb-5 <?php echo $source['border']; ?>">
+			        <span class="text-gray-800 fw-bolder fs-6">Link <?php echo $key; ?>:</span>
+			        <a href="<?php echo $source['link']; ?>" class="text-gray-700 fw-bold d-block mb-3" target="_blank"><?php echo $source['link']; ?></a>
+			        <span class="badge fs-8 fw-bolder <?php echo $source['bg_light']; ?> <?php echo $source['color']; ?>"><?php echo $source['label']; ?> <?php echo $source['score']; ?>%</span>
+			    </div>
+
+				<?php } ?>
+				<?php } ?>
+			    <!--end::Item-->
+
+				<?php } ?>
+
+			</div>
+				
+		    
+	  	</div>
+			<?php } ?>
+	  	<div class="row g-5 g-xl-8">
+			<div class="col-xl-4">
+				<!--begin::Notice-->
+				<div class="notice d-flex <?php echo $scan_report['three_do_light']; ?> rounded <?php echo $scan_report['three_do_border']; ?> border border-dashed p-6 mb-5">
+					<!--begin::Wrapper-->
+					<div class="d-flex flex-stack flex-grow-1">
+						<!--begin::Content-->
+						<div class="fw-bold">
+							<div class="fs-6 text-gray-700">
+								<div class="fs-6 fw-bold <?php echo $scan_report['three_do_color']; ?>"><?php echo $scan_report['three_do_state']; ?></div>
+							</div>
+						</div>
+						<!--end::Content-->
+					</div>
+					<!--end::Wrapper-->
+				</div>
+				<!--end::Notice-->
+			</div>
+			<div class="col-xl-4">
+				<!--begin::Notice-->
+				<div class="notice d-flex <?php echo $scan_report['two_do_light']; ?> rounded <?php echo $scan_report['two_do_border']; ?> border border-dashed p-6 mb-5">
+					<!--begin::Wrapper-->
+					<div class="d-flex flex-stack flex-grow-1">
+						<!--begin::Content-->
+						<div class="fw-bold">
+							<div class="fs-6 text-gray-700">
+								<div class="fs-6 fw-bold <?php echo $scan_report['two_do_color']; ?>"><?php echo $scan_report['two_do_state']; ?></div>
+							</div>
+						</div>
+						<!--end::Content-->
+					</div>
+					<!--end::Wrapper-->
+				</div>
+				<!--end::Notice-->
+			</div>
+			<div class="col-xl-4">
+				<!--begin::Notice-->
+				<div class="notice d-flex <?php echo $scan_report['one_do_light']; ?> rounded <?php echo $scan_report['one_do_border']; ?> border border-dashed p-6 mb-5">
+					<!--begin::Wrapper-->
+					<div class="d-flex flex-stack flex-grow-1">
+						<!--begin::Content-->
+						<div class="fw-bold">
+							<div class="fs-6 text-gray-700">
+								<div class="fs-6 fw-bold <?php echo $scan_report['one_do_color']; ?>"><?php echo $scan_report['one_do_state']; ?></div>
+							</div>
+						</div>
+						<!--end::Content-->
+					</div>
+					<!--end::Wrapper-->
+				</div>
+				<!--end::Notice-->
+			</div>
+		</div>
 
 </div>
 <?php }else{ ?>
