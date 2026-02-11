@@ -285,10 +285,8 @@ class Member extends CI_Controller
                 exit();
             }
 
-            $old_email = $this->customer_model->get_customer_email($customer_id);
-            $customer_info = $this->authentication_model->password_check(trim($old_email), md5($password));
-
-            if(isset($customer_info) && is_array($customer_info) && !empty($customer_info)){
+            $customer_info = $this->customer_model->get_customer($customer_id);
+            if(password_verify($password, $customer_info['password'])){
 
                 $update_info = array(
                     'email' => trim($email),
@@ -322,10 +320,9 @@ class Member extends CI_Controller
             $newpassword = $this->input->post('newpassword');
             $confirmpassword = $this->input->post('confirmpassword');
 
-            $old_email = $this->customer_model->get_customer_email($customer_id);
-            $customer_info = $this->authentication_model->password_check(trim($old_email), md5($currentpassword));
+            $customer_info = $this->customer_model->get_customer($customer_id);
 
-            if(isset($customer_info) && is_array($customer_info) && !empty($customer_info)){
+            if(password_verify($currentpassword, $customer_info['password'])){
 
                 $newpassword        = $this->input->post('newpassword');
                 $confirmpassword    = $this->input->post('confirmpassword');
@@ -336,7 +333,7 @@ class Member extends CI_Controller
                 }
 
                 $update_info = array(
-                    'password' => md5($newpassword),
+                    'password' => password_hash($newpassword, PASSWORD_DEFAULT),
                     'updated_at' => date('y-m-d H:m:s')
                 );
 
@@ -346,7 +343,7 @@ class Member extends CI_Controller
 
             }else{
 
-                echo json_encode(array("status" => 'error' , "message" => 'Old password entered was incorrect.'));
+                echo json_encode(array("status" => 'error' , "message" => 'Current password entered was incorrect.'));
                 exit(); 
 
             }

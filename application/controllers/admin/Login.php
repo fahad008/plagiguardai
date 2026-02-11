@@ -35,9 +35,13 @@ class Login extends CI_Controller
 
 			}
 			
-			$admin = $this->admin_model->password_check($email, md5($password));
+			$admin = $this->admin_model->admin_via_email($email);
+			if ($admin['status'] != '1') {
+				echo json_encode(array("status" => 'error' , "message" => 'Your access has been temporarily disabled by the super administrator. For assistance, please reach out to our support team.', "redirect" => ''));
+				exit();
+			}
 
-			if(isset($admin) && is_array($admin) && !empty($admin)){
+			if(password_verify($password, $admin['password'])){
 
 				$update_info = array(
 					'last_login' => date('y-m-d H:m:s'),

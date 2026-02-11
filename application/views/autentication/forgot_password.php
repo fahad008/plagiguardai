@@ -36,7 +36,7 @@
 				<!--begin::Wrapper-->
 				<div class="w-lg-500px p-10 p-lg-15 mx-auto">
 					<!--begin::Form-->
-					<form class="form w-100" novalidate="novalidate" id="kt_password_reset_form">
+					<form method="post" action="<?php echo base_url().'forgot_password/query/'; ?>" class="form w-100" novalidate="novalidate" id="kt_password_reset_form">
 						<!--begin::Heading-->
 						<div class="text-center mb-10">
 							<!--begin::Title-->
@@ -69,4 +69,15 @@
 				<!--end::Wrapper-->
 			</div>
 			<!--end::Content-->
+<!--end::Main-->
+<script>var hostUrl = "assets/";</script>
+<!--begin::Javascript-->
+<!--begin::Global Javascript Bundle(used by all pages)-->
+<script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="assets/js/scripts.bundle.js"></script>
+<!--end::Global Javascript Bundle-->
+<!--begin::Page Custom Javascript(used by this page)-->
+<script src="assets/js/custom/authentication/password-reset/password-reset.js"></script>
+<!--end::Page Custom Javascript-->
+<!--end::Javascript-->
 <?php $this->load->view('autentication/footer'); ?>

@@ -27,8 +27,7 @@ class Signup extends CI_Controller
     public function register(){
     	// echo "<pre>";print_r($this->input->post());die;
 		if($this->input->post()){
-
-			$password = md5($this->input->post('password'));
+			$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 			$email_check = $this->authentication_model->email_check($this->input->post('email'));
 
 			if ($email_check === true) {
@@ -51,15 +50,6 @@ class Signup extends CI_Controller
 			$customer_id = $this->authentication_model->save_customer($data);
 			
 			if(isset($customer_id) && !empty($customer_id)){
-
-				$credits = array(
-					'customer_id' => $customer_id,
-					'credits' => 0,
-					'updated_at' => date('y-m-d H:m:s'),
-				);
-
-				$this->subscription_model->save_customer_credits($credits);
-				// $this->session->set_userdata('logged_in_customer', $customer_info);
 
 				$response =  array(
 			      "status" => 'success',

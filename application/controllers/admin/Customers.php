@@ -382,7 +382,7 @@ class Customers extends Admin_Controller
 		if($this->input->post()){
 			$admin_id = $this->session->userdata('admin_id');
 			$pass_string = trim($this->input->post('password'));
-			$password = md5($pass_string);
+			$password = password_hash($pass_string, PASSWORD_DEFAULT);
 			$email_check = $this->admin_model->email_check($this->input->post('email'));
 
 			if ($email_check === true) {
@@ -407,14 +407,6 @@ class Customers extends Admin_Controller
 			$customer_id = $this->admin_model->save_customer($data);
 			
 			if(isset($customer_id) && !empty($customer_id)){
-
-				$credits = array(
-					'customer_id' => $customer_id,
-					'credits' => 0,
-					'updated_at' => date('y-m-d H:m:s'),
-				);
-
-				$this->subscription_model->save_customer_credits($credits);
 
 				$response =  array(
 			      "status" => 'success',

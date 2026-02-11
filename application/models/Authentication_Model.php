@@ -36,7 +36,36 @@ class Authentication_Model extends CI_Model{
 		$query = $this->db->get();
         // echo $this->db->last_query(); die;
 		if($query->num_rows() > 0){
-			return $query->result_array()[0];
+			return $query->row_array();
+		}else{
+			return false;
+		}
+	}
+
+	public function authentic_customer($id, $email)
+	{
+		$query = $this->db->select('*');
+		$query = $this->db->from('customer');
+		$this->db->where('customer.id', $id);
+		$this->db->where('customer.email', $email);
+		$query = $this->db->get();
+        // echo $this->db->last_query(); die;
+		if($query->num_rows() > 0){
+			return $query->row_array();
+		}else{
+			return false;
+		}
+	}
+
+	public function get_customer_via_email($email)
+	{
+		$query = $this->db->select('*');
+		$query = $this->db->from('customer');
+		$this->db->where('customer.email', $email);
+		$query = $this->db->get();
+        // echo $this->db->last_query(); die;
+		if($query->num_rows() > 0){
+			return $query->row_array();
 		}else{
 			return false;
 		}

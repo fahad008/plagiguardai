@@ -91,6 +91,18 @@ class Admin_Model extends CI_Model{
 			return false;
 	}
 
+	public function admin_via_email($email)
+	{
+		$query = $this->db->select('*');
+		$query = $this->db->from('admin');
+		$query = $this->db->where('email', $email);
+		$query = $this->db->get();
+		if($query->num_rows() > 0)
+			return $query->row_array();
+		else
+			return false;
+	}
+
 	public function update_admin($id,$data)
 	{
 		if (is_array($data) && !empty($data)) {

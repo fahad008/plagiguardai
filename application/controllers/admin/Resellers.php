@@ -71,7 +71,7 @@ class Resellers extends Admin_Controller
 		if($this->input->post()){
 
 			$pass_string = trim($this->input->post('password'));
-			$password = md5($pass_string);
+			$password = password_hash($pass_string, PASSWORD_DEFAULT);
 			$email_check = $this->admin_model->email_check_reseller($this->input->post('email'));
 
 			if ($email_check === true) {

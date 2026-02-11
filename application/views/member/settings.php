@@ -95,7 +95,7 @@
 												</div>
 												<div class="col-lg-6">
 													<div class="fv-row mb-0">
-														<label for="confirmemailpassword" class="form-label fs-6 fw-bolder mb-3">Confirm Password</label>
+														<label for="confirmemailpassword" class="form-label fs-6 fw-bolder mb-3">Current Password</label>
 														<input type="password" class="form-control form-control-lg form-control-solid" name="confirmemailpassword" id="confirmemailpassword" />
 													</div>
 												</div>

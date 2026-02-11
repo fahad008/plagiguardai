@@ -44,11 +44,10 @@ class login extends CI_Controller
 
 			}
 			
-			$customer_info = $this->authentication_model->password_check($email, md5($password));
-
-			if(isset($customer_info) && is_array($customer_info) && !empty($customer_info)){
-
-				$update_info = array(
+			$customer_info = $this->authentication_model->get_customer_via_email($email);
+			if (password_verify($password, $customer_info['password'])) {
+				
+			    $update_info = array(
 					'last_login' => date('y-m-d H:m:s'),
 				);
 
@@ -56,13 +55,10 @@ class login extends CI_Controller
 
 				$this->session->set_userdata('logged_in_customer', $customer_info);
 				echo json_encode(array("status" => 'success', "message" => 'Login successful. Redirecting to your dashboard…', "redirect" => base_url().'dashboard/'));
-
-			}else{
-
-				$error_msgs = ['candidate_password' => 'The password entered was incorrect.'];
+			} else {
+			    $error_msgs = ['candidate_password' => 'The password entered was incorrect.'];
 				echo json_encode(array("status" => 'error' , "message" => 'Incorrect password. Please try again.', "redirect" => ''));
-				exit();	
-
+				exit();
 			}
 		}
 	}
