@@ -154,7 +154,7 @@
 											<div class="ps-lg-6 mb-16 mt-md-0 mt-17">
 												<!--begin::Body-->
 												<div class="mb-6">
-													<div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(<?php echo $thumbnail; ?>)"></div>
+													<div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px mb-3" style="background-image:url(<?php echo $thumbnail; ?>)"></div>
 													<!--begin::Title-->
 													<a href="<?php echo base_url().'blogs/post/'.$value['slug']; ?>" class="fw-bolder text-dark mb-4 fs-2 lh-base text-hover-primary"><?php echo $value['title']; ?></a></br>
 													<a href="<?php echo base_url().'blogs/'.$value['category_slug']; ?>" class="fw-bolder text-gray-600 mb-4 fs-2 lh-base text-hover-primary"><?php echo $value['category_name']; ?></a>
@@ -210,7 +210,7 @@
 											<div class="ps-lg-6 mb-16 mt-md-0 mt-17">
 												<!--begin::Body-->
 												<div class="mb-6">
-													<div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(<?php echo $thumbnail; ?>)"></div>
+													<div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px mb-3" style="background-image:url(<?php echo $thumbnail; ?>)"></div>
 													<!--begin::Title-->
 													<a href="<?php echo base_url().'blogs/post/'.$value['slug']; ?>" class="fw-bolder text-dark mb-4 fs-2 lh-base text-hover-primary"><?php echo $value['title']; ?></a>
 													<!--end::Title-->

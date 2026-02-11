@@ -143,7 +143,7 @@
 												<div class="overlay mt-8">
 													<?php if ($featured_image_url != '') { ?>
 													<!--begin::Image-->
-													<div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-350px" style="background-image:url(<?php echo $featured_image_url; ?>)"></div>
+													<div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-350px mb-3" style="background-image:url(<?php echo $featured_image_url; ?>)"></div>
 													<!--end::Image-->
 													<?php } ?>
 													<!--begin::Links-->
