@@ -8,15 +8,18 @@
 		<meta name="author" content="PlagiGuardAI">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta charset="utf-8" />
+		<meta name="robots" content="index, follow">
 		<!-- Open Graph / Facebook -->
+
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:site_name" content="" />
 		<meta property="og:title" content="PlagiGuardAI - AI & Plagiarism Detection Tool">
 		<meta property="og:description" content="Check AI-generated content and detect plagiarism with PlagiGuardAI. Ensure content authenticity easily and quickly.">
-		<meta property="og:image" content="https://yourwebsite.com/path-to-logo-or-preview-image.png">
-		<meta property="og:url" content="https://yourwebsite.com">
+		<meta property="og:image" content="<?php echo base_url(); ?>assets/media/webscreen.png">
+		<meta property="og:image:alt" content="PlagiGuardAI - AI & Plagiarism Detection Tool">
+		<meta property="og:url" content="<?php echo base_url(); ?>">
 		<meta property="og:type" content="website">
-		<link rel="canonical" href="" />
+		<link rel="canonical" href="<?php if(isset($canonical_url) && !empty($canonical_url)){ echo $canonical_url; } ?>" />
 		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image">

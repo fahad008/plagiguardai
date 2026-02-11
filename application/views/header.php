@@ -69,7 +69,7 @@
 		<meta property="og:description" content="<?php if (isset($page_seo) && !empty($page_seo)) { echo $page_seo['meta_description']; }else{ echo "PlagiGuardAI is an advanced AI and plagiarism detection tool that helps you identify AI-generated content and ensure originality."; } ?>">
 		<meta property="og:image" content="<?php if(isset($post_info) && !empty($post_info)){ echo $featured_image = get_post_image($post_info['id'], $post_info['featured_image']); }else{ echo 'https://plagiguardai.com/assets/media/webscreen.png'; } ?>">
 		<meta property="og:image:alt" content="<?php if (isset($page_seo) && !empty($page_seo)) { echo $page_seo['meta_title']; }else{ echo "PlagiGuardAI - AI & Plagiarism Detection Tool"; } ?>">
-		<meta property="og:url" content="<?php echo base_url(); ?>">
+		<meta property="og:url" content="<?php if(isset($post_info) && !empty($post_info)){ echo base_url().'blogs/post/'.$post_info['slug']; } ?>">
 		<meta property="og:type" content="<?php if(isset($active) && $active != 'blogs'){ echo 'website'; }else{ echo 'article'; } ?>">
 
 		<?php if(isset($active) && $active == 'blogs'){ ?>

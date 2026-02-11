@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /assets_admin/
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /application/
+Disallow: /system/
+Disallow: /vendor/
+Disallow: /composer.json
+Disallow: /deploy.php
+
+Allow: /assets/
+
+# Sitemap: https://example.com/sitemap.xml
