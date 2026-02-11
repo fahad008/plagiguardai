@@ -1,5 +1,6 @@
 <?php if (isset($scan_info) && !empty($scan_info)) { ?>
 	<div class="">
+		<input type="hidden" value="<?php echo $scan_info['title']; ?>" id="scan_info_title">
 		<?php if (isset($scan_score) && !empty($scan_score)) {?>
 		<div class="row g-5 g-xl-8">
 			<div class="col-xl-4">

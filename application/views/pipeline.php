@@ -393,6 +393,7 @@
 <script src="assets/js/custom/detection-charts.js"></script>
 <!--end::Page Custom Javascript-->
 <script src="assets/js/custom/modals/new-title.js"></script>
+<script src="assets/js/html2pdf.bundle.min.js"></script>
 <!--end::Javascript-->
 <script>
 
@@ -649,7 +650,138 @@ function scan_details(el) {
         }
     });
 }
+
+
+
+function download_scan() {
+ 	var title = $("#scan_info_title").val();
+ 	if (!title) {
+ 		title = 'scan_report';
+ 	}
+ 	var element = document.getElementById('scan-detail-html');
+    // html2pdf.js options
+    var opt = {
+        margin:       10,
+        filename:     'scan-report-' + title + '.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, logging: true, scrollY: 0 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Trigger PDF download
+    html2pdf().set(opt).from(element).save();
+    
+}
+
+
 </script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+<script>
+
+function download_scan(el) {
+    const scan_id = el.getAttribute('data-id');
+
+    $.ajax({
+        url: "<?php //echo base_url().'scan/detail/'; ?>",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            scan_id: scan_id
+        },
+        success: function(response) {
+
+            if (response.status == 'success') {
+            	console.log(response);
+            	// $("#scan-detail-html").html(response.html);
+            	// $("#kt_modal_scan_detail").modal('show');
+
+            	const scanData = {
+	                three_do_text: response.scan_score.three_do_text,
+	                three_do_score: response.scan_score.three_do_score,
+	                two_do_text: response.scan_score.two_do_text,
+	                two_do_score: response.scan_score.two_do_score,
+	                one_do_text: response.scan_score.one_do_text,
+	                one_do_score: response.scan_score.one_do_score,
+	                title: response.scan_info.title,
+	                original_name: response.scan_file?.original_name || '',
+	                updated_at: response.scan_info.updated_at,
+	                expire_at: response.scan_info.expire_at
+	            };
+
+            createPDF(scanData);
+            } else {
+            	Swal.fire({
+				    text: response.message,
+				    icon: "error",
+				    confirmButtonText: "OK",
+				    customClass: {
+				        confirmButton: "btn btn-danger"
+				    }
+				});
+            }
+        }
+    });
+}
+
+async function createPDF(scanData) {
+	const { PDFDocument, rgb, StandardFonts } = PDFLib; 
+    // Create new PDF
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([595, 842]); // A4 size in points
+
+    // Embed a font
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+    let y = 800; // Starting Y position
+    const leftMargin = 50;
+
+    // Title
+    page.drawText('Scan Report', { x: leftMargin, y: y, size: 24, font, color: rgb(0,0,0) });
+    y -= 40;
+
+    // Plagiarism Score Card
+    page.drawText(`Plagiarism Score: ${scanData.three_do_text} (${scanData.three_do_score}%)`, {
+        x: leftMargin, y: y, size: 16, font, color: rgb(0.94,0.08,0.42) // F1416C
+    });
+    y -= 30;
+
+    // AI Confidence Card
+    page.drawText(`AI Confidence: ${scanData.two_do_text} (${scanData.two_do_score}%)`, {
+        x: leftMargin, y: y, size: 16, font, color: rgb(0.21,0.6,1) // 3699FF
+    });
+    y -= 30;
+
+    // AI Classification Card
+    page.drawText(`AI Classification: ${scanData.one_do_text} (${scanData.one_do_score}%)`, {
+        x: leftMargin, y: y, size: 16, font, color: rgb(0.31,0.8,0.54) // 50CD89
+    });
+    y -= 40;
+
+    // Scan Info Table
+    page.drawText('Scan Information:', { x: leftMargin, y: y, size: 18, font, color: rgb(0,0,0) });
+    y -= 20;
+    page.drawText(`Title: ${scanData.title}`, { x: leftMargin, y: y, size: 14, font });
+    y -= 20;
+    page.drawText(`File Name: ${scanData.original_name || 'N/A'}`, { x: leftMargin, y: y, size: 14, font });
+    y -= 20;
+    page.drawText(`Scanned At: ${scanData.updated_at}`, { x: leftMargin, y: y, size: 14, font });
+    y -= 20;
+    page.drawText(`Expiry: ${scanData.expire_at}`, { x: leftMargin, y: y, size: 14, font, color: rgb(1,0,0) });
+    y -= 40;
+
+    // Save PDF
+    const pdfBytes = await pdfDoc.save();
+
+    // Trigger download
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'scan-report.pdf';
+    link.click();
+}
+
+</script> -->
+
 </body>
 <!--end::Body-->
 </html>

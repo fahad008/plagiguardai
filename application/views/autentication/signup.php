@@ -49,13 +49,13 @@
 						</div>
 						<!--end::Heading-->
 						<!--begin::Action-->
-						<button type="button" class="btn btn-light fw-bolder w-100 mb-10">
-						<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Sign in with Google</button>
+						<!-- <button type="button" class="btn btn-light fw-bolder w-100 mb-10">
+						<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Sign in with Google</button> -->
 						<!--end::Action-->
 						<!--begin::Separator-->
 						<div class="d-flex align-items-center mb-10">
 							<div class="border-bottom border-gray-300 mw-50 w-100"></div>
-							<span class="fw-bold text-gray-400 fs-7 mx-2">OR</span>
+							<!-- <span class="fw-bold text-gray-400 fs-7 mx-2">OR</span> -->
 							<div class="border-bottom border-gray-300 mw-50 w-100"></div>
 						</div>
 						<!--end::Separator-->

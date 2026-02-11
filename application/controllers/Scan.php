@@ -9,7 +9,17 @@ class scan extends CI_Controller
 	{
 		parent::__construct();
         if (!$this->session->userdata('logged_in_customer')) {
-            redirect(base_url().'login/');
+            if ($this->input->is_ajax_request()) {
+                // For AJAX, return JSON or proper HTTP code
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Session expired, please login again'
+                ]);
+                exit; // stop further execution
+            } else {
+                // Normal page request
+                redirect(base_url().'login/');
+            }
         }
         $this->load->model('Subscription_Model', 'subscription_model');
         $this->load->model('Customer_Model', 'customer_model');
@@ -947,10 +957,31 @@ class scan extends CI_Controller
             // echo "<pre>";print_r($data);die;
             $view_to_pass = $this->load->view('chunks/scan_report',$data,TRUE);
             $response =  array(
-              "status" => 'success', "html" => $view_to_pass
+              "status" => 'success', "html" => $view_to_pass, "scan_info" => $data['scan_info'], "scan_score" => $data['scan_score']
             );
             echo json_encode($response);
             exit();
         }
+    }
+
+    public function download(){
+        // if($this->input->post()){
+            // echo "<pre>";print_r($this->input->post());die;
+            $scan_id = $this->input->get('scan_id');
+            $data = [];
+            // $scan_id = $this->input->post('scan_id');
+            $data['scan_score'] = '';
+            $data['scan_file'] = '';
+            $data['scan_info'] = $this->scan_model->get_scans($scan_id);
+            if (isset($data['scan_info']) && !empty($data['scan_info'])) {
+                $data['scan_score'] = $scan_obj = getScanOverviewData($data['scan_info']);
+                $data['scan_file'] = $this->scan_model->get_scan_file($data['scan_info']['customer_uploads_id']);
+            }
+            // echo "<pre>";print_r($data);die;
+            $html = $this->load->view('chunks/scan_report_pdf',$data,TRUE);
+            $this->load->library('pdf');
+            $this->pdf->create($html, 'scan-report-'.$scan_id, 'D');
+            exit;
+        // }
     }
 }
