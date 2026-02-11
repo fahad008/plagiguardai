@@ -9,7 +9,17 @@ class dashboard extends CI_Controller
 	{
 		parent::__construct();
         if (!$this->session->userdata('logged_in_customer')) {
-            redirect(base_url().'login/');
+            if ($this->input->is_ajax_request()) {
+                // For AJAX, return JSON or proper HTTP code
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Session expired, please login again'
+                ]);
+                exit; // stop further execution
+            } else {
+                // Normal page request
+                redirect(base_url().'login/');
+            }
         }
         $this->load->model('Customer_Model', 'customer_model');
         $this->load->model('Settings_Model', 'settings_model');
