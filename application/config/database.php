@@ -100,7 +100,7 @@ if ($_SERVER['HTTP_HOST'] == 'plagiguardai.com') {
 		'dsn'	=> '',
 		'hostname' => 'localhost',
 		'username' => 'harisnfc_plagiguardai',
-		'password' => 'Ac5fvM+pdrim',
+		'password' => '',
 		'database' => 'harisnfc_plagiguardai',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
