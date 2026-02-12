@@ -73,13 +73,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-echo $_SERVER['HTTP_HOST'];die;
-if ($_SERVER['HTTP_HOST'] == 'plagiguardai.com') {
+if ($_SERVER['HTTP_HOST'] == 'plagiguardai') {
 	$db['default'] = array(
 	    'dsn'      => '',
 	    'hostname' => 'localhost',            // usually 'localhost' on HostNext
-	    'username' => 'plagiguardai_user',   // your cPanel DB username
-	    'password' => 'YourStrongPassword',  // your cPanel DB password
+	    'username' => 'root',   // your cPanel DB username
+	    'password' => '',  // your cPanel DB password
 	    'database' => 'plagiguardai',        // your cPanel DB name
 	    'dbdriver' => 'mysqli',
 	    'dbprefix' => '',
