@@ -73,24 +73,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'plagiguardai',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+if ($_SERVER['HTTP_HOST'] == 'plagiguardai.com') {
+	$db['default'] = array(
+	    'dsn'      => '',
+	    'hostname' => 'localhost',            // usually 'localhost' on HostNext
+	    'username' => 'plagiguardai_user',   // your cPanel DB username
+	    'password' => 'YourStrongPassword',  // your cPanel DB password
+	    'database' => 'plagiguardai',        // your cPanel DB name
+	    'dbdriver' => 'mysqli',
+	    'dbprefix' => '',
+	    'pconnect' => FALSE,                  // FALSE is recommended on shared hosting
+	    'db_debug' => (ENVIRONMENT !== 'production'),
+	    'cache_on' => FALSE,
+	    'cachedir' => '',
+	    'char_set' => 'utf8',
+	    'dbcollat' => 'utf8_general_ci',
+	    'swap_pre' => '',
+	    'encrypt' => FALSE,
+	    'compress' => FALSE,
+	    'stricton' => FALSE,
+	    'failover' => array(),
+	    'save_queries' => TRUE
+	);
+}else{
+	$db['default'] = array(
+		'dsn'	=> '',
+		'hostname' => 'localhost',
+		'username' => 'harisnfc_plagiguardai',
+		'password' => 'Ac5fvM+pdrim',
+		'database' => 'harisnfc_plagiguardai',
+		'dbdriver' => 'mysqli',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE
+	);
+}
