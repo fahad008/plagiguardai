@@ -73,6 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+echo $_SERVER['HTTP_HOST'];die;
 if ($_SERVER['HTTP_HOST'] == 'plagiguardai.com') {
 	$db['default'] = array(
 	    'dsn'      => '',
@@ -99,8 +100,8 @@ if ($_SERVER['HTTP_HOST'] == 'plagiguardai.com') {
 	$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => 'localhost',
-		'username' => 'harisnfc_hnfpk',
-		'password' => 'Ac5fvM+pdrim',
+		'username' => 'plagiguard_user',
+		'password' => '&ZRZDP,M$*%U',
 		'database' => 'harisnfc_plagiguardai',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
