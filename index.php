@@ -1,5 +1,5 @@
 <?php
-echo "++++++++++++++++++++Comming Soon+++++++++++++++++++";die;
+// echo "++++++++++++++++++++Comming Soon+++++++++++++++++++";die;
 /**
  * CodeIgniter
  *
