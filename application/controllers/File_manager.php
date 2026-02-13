@@ -7,6 +7,7 @@ class File_manager extends CI_Controller
 {
 	function __construct()
 	{
+		parent::__construct();
 		if (!$this->session->userdata('logged_in_customer')) {
             if ($this->input->is_ajax_request()) {
                 // For AJAX, return JSON or proper HTTP code
@@ -20,7 +21,7 @@ class File_manager extends CI_Controller
                 redirect(base_url().'login/');
             }
         }
-		parent::__construct();
+		
 		$this->load->helper('pdf');
 		// $this->load->helper('docs');
 		$this->load->helper('text');
