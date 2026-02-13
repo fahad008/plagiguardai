@@ -111,12 +111,13 @@ class Customer_Model extends CI_Model{
 
 	public function get_customers_datatable($start, $length, $search, $month, $plan_id)
 	{
+		$admin_id = $this->session->userdata('admin_id');
 		$admin_role_id = $this->session->userdata('admin_role_id');
 	    $this->db->select('*');
 	    $this->db->from('customer');
 
 	    if ($admin_role_id == '3') {
-	    	$this->db->where('creator_id', $admin_role_id);
+	    	$this->db->where('creator_id', $admin_id);
 	    }
 	    $this->db->where('deleted_at IS NULL', null, false);
 
@@ -164,11 +165,12 @@ class Customer_Model extends CI_Model{
 
 	public function count_filtered($search, $month, $plan_id)
 	{
+		$admin_id = $this->session->userdata('admin_id');
 		$admin_role_id = $this->session->userdata('admin_role_id');
 	    
 	    $this->db->from('customer');
 	    if ($admin_role_id == '3') {
-	    	$this->db->where('creator_id', $admin_role_id);
+	    	$this->db->where('creator_id', $admin_id);
 	    }
 	    $this->db->where('deleted_at IS NULL', null, false);
 	    if (!empty($search)) {
