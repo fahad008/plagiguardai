@@ -103,7 +103,7 @@ class scan extends CI_Controller
 
                 $response = [
                     "status"  => "error",
-                    "message" => $error_message,
+                    "message" => $result['error_message'],
                     "http_code" => $result['http_code'] ?? 500
                 ];
                 echo json_encode($response);
