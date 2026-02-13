@@ -282,7 +282,6 @@ class Customers extends Admin_Controller
 
 	public function add()
 	{
-		echo "<pre>";print_r($this->session->userdata());die;
 		$this->require_role(['super_admin', 'reseller']);
 		$data = array();
 		$data['active'] = 'AddCustomer';
@@ -382,6 +381,7 @@ class Customers extends Admin_Controller
     	// echo "<pre>";print_r($this->input->post());die;
 		if($this->input->post()){
 			$admin_id = $this->session->userdata('admin_id');
+			$admin_role_id = $this->session->userdata('admin_role_id');
 			$pass_string = trim($this->input->post('password'));
 			$password = password_hash($pass_string, PASSWORD_DEFAULT);
 			$email_check = $this->admin_model->email_check($this->input->post('email'));
@@ -408,6 +408,17 @@ class Customers extends Admin_Controller
 			$customer_id = $this->admin_model->save_customer($data);
 			
 			if(isset($customer_id) && !empty($customer_id)){
+
+				if ($admin_role_id != 1) {
+					
+					$customer_reseller = array(
+	                    "customer_id" => $customer_id,
+	                    "reseller_id" => $admin_id,
+	                    "created_at" => date('y-m-d H:m:s')
+	                );
+
+	                $this->subscription_model->save_customer_reseller($customer_reseller);
+	            }
 
 				$response =  array(
 			      "status" => 'success',

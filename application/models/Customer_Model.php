@@ -153,8 +153,9 @@ class Customer_Model extends CI_Model{
 	public function count_all()
 	{
 	    $admin_role_id = $this->session->userdata('admin_role_id');
+	    $admin_id = $this->session->userdata('admin_id');
 	    if ($admin_role_id == '3') {
-	    	$this->db->where('creator_id', $admin_role_id);
+	    	$this->db->where('creator_id', $admin_id);
 	    }
 	    $this->db->where('deleted_at IS NULL', null, false);
 	    return $this->db->count_all_results('customer');
