@@ -1,5 +1,5 @@
 <?php
-class Pages_model extends CI_Model{
+class Pages_Model extends CI_Model{
 
 	function __construct() 
 	{
