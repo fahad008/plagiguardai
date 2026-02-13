@@ -19,11 +19,11 @@ class Dashboard extends Admin_Controller
 		$data = array();
 		$data['active'] = 'dashboard';
 		$data['scripts'] = array(
-			"0" => 'assets/js/custom/apps/customers/add.js',
+			"0" => base_url().'assets/js/custom/apps/customers/add.js',
 		);
         $admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -42,11 +42,11 @@ class Dashboard extends Admin_Controller
 		$data = array();
 		$data['active'] = 'settings';
 		$data['scripts'] = array(
-            "0" => 'assets/js/custom/admin/admin-settings.js',
+            "0" => base_url().'assets/js/custom/admin/admin-settings.js',
         );
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -65,11 +65,11 @@ class Dashboard extends Admin_Controller
 		$data = array();
 		$data['active'] = 'profile';
 		$data['scripts'] = array(
-			"0" => 'assets/js/custom/admin/admin-profile-details.js',
+			"0" => base_url().'assets/js/custom/admin/admin-profile-details.js',
 		);
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {

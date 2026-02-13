@@ -23,19 +23,19 @@ class Customers extends Admin_Controller
 		$data = array();
 		$data['active'] = 'customerList';
 		$data['scripts'] = array(
-			"0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
-			"1" => 'assets/js/custom/apps/customers/list/list.js',
-			"2" => 'assets/js/custom/apps/customers/add.js',
-			"3" => 'assets/js/custom/modals/offer-a-deal/bundle/main.js',
-			"4" => 'assets/js/custom/modals/offer-a-deal/bundle/type.js',
-			"5" => 'assets/js/custom/modals/offer-a-deal/bundle/details.js',
-			"6" => 'assets/js/custom/apps/subscriptions/add/customer-select.js',
+			"0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
+			"1" => base_url().'assets/js/custom/apps/customers/list/list.js',
+			"2" => base_url().'assets/js/custom/apps/customers/add.js',
+			"3" => base_url().'assets/js/custom/modals/offer-a-deal/bundle/main.js',
+			"4" => base_url().'assets/js/custom/modals/offer-a-deal/bundle/type.js',
+			"5" => base_url().'assets/js/custom/modals/offer-a-deal/bundle/details.js',
+			"6" => base_url().'assets/js/custom/apps/subscriptions/add/customer-select.js',
 		);
 
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -286,12 +286,12 @@ class Customers extends Admin_Controller
 		$data = array();
 		$data['active'] = 'AddCustomer';
 		$data['scripts'] = array(
-			"0" => 'assets/js/custom/apps/customers/add.js',
+			"0" => base_url().'assets/js/custom/apps/customers/add.js',
 		);
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -309,18 +309,18 @@ class Customers extends Admin_Controller
 		$data = array();
 		$data['active'] = 'view';
 		$data['scripts'] = array(
-			"0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
-			"1" => 'assets/js/custom/apps/customers/list/invoices.js',
-			"2" => 'assets/js/custom/apps/customers/view/payment-table.js',
-			"3" => 'assets/js/custom/apps/customers/update.js',
-			"4" => 'assets/js/custom/admin/topup.js',
-			"5" => 'assets/js/custom/widgets.js',
+			"0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
+			"1" => base_url().'assets/js/custom/apps/customers/list/invoices.js',
+			"2" => base_url().'assets/js/custom/apps/customers/view/payment-table.js',
+			"3" => base_url().'assets/js/custom/apps/customers/update.js',
+			"4" => base_url().'assets/js/custom/admin/topup.js',
+			"5" => base_url().'assets/js/custom/widgets.js',
 		);
 		
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -330,7 +330,7 @@ class Customers extends Admin_Controller
         $data['admin_info']['country'] = getCountryByCode('PK');
         $customer_id = $this->url_encrypt->decode_id(rawurldecode($encoded_id));
 		$data['customer_info'] = $this->customer_model->get_customer($customer_id);
-		$data['avatar'] = 'assets/media/avatars/blank.png';
+		$data['avatar'] = base_url().'assets/media/avatars/blank.png';
 		$data['country'] = '-';
 		$data['customer_subscription'] = [];
 		$data['customer_plan'] = [];
@@ -356,7 +356,7 @@ class Customers extends Admin_Controller
 		        if (isset($data['customer_subscription']) && !empty($data['customer_subscription'])) {
 		        	$data['customer_plan'] = $this->plan_model->get_plan($data['customer_subscription']['plan_id']);
 		        }
-		        $data['reseller_avatar'] = 'assets/media/avatars/blank.png';
+		        $data['reseller_avatar'] = base_url().'assets/media/avatars/blank.png';
 		        $data['reseller_country'] = [];
 	        	$data['reseller_info'] = $this->customer_model->get_reseller_by_customer_id($customer_id);
 		        if (!empty($data['reseller_info']) && $data['reseller_info']->profile_picture != '') {

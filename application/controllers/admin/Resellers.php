@@ -24,14 +24,14 @@ class Resellers extends Admin_Controller
 		$data = array();
 		$data['active'] = 'resellerList';
 		$data['scripts'] = array(
-			"0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
-			"1" => 'assets/js/custom/apps/resellers/list/list.js',
-			"2" => 'assets/js/custom/apps/resellers/add.js',
+			"0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
+			"1" => base_url().'assets/js/custom/apps/resellers/list/list.js',
+			"2" => base_url().'assets/js/custom/apps/resellers/add.js',
 		);
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -50,12 +50,12 @@ class Resellers extends Admin_Controller
 		$data = array();
 		$data['active'] = 'AddReseller';
 		$data['scripts'] = array(
-			"0" => 'assets/js/custom/apps/resellers/add.js',
+			"0" => base_url().'assets/js/custom/apps/resellers/add.js',
 		);
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -267,16 +267,16 @@ class Resellers extends Admin_Controller
 		$data = array();
 		$data['active'] = 'view';
 		$data['scripts'] = array(
-			"0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
-			"1" => 'assets/js/custom/apps/resellers/list/invoices.js',
-			"2" => 'assets/js/custom/apps/resellers/list/customers.js',
-			"3" => 'assets/js/custom/apps/resellers/update.js',
-			"4" => 'assets/js/custom/widgets.js',
+			"0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
+			"1" => base_url().'assets/js/custom/apps/resellers/list/invoices.js',
+			"2" => base_url().'assets/js/custom/apps/resellers/list/customers.js',
+			"3" => base_url().'assets/js/custom/apps/resellers/update.js',
+			"4" => base_url().'assets/js/custom/widgets.js',
 		);
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -285,7 +285,7 @@ class Resellers extends Admin_Controller
         }
         $data['admin_info']['country'] = getCountryByCode('PK');
 		$data['reseller_info'] = $this->reseller_model->get_reseller($reseller_id);
-		$data['avatar'] = 'assets/media/avatars/blank.png';
+		$data['avatar'] = base_url().'assets/media/avatars/blank.png';
 		$data['country'] = '-';
 		if (isset($data['reseller_info']) && is_array($data['reseller_info']) && !empty($data['reseller_info'])) {
 			if ($data['reseller_info']['profile_picture']) {
@@ -410,7 +410,7 @@ class Resellers extends Admin_Controller
         if($this->input->post()){
         	// echo "<pre>";print_r($this->input->post());die;
         	$data = [];
-        	$data['avatar'] = 'assets/media/avatars/blank.png';
+        	$data['avatar'] = base_url().'assets/media/avatars/blank.png';
         	$data['country'] = '';
         	$data['reseller_info'] = $this->customer_model->get_reseller_by_customer_id($this->input->post('customer_id'));
         	// echo "<pre>";print_r($data['reseller_info']);die;

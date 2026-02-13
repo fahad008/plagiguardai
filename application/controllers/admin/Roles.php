@@ -22,7 +22,7 @@ class Roles extends Admin_Controller
         $admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -52,14 +52,14 @@ class Roles extends Admin_Controller
         if(isset($data['view_role_info']) && !empty($data['view_role_info'])){
             $data['active'] = 'roles';
             $data['scripts'] = array(
-                "0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
-                "1" => 'assets/js/custom/apps/user-management/roles/view/view.js'
+                "0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
+                "1" => base_url().'assets/js/custom/apps/user-management/roles/view/view.js'
 
             );
             $admin_id = $this->session->userdata('admin_id');
             $data['admin_info'] = $this->admin_model->get_admin($admin_id);
             $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-            $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+            $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
             if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
                 $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
                 if (file_exists($avatar_path)) {
@@ -94,7 +94,7 @@ class Roles extends Admin_Controller
         $data = [];
         foreach ($list as $admin) {
 
-            $avatar = 'assets/media/avatars/blank.png';
+            $avatar = base_url().'assets/media/avatars/blank.png';
             $view_url = base_url('admin/management/view/'.$admin->id);
             if ($admin->profile_picture) {
                 $avatar_path = FCPATH . 'uploads/avatar/admin/'.$admin->profile_picture;

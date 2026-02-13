@@ -23,7 +23,7 @@ class Plans extends Admin_Controller
         $admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -43,12 +43,12 @@ class Plans extends Admin_Controller
         $data = array();
         $data['active'] = 'AddPlans';
         $data['scripts'] = array(
-            "0" => 'assets/js/custom/admin/add-plan.js',
+            "0" => base_url().'assets/js/custom/admin/add-plan.js',
         );
         $admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -70,12 +70,12 @@ class Plans extends Admin_Controller
         if (isset($data['plan_info']) && !empty($data['plan_info'])) {
             $data['active'] = 'editPlans';
             $data['scripts'] = array(
-                "0" => 'assets/js/custom/admin/add-plan.js',
+                "0" => base_url().'assets/js/custom/admin/add-plan.js',
             );
             $admin_id = $this->session->userdata('admin_id');
             $data['admin_info'] = $this->admin_model->get_admin($admin_id);
             $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-            $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+            $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
             if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
                 $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
                 if (file_exists($avatar_path)) {

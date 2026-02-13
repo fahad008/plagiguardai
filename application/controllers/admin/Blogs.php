@@ -20,21 +20,21 @@ class Blogs extends Admin_Controller
 		$data = array();
 		$data['active'] = 'blogs_list';
 		$data['scripts'] = array(
-			"0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
-			"1" => 'assets/js/custom/apps/blogs/create-blog/main.js',
-			"2" => 'assets/js/custom/apps/blogs/create-blog/type.js',
-			"3" => 'assets/js/custom/apps/blogs/create-blog/settings.js',
-			"4" => 'assets/js/custom/apps/blogs/create-blog/budget.js',
-			"5" => 'assets/js/custom/apps/blogs/create-blog/team.js',
-			"6" => 'assets/js/custom/apps/blogs/create-blog/targets.js',
-			"7" => 'assets/js/custom/apps/blogs/create-blog/files.js',
-			"8" => 'assets/js/custom/apps/blogs/create-blog/complete.js',
+			"0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
+			"1" => base_url().'assets/js/custom/apps/blogs/create-blog/main.js',
+			"2" => base_url().'assets/js/custom/apps/blogs/create-blog/type.js',
+			"3" => base_url().'assets/js/custom/apps/blogs/create-blog/settings.js',
+			"4" => base_url().'assets/js/custom/apps/blogs/create-blog/budget.js',
+			"5" => base_url().'assets/js/custom/apps/blogs/create-blog/team.js',
+			"6" => base_url().'assets/js/custom/apps/blogs/create-blog/targets.js',
+			"7" => base_url().'assets/js/custom/apps/blogs/create-blog/files.js',
+			"8" => base_url().'assets/js/custom/apps/blogs/create-blog/complete.js',
 		);
 
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -724,15 +724,15 @@ class Blogs extends Admin_Controller
 		$data = array();
 		$data['active'] = 'blogs_category';
 		$data['scripts'] = array(
-                "0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
-                "1" => 'assets/js/custom/apps/blogs/categories/list/table.js',
-                "2" => 'assets/js/custom/apps/blogs/categories/list/add.js',
+                "0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
+                "1" => base_url().'assets/js/custom/apps/blogs/categories/list/table.js',
+                "2" => base_url().'assets/js/custom/apps/blogs/categories/list/add.js',
             );
 
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
@@ -809,7 +809,7 @@ class Blogs extends Admin_Controller
 
         	$admin_info = $this->admin_model->get_admin($category->creator_id);
 
-            $avatar = 'assets/media/avatars/blank.png';
+            $avatar = base_url().'assets/media/avatars/blank.png';
             $admin_view_url = base_url('admin/management/view/'.$admin_info['id']);
 
             $admin_role = '';
@@ -1005,14 +1005,14 @@ class Blogs extends Admin_Controller
 		$data = array();
 		$data['active'] = 'blogs_author';
 		$data['scripts'] = array(
-                "0" => 'assets/js/custom/apps/blogs/authors/list.js',
-                "1" => 'assets/js/custom/apps/blogs/authors/add.js',
+                "0" => base_url().'assets/js/custom/apps/blogs/authors/list.js',
+                "1" => base_url().'assets/js/custom/apps/blogs/authors/add.js',
             );
 
 		$admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-		$data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+		$data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
 		if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {

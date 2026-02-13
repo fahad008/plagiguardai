@@ -24,13 +24,13 @@ class Pages extends Admin_Controller
         $data = array();
         $data['active'] = 'contact_us';
         $data['scripts'] = array(
-            "0" => 'assets/plugins/custom/datatables/datatables.bundle.js',
+            "0" => base_url().'assets/plugins/custom/datatables/datatables.bundle.js',
         );
 
         $admin_id = $this->session->userdata('admin_id');
         $data['admin_info'] = $this->admin_model->get_admin($admin_id);
         $data['role_info'] = $this->admin_model->get_role_info($data['admin_info']['role_id']);
-        $data['admin_info']['avatar'] = 'assets/media/avatars/blank.png';
+        $data['admin_info']['avatar'] = base_url().'assets/media/avatars/blank.png';
         if (is_array($data['admin_info']) && !empty($data['admin_info']) && $data['admin_info']['profile_picture'] != '') {
             $avatar_path = FCPATH . 'uploads/avatar/admin/'.$data['admin_info']['profile_picture'];
             if (file_exists($avatar_path)) {
