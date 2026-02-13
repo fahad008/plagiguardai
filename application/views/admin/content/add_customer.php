@@ -27,7 +27,7 @@
 				<!--end::Aside mobile toggle-->
 				<!--begin::Logo-->
 				<a href="<?php echo base_url().'admin/'; ?>" class="d-flex align-items-center">
-					<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default.svg" class="h-20px" />
+					<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/text-logo.svg" class="h-20px" />
 				</a>
 				<!--end::Logo-->
 			</div>

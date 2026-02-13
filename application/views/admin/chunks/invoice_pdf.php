@@ -16,7 +16,7 @@
 						<div class="d-flex flex-stack pb-10">
 							<!--begin::Logo-->
 							<a href="#">
-								<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default" />
+								<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/text-logo.svg" />
 							</a>
 							<!--end::Logo-->
 						</div>

@@ -62,7 +62,7 @@
 								<div class="d-flex flex-stack pb-10">
 									<!--begin::Logo-->
 									<a href="<?php echo base_url().'admin/'; ?>">
-										<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default" />
+										<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/text-logo.svg" />
 									</a>
 									<!--end::Logo-->
 									<!-- <a href="<?php //echo base_url('admin/invoices/download_invoice/'.$invoice_info['id']) ?>" class="btn btn-primary">
