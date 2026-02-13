@@ -24,7 +24,7 @@
 						<!--begin::Logo image-->
 						<a href="<?php echo base_url(); ?>">
 							<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/text-logo.svg" class="logo-default h-25px h-lg-30px">
-							<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default" class="logo-sticky h-20px h-lg-25px">
+							<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/text-logo.svg" class="logo-sticky h-20px h-lg-25px">
 						</a>
 						<!--end::Logo image-->
 					</div>
@@ -236,13 +236,8 @@
 															<!--end::Item-->
 														</div>
 														<!--end::Features-->
-														<?php if ($this->session->userdata('logged_in_customer')) { ?>
 														<!--begin::Select-->
 														<a href="Javascript: void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users" class="btn btn-sm btn-primary">Buy Credits</a>
-														<!--end::Select-->
-														<?php }else{ ?>
-														<!--begin::Select-->
-														<a href="<?php echo base_url(); ?>" class="btn btn-sm btn-primary">Join Us</a>
 														<!--end::Select-->
 														<?php } ?>
 													</div>
@@ -404,15 +399,9 @@
 															<!--end::Item-->
 														</div>
 														<!--end::Features-->
-														<?php if ($this->session->userdata('logged_in_customer')) { ?>
 														<!--begin::Select-->
 														<a href="Javascript: void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users" class="btn btn-sm btn-primary">Buy Credits</a>
 														<!--end::Select-->
-														<?php }else{ ?>
-														<!--begin::Select-->
-														<a href="<?php echo base_url(); ?>" class="btn btn-sm btn-primary">Join Us</a>
-														<!--end::Select-->
-														<?php } ?>
 													</div>
 													<!--end::Option-->
 												</div>
