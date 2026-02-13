@@ -519,9 +519,9 @@
 											<!--end::Input-->
 											<!--begin::Card logos-->
 											<div class="position-absolute translate-middle-y top-50 end-0 me-5">
-												<img src="assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
-												<img src="assets/media/svg/card-logos/mastercard.svg" alt="" class="h-25px" />
-												<img src="assets/media/svg/card-logos/american-express.svg" alt="" class="h-25px" />
+												<img src="<?php echo base_url(); ?>assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
+												<img src="<?php echo base_url(); ?>assets/media/svg/card-logos/mastercard.svg" alt="" class="h-25px" />
+												<img src="<?php echo base_url(); ?>assets/media/svg/card-logos/american-express.svg" alt="" class="h-25px" />
 											</div>
 											<!--end::Card logos-->
 										</div>
@@ -639,7 +639,7 @@
 									<!--end::Description-->
 									<!--begin::Illustration-->
 									<div class="text-center px-4 py-15">
-										<img src="assets/media/illustrations/dozzy-1/9.png" alt="" class="w-100 mh-300px" />
+										<img src="<?php echo base_url(); ?>assets/media/illustrations/dozzy-1/9.png" alt="" class="w-100 mh-300px" />
 									</div>
 									<!--end::Illustration-->
 								</div>

@@ -11,7 +11,7 @@
 				<div class="d-flex flex-row-fluid flex-column text-center p-5">
 					<!--begin::Logo-->
 					<a href="<?php echo base_url(); ?>" class="mb-3">
-						<img alt="Logo" src="assets/media/logos/logo-2.png" class="h-150px" />
+						<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-2.png" class="h-150px" />
 					</a>
 					<!--end::Logo-->
 					<!--begin::Title-->
@@ -23,7 +23,7 @@
 				</div>
 				<!--end::Content-->
 				<!--begin::Illustration-->
-				<div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(assets/media/illustrations/dozzy-1/23.png"></div>
+				<div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(<?php echo base_url(); ?>assets/media/illustrations/dozzy-1/23.png"></div>
 				<!--end::Illustration-->
 			</div>
 			<!--end::Wrapper-->
@@ -102,11 +102,11 @@
 <script>var hostUrl = "assets/";</script>
 <!--begin::Javascript-->
 <!--begin::Global Javascript Bundle(used by all pages)-->
-<script src="assets/plugins/global/plugins.bundle.js"></script>
-<script src="assets/js/scripts.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Custom Javascript(used by this page)-->
-<script src="assets/js/custom/authentication/sign-in/general.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/custom/authentication/sign-in/general.js"></script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 

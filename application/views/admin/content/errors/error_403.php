@@ -20,7 +20,7 @@
 				<!--end::Aside mobile toggle-->
 				<!--begin::Logo-->
 				<a href="<?php echo base_url().'admin/dashboard/'; ?>" class="d-flex align-items-center">
-					<img alt="Logo" src="assets/media/logos/logo-demo3-default.svg" class="h-20px" />
+					<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default.svg" class="h-20px" />
 				</a>
 				<!--end::Logo-->
 			</div>
@@ -50,7 +50,7 @@
 				</div>
 				<!--end::Wrapper-->
 				<!--begin::Illustration-->
-				<div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(assets/media/illustrations/unitedpalms-1/9.png"></div>
+				<div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(<?php echo base_url(); ?>assets/media/illustrations/unitedpalms-1/9.png"></div>
 				<!--end::Illustration-->
 			</div>
 		</div>
@@ -60,8 +60,8 @@
 	<script>var hostUrl = "assets/";</script>
 	<!--begin::Javascript-->
 	<!--begin::Global Javascript Bundle(used by all pages)-->
-	<script src="assets/plugins/global/plugins.bundle.js"></script>
-	<script src="assets/js/scripts.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
 	<!--end::Global Javascript Bundle-->
 	<!--begin::Footer-->
 	<?php $this->load->view('admin/layouts/footer'); ?>

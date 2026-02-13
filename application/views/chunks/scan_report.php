@@ -247,7 +247,7 @@
 			<!--end::Wrapper-->
 			<!--begin::Illustration-->
 			<div class="text-center px-4">
-				<img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/unitedpalms-1/5.png">
+				<img class="mw-100 mh-300px" alt="" src="<?php echo base_url(); ?>assets/media/illustrations/unitedpalms-1/5.png">
 			</div>
 			<!--end::Illustration-->
 		</div>

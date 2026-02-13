@@ -16,7 +16,7 @@
 						<div class="d-flex flex-stack pb-10">
 							<!--begin::Logo-->
 							<a href="#">
-								<img alt="Logo" src="assets/media/logos/logo-demo3-default" />
+								<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default" />
 							</a>
 							<!--end::Logo-->
 						</div>
@@ -258,5 +258,5 @@
 <script>var hostUrl = "assets/";</script>
 <!--begin::Javascript-->
 <!--begin::Global Javascript Bundle(used by all pages)-->
-<script src="assets/plugins/global/plugins.bundle.js"></script>
-<script src="assets/js/scripts.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>

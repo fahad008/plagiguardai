@@ -23,8 +23,8 @@
 						<!--end::Mobile menu toggle-->
 						<!--begin::Logo image-->
 						<a href="<?php echo base_url(); ?>">
-							<img alt="Logo" src="assets/media/logos/logo-demo3-default" class="logo-default h-25px h-lg-30px">
-							<img alt="Logo" src="assets/media/logos/logo-demo3-default" class="logo-sticky h-20px h-lg-25px">
+							<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default" class="logo-default h-25px h-lg-30px">
+							<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default" class="logo-sticky h-20px h-lg-25px">
 						</a>
 						<!--end::Logo image-->
 					</div>
@@ -583,9 +583,9 @@
 	<script>var hostUrl = "assets/";</script>
 	<!--begin::Javascript-->
 	<!--begin::Global Javascript Bundle(used by all pages)-->
-	<script src="assets/plugins/global/plugins.bundle.js"></script>
-	<script src="assets/js/scripts.bundle.js"></script>
-	<script src="assets/js/custom/pages/company/pricing.js"></script>
+	<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/custom/pages/company/pricing.js"></script>
 	<script>
 
 		function copy_email(el) {

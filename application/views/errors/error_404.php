@@ -14,10 +14,10 @@
 		<meta property="og:title" content="PlagiGuardAI - AI & Plagiarism Detection Tool">
 		<meta property="og:description" content="Check AI-generated content and detect plagiarism with PlagiGuardAI. Ensure content authenticity easily and quickly.">
 		<meta property="og:image" content="https://yourwebsite.com/path-to-logo-or-preview-image.png">
-		<meta property="og:url" content="https://yourwebsite.com">
+		<meta property="og:url" content="<?php echo base_url(); ?>">
 		<meta property="og:type" content="website">
 		<link rel="canonical" href="" />
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/media/logos/favicon.ico" />
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content="PlagiGuardAI - AI & Plagiarism Detection Tool">
@@ -25,14 +25,14 @@
 		<meta name="twitter:image" content="https://yourwebsite.com/path-to-logo-or-preview-image.png">
 
 		<!-- Favicon -->
-		<link rel="icon" href="assets/media/logos/favicon.ico" type="image/png">
+		<link rel="icon" href="<?php echo base_url(); ?>assets/media/logos/favicon.ico" type="image/png">
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
-		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -43,7 +43,7 @@
 			<!--begin::Authentication - 404 Page-->
 			<div class="d-flex flex-column flex-center flex-column-fluid p-10">
 				<!--begin::Illustration-->
-				<img src="assets/media/illustrations/unitedpalms-1/18.png" alt="" class="mw-100 mb-10 h-lg-450px" />
+				<img src="<?php echo base_url(); ?>assets/media/illustrations/unitedpalms-1/18.png" alt="" class="mw-100 mb-10 h-lg-450px" />
 				<!--end::Illustration-->
 				<!--begin::Message-->
 				<h1 class="fw-bold mb-10" style="color: #A3A3C7">Seems there is nothing here</h1>
@@ -95,8 +95,8 @@
 		<script>var hostUrl = "assets/";</script>
 		<!--begin::Javascript-->
 		<!--begin::Global Javascript Bundle(used by all pages)-->
-		<script src="assets/plugins/global/plugins.bundle.js"></script>
-		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+		<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
 		<!--end::Global Javascript Bundle-->
 		<!--end::Javascript-->
 	</body>

@@ -20,7 +20,7 @@
 		<meta property="og:url" content="<?php echo base_url(); ?>">
 		<meta property="og:type" content="website">
 		<link rel="canonical" href="<?php if(isset($canonical_url) && !empty($canonical_url)){ echo $canonical_url; } ?>" />
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/media/logos/favicon.ico" />
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content="PlagiGuardAI - AI & Plagiarism Detection Tool">
@@ -28,14 +28,14 @@
 		<meta name="twitter:image" content="https://yourwebsite.com/path-to-logo-or-preview-image.png">
 
 		<!-- Favicon -->
-		<link rel="icon" href="assets/media/logos/favicon.ico" type="image/png">
+		<link rel="icon" href="<?php echo base_url(); ?>assets/media/logos/favicon.ico" type="image/png">
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
-		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->

@@ -26,8 +26,8 @@
 				</div>
 				<!--end::Aside mobile toggle-->
 				<!--begin::Logo-->
-				<a href="../../demo3/dist/index.html" class="d-flex align-items-center">
-					<img alt="Logo" src="assets/media/logos/logo-demo3-default.svg" class="h-20px" />
+				<a href="<?php echo base_url().'admin/'; ?>" class="d-flex align-items-center">
+					<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default.svg" class="h-20px" />
 				</a>
 				<!--end::Logo-->
 			</div>
@@ -181,7 +181,7 @@
 					<!--end::Wrapper-->
 					<!--begin::Illustration-->
 					<div class="text-center px-4">
-						<img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/dozzy-1/2.png" />
+						<img class="mw-100 mh-300px" alt="" src="<?php echo base_url(); ?>assets/media/illustrations/dozzy-1/2.png" />
 					</div>
 					<!--end::Illustration-->
 				</div>
@@ -313,8 +313,8 @@
 	<script>var hostUrl = "assets/";</script>
 	<!--begin::Javascript-->
 	<!--begin::Global Javascript Bundle(used by all pages)-->
-	<script src="assets/plugins/global/plugins.bundle.js"></script>
-	<script src="assets/js/scripts.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
 	<!--end::Global Javascript Bundle-->
 	<script>
 		// Password generator function

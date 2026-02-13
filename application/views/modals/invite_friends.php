@@ -34,7 +34,7 @@
 				<!--end::Heading-->
 				<!--begin::Google Contacts Invite-->
 				<div class="btn btn-light-primary fw-bolder w-100 mb-8">
-				<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Invite Gmail Contacts</div>
+				<img alt="Logo" src="<?php echo base_url(); ?>assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Invite Gmail Contacts</div>
 				<!--end::Google Contacts Invite-->
 				<!--begin::Separator-->
 				<div class="separator d-flex flex-center mb-8">
@@ -57,7 +57,7 @@
 							<div class="d-flex align-items-center">
 								<!--begin::Avatar-->
 								<div class="symbol symbol-35px symbol-circle">
-									<img alt="Pic" src="assets/media/avatars/150-1.jpg" />
+									<img alt="Pic" src="<?php echo base_url(); ?>assets/media/avatars/150-1.jpg" />
 								</div>
 								<!--end::Avatar-->
 								<!--begin::Details-->
@@ -113,7 +113,7 @@
 							<div class="d-flex align-items-center">
 								<!--begin::Avatar-->
 								<div class="symbol symbol-35px symbol-circle">
-									<img alt="Pic" src="assets/media/avatars/150-26.jpg" />
+									<img alt="Pic" src="<?php echo base_url(); ?>assets/media/avatars/150-26.jpg" />
 								</div>
 								<!--end::Avatar-->
 								<!--begin::Details-->
@@ -141,7 +141,7 @@
 							<div class="d-flex align-items-center">
 								<!--begin::Avatar-->
 								<div class="symbol symbol-35px symbol-circle">
-									<img alt="Pic" src="assets/media/avatars/150-4.jpg" />
+									<img alt="Pic" src="<?php echo base_url(); ?>assets/media/avatars/150-4.jpg" />
 								</div>
 								<!--end::Avatar-->
 								<!--begin::Details-->

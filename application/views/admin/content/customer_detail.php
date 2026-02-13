@@ -27,7 +27,7 @@
 				<!--end::Aside mobile toggle-->
 				<!--begin::Logo-->
 				<a href="<?php echo base_url().'admin/'; ?>" class="d-flex align-items-center">
-					<img alt="Logo" src="assets/media/logos/logo-demo3-default.svg" class="h-20px" />
+					<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default.svg" class="h-20px" />
 				</a>
 				<!--end::Logo-->
 			</div>
@@ -676,9 +676,9 @@
 											<!--begin::Image input wrapper-->
 											<div class="mt-1">
 												<!--begin::Image input-->
-												<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(assets/media/avatars/blank.png)">
+												<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(<?php echo base_url(); ?>assets/media/avatars/blank.png)">
 													<!--begin::Preview existing avatar-->
-													<div class="image-input-wrapper w-125px h-125px" style="background-image: url(assets/media/avatars/150-2.jpg)"></div>
+													<div class="image-input-wrapper w-125px h-125px" style="background-image: url(<?php echo base_url(); ?>assets/media/avatars/150-2.jpg)"></div>
 													<!--end::Preview existing avatar-->
 													<!--begin::Edit-->
 													<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
@@ -1110,8 +1110,8 @@
 	<script>var hostUrl = "assets/";</script>
 	<!--begin::Javascript-->
 	<!--begin::Global Javascript Bundle(used by all pages)-->
-	<script src="assets/plugins/global/plugins.bundle.js"></script>
-	<script src="assets/js/scripts.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
 	<!--end::Global Javascript Bundle-->
 	<!--begin::Footer-->
 	<?php $this->load->view('admin/layouts/footer'); ?>

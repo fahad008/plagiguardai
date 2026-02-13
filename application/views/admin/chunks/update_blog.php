@@ -473,7 +473,7 @@
 								<!--end::Actions-->
 								<!--begin::Illustration-->
 								<div class="text-center px-4">
-									<img src="assets/media/illustrations/unitedpalms-1/17.png" alt="" class="w-100 mh-350px" />
+									<img src="<?php echo base_url(); ?>assets/media/illustrations/unitedpalms-1/17.png" alt="" class="w-100 mh-350px" />
 								</div>
 								<!--end::Illustration-->
 							</div>

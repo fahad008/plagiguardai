@@ -3,7 +3,7 @@
 	<div class="aside-logo flex-column-auto px-9 mb-9" id="kt_aside_logo">
 		<!--begin::Logo-->
 		<a href="<?php echo base_url(); ?>">
-			<img alt="Logo" src="assets/media/logos/logo-demo3-default" class="custom-h-20px logo" />
+			<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default" class="custom-h-20px logo" />
 		</a>
 		<!--end::Logo-->
 	</div>

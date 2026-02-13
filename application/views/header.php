@@ -67,7 +67,7 @@
 		<meta property="og:site_name" content="PlagiGuardAI" />
 		<meta property="og:title" content="<?php if (isset($page_seo) && !empty($page_seo)) { echo $page_seo['meta_title']; }else{ echo "PlagiGuardAI - AI & Plagiarism Detection Tool"; } ?>">
 		<meta property="og:description" content="<?php if (isset($page_seo) && !empty($page_seo)) { echo $page_seo['meta_description']; }else{ echo "PlagiGuardAI is an advanced AI and plagiarism detection tool that helps you identify AI-generated content and ensure originality."; } ?>">
-		<meta property="og:image" content="<?php if(isset($post_info) && !empty($post_info)){ echo $featured_image = get_post_image($post_info['id'], $post_info['featured_image']); }else{ echo 'https://plagiguardai.com/assets/media/webscreen.png'; } ?>">
+		<meta property="og:image" content="<?php if(isset($post_info) && !empty($post_info)){ echo $featured_image = get_post_image($post_info['id'], $post_info['featured_image']); }else{ echo base_url().'assets/media/webscreen.png'; } ?>">
 		<meta property="og:image:alt" content="<?php if (isset($page_seo) && !empty($page_seo)) { echo $page_seo['meta_title']; }else{ echo "PlagiGuardAI - AI & Plagiarism Detection Tool"; } ?>">
 		<meta property="og:url" content="<?php if(isset($post_info) && !empty($post_info)){ echo base_url().'blogs/post/'.$post_info['slug']; } ?>">
 		<meta property="og:type" content="<?php if(isset($active) && $active != 'blogs'){ echo 'website'; }else{ echo 'article'; } ?>">
@@ -92,25 +92,25 @@
 		<meta name="twitter:url" content="<?php if(isset($post_info) && !empty($post_info)){ echo base_url().'blogs/post/'.$post_info['slug']; } ?>">
 		<meta name="twitter:title" content="<?php if (isset($page_seo) && !empty($page_seo)) { echo $page_seo['meta_title']; }else{ echo "PlagiGuardAI - AI & Plagiarism Detection Tool"; } ?>">
 		<meta name="twitter:description" content="<?php if (isset($page_seo) && !empty($page_seo)) { echo $page_seo['meta_description']; }else{ echo "PlagiGuardAI is an advanced AI and plagiarism detection tool that helps you identify AI-generated content and ensure originality."; } ?>">
-		<meta name="twitter:image" content="<?php if(isset($post_info) && !empty($post_info)){ echo $featured_image = get_post_image($post_info['id'], $post_info['featured_image']); }else{ echo 'https://plagiguardai.com/assets/media/webscreen.png'; } ?>">
+		<meta name="twitter:image" content="<?php if(isset($post_info) && !empty($post_info)){ echo $featured_image = get_post_image($post_info['id'], $post_info['featured_image']); }else{ echo base_url().'assets/media/webscreen.png'; } ?>">
 
 
 
 		<!-- Favicon -->
-		<link rel="icon" href="assets/media/logos/favicon.ico" type="image/png">
+		<link rel="icon" href="<?php echo base_url(); ?>assets/media/logos/favicon.ico" type="image/png">
 		<!--begin::Fonts-->
 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
-		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/dashboard.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo base_url(); ?>assets/css/dashboard.css" rel="stylesheet" type="text/css" />
 		<?php if ($active == 'blogs' or $active == 'pricing' or $active == 'contact_us') { ?>
-			<link href="assets/css/external-pages.css" rel="stylesheet" type="text/css" />
+			<link href="<?php echo base_url(); ?>assets/css/external-pages.css" rel="stylesheet" type="text/css" />
 		<?php } ?>
 		<?php if ($active == 'bulk_uploads') { ?>
-			<link href="assets/css/toastr.min.css" rel="stylesheet" type="text/css" />
+			<link href="<?php echo base_url(); ?>assets/css/toastr.min.css" rel="stylesheet" type="text/css" />
 		<?php } ?>
 		<!--end::Global Stylesheets Bundle-->
 	</head>

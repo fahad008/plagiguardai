@@ -36,7 +36,7 @@
 						<!--end::Aside mobile toggle-->
 						<!--begin::Logo-->
 						<a href="<?php echo base_url(); ?>" class="d-flex align-items-center">
-							<img alt="Logo" src="assets/media/logos/logo-demo3-default.svg" class="h-20px" />
+							<img alt="Logo" src="<?php echo base_url(); ?>assets/media/logos/logo-demo3-default.svg" class="h-20px" />
 						</a>
 						<!--end::Logo-->
 					</div>
@@ -385,15 +385,15 @@
 <script>var hostUrl = "assets/";</script>
 <!--begin::Javascript-->
 <!--begin::Global Javascript Bundle(used by all pages)-->
-<script src="assets/plugins/global/plugins.bundle.js"></script>
-<script src="assets/js/scripts.bundle.js"></script>
-<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<script src="assets/js/custom/scans/all.js"></script>
-<script src="assets/js/custom/widgets.js"></script>
-<script src="assets/js/custom/detection-charts.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/custom/scans/all.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/custom/widgets.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/custom/detection-charts.js"></script>
 <!--end::Page Custom Javascript-->
-<script src="assets/js/custom/modals/new-title.js"></script>
-<script src="assets/js/html2pdf.bundle.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/custom/modals/new-title.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/html2pdf.bundle.min.js"></script>
 <!--end::Javascript-->
 <script>
 
