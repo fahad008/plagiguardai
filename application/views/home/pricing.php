@@ -239,7 +239,6 @@
 														<!--begin::Select-->
 														<a href="Javascript: void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users" class="btn btn-sm btn-primary">Buy Credits</a>
 														<!--end::Select-->
-														<?php } ?>
 													</div>
 													<!--end::Option-->
 												</div>
