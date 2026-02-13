@@ -514,6 +514,7 @@
 																			</svg>
 																		</span>
 																	</button>
+																	<?php if ($reseller['contact_number'] != '') { ?>
 																	<a href="javascript: void(0)" onclick="copy_phone(this)" data-phone="<?php echo $reseller['contact_number']; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm ms-1">
 																		<span class="svg-icon svg-icon-3">
 																			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -522,6 +523,7 @@
 																			</svg>
 																		</span>
 																	</a>
+																	<?php } ?>
 															</div>
 															<!--end::Sales-->
 														</div>
