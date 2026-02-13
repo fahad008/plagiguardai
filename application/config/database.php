@@ -99,7 +99,7 @@ if ($_SERVER['HTTP_HOST'] == 'plagiguardai') {
 	$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => 'localhost',
-		'username' => 'plagiguard_user',
+		'username' => 'harisnfc_plagiguard_user',
 		'password' => '&ZRZDP,M$*%U',
 		'database' => 'harisnfc_plagiguardai',
 		'dbdriver' => 'mysqli',
