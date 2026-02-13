@@ -368,6 +368,68 @@
 	</div>
 </div>
 <!--end::Modal - New Address-->
+<!--begin::Modal - New Address-->
+<div class="modal fade" id="kt_modal_new_title" tabindex="-1" aria-hidden="true">
+	<!--begin::Modal dialog-->
+	<div class="modal-dialog modal-dialog-centered mw-650px">
+		<!--begin::Modal content-->
+		<div class="modal-content">
+			<!--begin::Form-->
+			<form class="form" action="<?php echo base_url().'scan/update_title'; ?>" id="kt_modal_new_title_form">
+				<!--begin::Modal header-->
+				<div class="modal-header">
+					<!--begin::Modal title-->
+					<h2>Add New Title</h2>
+					<!--end::Modal title-->
+					<!--begin::Close-->
+					<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+						<span class="svg-icon svg-icon-1">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+								<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+								<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+							</svg>
+						</span>
+						<!--end::Svg Icon-->
+					</div>
+					<!--end::Close-->
+				</div>
+				<!--end::Modal header-->
+				<!--begin::Modal body-->
+				<div class="modal-body py-10 px-lg-17">
+					<!--begin::Input group-->
+					<div class="d-flex flex-column mb-5 fv-row">
+						<!--begin::Label-->
+						<label class="fs-5 fw-bold mb-2">New Title</label>
+						<!--end::Label-->
+						<!--begin::Input-->
+						<input type="hidden" name="scan_id" id="scan-id-input" />
+						<input class="form-control form-control-solid" placeholder="" name="title" id="scan-title-modal-input" />
+						<!--end::Input-->
+					</div>
+					<!--end::Input group-->
+				</div>
+				<!--end::Modal body-->
+				<!--begin::Modal footer-->
+				<div class="modal-footer flex-center">
+					<!--begin::Button-->
+					<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Discard</button>
+					<!--end::Button-->
+					<!--begin::Button-->
+					<button type="submit" id="kt_modal_new_title_submit" class="btn btn-primary">
+						<span class="indicator-label">Submit</span>
+						<span class="indicator-progress">Please wait...
+						<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+					</button>
+					<!--end::Button-->
+				</div>
+				<!--end::Modal footer-->
+			</form>
+			<!--end::Form-->
+		</div>
+	</div>
+</div>
+<!--end::Modal - New Address-->
 <!-- <?php //$this->load->view('modals/upgrade_plan'); ?> -->
 <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
 	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -619,6 +681,7 @@ var errorOptions = {
 		$("#scan-id-input").val(id);
 		$("#scan-title-modal-input").val(title);
 		$("#kt_modal_new_title").modal('show');
+
 	}
 
 
