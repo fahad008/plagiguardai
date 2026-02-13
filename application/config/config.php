@@ -23,7 +23,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://plagiguardai/';
+if (@$_SERVER['HTTP_HOST'] == 'plagiguardai') {
+	$config['base_url']	= 'http://'.@$_SERVER['HTTP_HOST'].'/';
+}else{
+	$temp_string = @$_SERVER['HTTP_HOST'];
+	if (substr($temp_string, 0, 4) == 'www.') {
+		$temp_string = str_replace("www.","",$temp_string);
+		header('Location: '.'https://'.$temp_string.@$_SERVER['REQUEST_URI']);
+		die;
+	}
+	$config['base_url']	= 'https://'.$temp_string.'/';
+	
+}
 
 /*
 |--------------------------------------------------------------------------
