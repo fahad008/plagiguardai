@@ -282,6 +282,7 @@ class Customers extends Admin_Controller
 
 	public function add()
 	{
+		echo "<pre>";print_r($this->session->userdata());die;
 		$this->require_role(['super_admin', 'reseller']);
 		$data = array();
 		$data['active'] = 'AddCustomer';
