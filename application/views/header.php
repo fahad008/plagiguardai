@@ -112,6 +112,11 @@
 		<?php if ($active == 'bulk_uploads') { ?>
 			<link href="<?php echo base_url(); ?>assets/css/toastr.min.css" rel="stylesheet" type="text/css" />
 		<?php } ?>
+
+		<?php if ($_SERVER['HTTP_HOST'] != 'plagiguardai') {
+		         if (isset($active) && $active == 'contact_us') { ?>
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+		<?php } } ?>
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->

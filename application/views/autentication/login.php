@@ -75,6 +75,13 @@
 							<!--end::Input-->
 						</div>
 						<!--end::Input group-->
+						<?php if ($_SERVER['HTTP_HOST'] != 'plagiguardai') { ?>
+						<!--begin::Input group-->
+						<div class="fv-row mb-10">
+							<div class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITE_KEY; ?>"></div>
+						</div>
+						<!--end::Input group-->
+						<?php } ?>
 						<!--begin::Actions-->
 						<div class="text-center">
 							<!--begin::Submit button-->
@@ -109,5 +116,4 @@
 <script src="<?php echo base_url(); ?>assets/js/custom/authentication/sign-in/general.js"></script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
-
 <?php $this->load->view('autentication/footer'); ?>

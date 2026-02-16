@@ -2090,6 +2090,19 @@ function get_footer_links(){
     );
 }
 
+function verify_captcha($recaptcha_response=''){
+        if ($recaptcha_response) {
+            $secret = CAPTCHA_SECTRET_KEY;
+            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$recaptcha_response}");
+            $response = json_decode($verify);
+
+            if ($response->success) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 

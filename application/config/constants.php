@@ -89,3 +89,5 @@ defined('EXPIRY_WINDOW')      OR define('EXPIRY_WINDOW', 2);
 defined('SCAN_URL')      OR define('SCAN_URL', 'https://api.originality.ai/api/v3/scan');
 defined('BALANCE_URL')      OR define('BALANCE_URL', 'https://api.originality.ai/api/v3/account/balance');
 defined('SCAN_API_KEY')      OR define('SCAN_API_KEY', '3q9vw4lyrhoi8k526szmupx10gfja7cn');
+defined('CAPTCHA_SITE_KEY')      OR define('CAPTCHA_SITE_KEY', '3q9vw4lyrhoi8k526szmupx10gfja7cn');
+defined('CAPTCHA_SECTRET_KEY')      OR define('CAPTCHA_SECTRET_KEY', '6Le2LG0sAAAAAME5A5Q_4jwnsOp1Tr9HD4pbsCPA');

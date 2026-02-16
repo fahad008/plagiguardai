@@ -127,6 +127,13 @@
 							</label>
 						</div>
 						<!--end::Input group-->
+						<?php if ($_SERVER['HTTP_HOST'] != 'plagiguardai') { ?>
+						<!--begin::Input group-->
+						<div class="fv-row mb-10">
+							<div class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITE_KEY; ?>"></div>
+						</div>
+						<!--end::Input group-->
+						<?php } ?>
 						<!--begin::Actions-->
 						<div class="text-center">
 							<button type="button" id="kt_sign_up_submit" class="btn btn-lg btn-primary">

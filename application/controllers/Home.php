@@ -164,6 +164,15 @@ class Home extends CI_Controller
         // echo "<pre>";print_r($this->input->post());die;
         if($this->input->post()){
 
+            if ($_SERVER['HTTP_HOST'] != 'plagiguardai') {
+                $recaptcha_input = $this->input->post('g-recaptcha-response');
+                $recaptcha_response = verify_captcha($recaptcha_input);
+                if (!$recaptcha_response) {
+                    echo json_encode(array("status" => 'error' , "message" => 'Please verify that you are not a robot.', "redirect" => ''));
+                    exit();
+                }
+            }
+            
             $data = array(
                 'name' => trim($this->input->post('name')),
                 'email' => $this->input->post('email'),
@@ -203,6 +212,24 @@ class Home extends CI_Controller
                 echo json_encode($response);exit(); 
 
             }
+    }
+
+    public function test_mail()
+    {
+        $data = array();
+        $to = "fahadrazabhatti413@gmail.com";
+        $subject = "Test Email from PlagiGuard AI";
+        // $message = "<h3>This is test email</h3><p>Email working properly.</p>";
+
+        echo $message = $this->load->view('emails/welcome',$data, true);die;
+
+        $response = send_email($to, $subject, $message, 'info');
+        echo "<pre>";print_r($response);die;
+        if (send_email($to, $subject, $message, 'info')) {
+            echo "Email Sent Successfully";
+        } else {
+            echo "Email Failed";
+        }
     }
     
 }

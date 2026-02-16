@@ -31,7 +31,14 @@ class login extends CI_Controller
 		if($this->input->post()){
 
 			// echo "<pre>";print_r($this->input->post());die;
-
+			if ($_SERVER['HTTP_HOST'] != 'plagiguardai') {
+				$recaptcha_input = $this->input->post('g-recaptcha-response');
+				$recaptcha_response = verify_captcha($recaptcha_input);
+				if (!$recaptcha_response) {
+					echo json_encode(array("status" => 'error' , "message" => 'Please verify that you are not a robot.', "redirect" => ''));
+					exit();
+				}
+			}
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 

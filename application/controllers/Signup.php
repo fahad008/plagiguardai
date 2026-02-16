@@ -27,6 +27,16 @@ class Signup extends CI_Controller
     public function register(){
     	// echo "<pre>";print_r($this->input->post());die;
 		if($this->input->post()){
+
+			if ($_SERVER['HTTP_HOST'] != 'plagiguardai') {
+				$recaptcha_input = $this->input->post('g-recaptcha-response');
+				$recaptcha_response = verify_captcha($recaptcha_input);
+				if (!$recaptcha_response) {
+					echo json_encode(array("status" => 'error' , "message" => 'Please verify that you are not a robot.', "redirect" => ''));
+					exit();
+				}
+			}
+			
 			$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 			$email_check = $this->authentication_model->email_check($this->input->post('email'));
 

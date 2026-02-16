@@ -120,6 +120,13 @@
 												<textarea class="form-control form-control-solid" rows="6" name="message" placeholder=""></textarea>
 											</div>
 											<!--end::Input group-->
+											<?php if ($_SERVER['HTTP_HOST'] != 'plagiguardai') { ?>
+											<!--begin::Input group-->
+											<div class="d-flex flex-column mb-10 fv-row">
+												<div class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITE_KEY; ?>"></div>
+											</div>
+											<!--end::Input group-->
+											<?php } ?>
 											<!--begin::Submit-->
 											<button type="submit" class="btn btn-primary" id="kt_contact_submit_button">
 												<!--begin::Indicator-->
