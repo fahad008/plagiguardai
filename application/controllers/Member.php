@@ -28,6 +28,7 @@ class Member extends CI_Controller
         $this->load->model('Plan_Model', 'plan_model');
         $this->load->model('Authentication_Model', 'authentication_model');
         $this->load->helper('country');
+        $this->load->library('url_encrypt');
 	}
 
 
@@ -347,6 +348,62 @@ class Member extends CI_Controller
                 exit(); 
 
             }
+        }
+    }
+
+    public function send_email(){
+
+        if($this->input->post()){
+
+            $customer_id  = $this->session->userdata('logged_in_customer')['id'];
+            $data = [];
+            $data['email']  = $this->session->userdata('logged_in_customer')['email'];
+            $data['name']  = $this->session->userdata('logged_in_customer')['full_name'];
+
+            $encode = ["id" => $customer_id, "email" => $data['email']];
+            $encoded = json_encode($encode);
+            $token = $this->encryption->encrypt($encoded);
+            $data['token'] = base64_encode($token);
+
+            $response = $this->verify_token_email($data);
+
+            if ($response) {
+
+                $verify_info = [
+                    "verify_link" => $data['token'],
+                ];
+
+                $this->authentication_model->update_customer($customer_id, $verify_info);
+
+                echo json_encode(array("status" => 'success' , "message" => 'A verification link has been sent to you email, Please verify!'));
+                exit();
+            }else{
+                echo json_encode(array("status" => 'error' , "message" => 'We are unable to send email at this moment. please try later!'));
+                exit(); 
+            }
+
+        }else{
+            echo json_encode(array("status" => 'error' , "message" => 'Access denied!'));
+            exit(); 
+        }
+    }
+
+    private function verify_token_email($customer_info)
+    {
+        $data = array();
+        $to = $customer_info['email'];
+        $subject = "Verify Your Email Address";
+        $message = "";
+
+        $data['name'] = $customer_info['name'];
+        $data['token'] = $customer_info['token'];
+        $message = $this->load->view('emails/verify_link',$data, true);
+
+        $response = send_email($to, $subject, $message, 'info');
+        if ($response) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

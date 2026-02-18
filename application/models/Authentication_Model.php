@@ -57,6 +57,21 @@ class Authentication_Model extends CI_Model{
 		}
 	}
 
+	public function verify_customer($id, $email)
+	{
+		$query = $this->db->select('customer.verify_link');
+		$query = $this->db->from('customer');
+		$this->db->where('customer.id', $id);
+		$this->db->where('customer.email', $email);
+		$query = $this->db->get();
+        // echo $this->db->last_query(); die;
+		if($query->num_rows() > 0){
+			return $query->row_array()['verify_link'];
+		}else{
+			return false;
+		}
+	}
+
 	public function get_customer_via_email($email)
 	{
 		$query = $this->db->select('*');
