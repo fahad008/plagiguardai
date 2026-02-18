@@ -54,33 +54,26 @@ var KTPasswordResetGeneral = function() {
                             dataType: 'json',
                             success: function (response) {
 
+                                submitButton.removeAttribute('data-kt-indicator');
+
+                                // Enable button
+                                submitButton.disabled = false;
+                                    
                                 if (response.status === 'success') {
 
-                                    submitButton.removeAttribute('data-kt-indicator');
-
-                                    // Enable button
-                                    submitButton.disabled = false;
-                                    
                                     Swal.fire({
                                         text: response.message,
                                         icon: "success",
-                                        buttonsStyling: false,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary"
-                                        }
-                                    }).then(function (result) {
-                                        if (result.isConfirmed) {
-                                            form.querySelector('[name="email"]').value= "";       
-                                        }
+                                        showConfirmButton: false,
+                                        timer: 1000,
+                                        timerProgressBar: true
                                     });
 
+                                    setTimeout(function () {
+                                        location.reload();
+                                    }, 500);
+
                                 } else {
-
-                                    submitButton.removeAttribute('data-kt-indicator');
-
-                                    // Enable button
-                                    submitButton.disabled = false;
                                     
                                     Swal.fire({
                                         html: response.message,

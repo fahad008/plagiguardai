@@ -47,12 +47,35 @@
 							<!--end::Link-->
 						</div>
 						<!--begin::Heading-->
+						<?php if ($this->session->flashdata('error')): ?>
+						    <div class="alert alert-danger d-flex align-items-center p-5" id="error-alert">
+					            <span class="svg-icon svg-icon-2hx svg-icon-danger me-4">
+					                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					                    <path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black"/>
+					                    <rect x="9" y="13.0283" width="7.3536" height="1.2256" rx="0.6128" transform="rotate(-45 9 13.0283)" fill="black"/>
+					                    <rect x="9.86664" y="7.93359" width="7.3536" height="1.2256" rx="0.6128" transform="rotate(45 9.86664 7.93359)" fill="black"/>
+					                </svg>
+					            </span>
+
+					            <div class="d-flex flex-column">
+					                <h4 class="mb-1">Attention</h4>
+					                <span><?php echo $this->session->flashdata('error'); ?></span>
+					            </div>
+		        			</div>
+						<?php endif; ?>
 						<!--begin::Input group-->
 						<div class="fv-row mb-10">
 							<label class="form-label fw-bolder text-gray-900 fs-6">Email</label>
 							<input class="form-control form-control-solid" type="email" placeholder="" name="email" autocomplete="off" />
 						</div>
 						<!--end::Input group-->
+						<?php if ($_SERVER['HTTP_HOST'] == 'plagiguardai') { ?>
+						<!--begin::Input group-->
+						<div class="fv-row mb-10">
+							<div class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITE_KEY; ?>"></div>
+						</div>
+						<!--end::Input group-->
+						<?php } ?>
 						<!--begin::Actions-->
 						<div class="d-flex flex-wrap justify-content-center pb-lg-0">
 							<button type="button" id="kt_password_reset_submit" class="btn btn-lg btn-primary fw-bolder me-4">
@@ -79,5 +102,19 @@
 <!--begin::Page Custom Javascript(used by this page)-->
 <script src="<?php echo base_url(); ?>assets/js/custom/authentication/password-reset/password-reset.js"></script>
 <!--end::Page Custom Javascript-->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let alertBox = document.getElementById("error-alert");
+    if (alertBox) {
+        setTimeout(function () {
+            alertBox.style.transition = "opacity 0.5s ease";
+            alertBox.style.opacity = "0";
+            setTimeout(function () {
+                alertBox.remove();
+            }, 500);
+        }, 3000); // 3 seconds
+    }
+});
+</script>
 <!--end::Javascript-->
 <?php $this->load->view('autentication/footer'); ?>

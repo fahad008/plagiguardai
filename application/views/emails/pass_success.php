@@ -6,20 +6,19 @@
 				<td align="left" valign="center">
 					<div style="text-align:left; margin: 40px; padding: 40px; background-color:#ffffff; border-radius: 6px">
 						<!--begin:Email content-->
-						<div style="padding-bottom: 30px; font-size: 17px;">
-							<strong>Welcome to PlagiGuardAI!</strong>
+						<div style="padding-bottom: 15px; font-size: 17px;">
+							<strong>Dear member,</strong>
 						</div>
-						<div style="padding-bottom: 30px">Thank you for joining <strong>PlagiGuardAI</strong>! Your account has been successfully created.</div>
-						<div style="padding-bottom: 30px">You can now start checking documents for plagiarism with fast, accurate, and AI-powered detection.</div>
-						<div style="padding-bottom: 30px">If you have any questions, feel free to get in touch with us at
-						<a href="#" rel="noopener" style="text-decoration:none;color: #e6ad22">support@plagiguardai.com</a> or visit our <a href="https://plagiguardai.com/home/contact_us/" rel="noopener" target="_blank" style="text-decoration:none;color: #e6ad22">Contact Us</a> page</div>
+						<div style="padding-bottom: 15px">This is to confirm that your account password has been successfully updated.</div>
+						<div style="padding-bottom: 15px">If you made this change, no further action is required.</div>
+						<div style="padding-bottom: 15px">If you did not update your password, please reset it immediately or contact our support team for assistance.</div>
 						<!--end:Email content-->
 						<div style="padding-bottom: 10px">Kind regards,
 						<br>PlagiGuardAI Team.
 						<tr>
 							<td align="center" valign="center" style="font-size: 13px; text-align:center;padding: 20px; color: #6d6e7c;">
 								<p>Copyright ©
-								<a href="https://plagiguardai.com" rel="noopener" target="_blank" style="text-decoration:none;color: #e6ad22">PlagiGuardAI</a></p>
+								<a href="https://plagiguardai.com" style="text-decoration:none;color: #e6ad22" rel="noopener" target="_blank">PlagiGuardAI</a></p>
 							</td>
 						</tr></br></div>
 					</div>

@@ -38,7 +38,7 @@
 		<link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 		<!-- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script> -->
-		<?php if ($_SERVER['HTTP_HOST'] != 'plagiguardai') { ?>
+		<?php if ($_SERVER['HTTP_HOST'] == 'plagiguardai') { ?>
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 		<?php } ?>
 	</head>

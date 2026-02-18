@@ -44,14 +44,14 @@ class Authentication_Model extends CI_Model{
 
 	public function authentic_customer($id, $email)
 	{
-		$query = $this->db->select('*');
+		$query = $this->db->select('customer.pass_reset');
 		$query = $this->db->from('customer');
 		$this->db->where('customer.id', $id);
 		$this->db->where('customer.email', $email);
 		$query = $this->db->get();
         // echo $this->db->last_query(); die;
 		if($query->num_rows() > 0){
-			return $query->row_array();
+			return $query->row_array()['pass_reset'];
 		}else{
 			return false;
 		}

@@ -41,13 +41,6 @@ var KTPasswordResetNewPassword = function() {
                                 message: 'The password and its confirm are not the same'
                             }
                         }
-                    },
-                    'toc': {
-                        validators: {
-                            notEmpty: {
-                                message: 'You must accept the terms and conditions'
-                            }
-                        }
                     }
 				},
 				plugins: {
@@ -78,32 +71,46 @@ var KTPasswordResetNewPassword = function() {
                     // Disable button to avoid multiple click 
                     submitButton.disabled = true;
 
-                    // Simulate ajax request
-                    setTimeout(function() {
-                        // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        var formData = new FormData(form);
+                        $.ajax({
+                            url: form.getAttribute('action'),
+                            type: 'POST',
+                            data: formData,
+                            dataType: 'json',
+                            contentType: false, 
+                            processData: false,
+                            cache: false,
+                            success: function (response) {
+                                submitButton.removeAttribute('data-kt-indicator');
+                                submitButton.disabled = false;
 
-                        // Enable button
-                        submitButton.disabled = false;
+                                if (response.status === 'success') {
+                                    Swal.fire({
+                                        text: response.message,
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1000,
+                                        timerProgressBar: true
+                                    });
 
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "You have successfully reset your password!!!!",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) { 
-                                form.querySelector('[name="password"]').value= "";   
-                                form.querySelector('[name="confirm-password"]').value= "";      
-                                passwordMeter.reset();  // reset password meter
-                                //form.submit();
+                                    setTimeout(function () {
+                                        window.location.href = 'https://plagiguardai.com/login/';
+                                    }, 300);
+
+                                } else {
+                                    Swal.fire({
+                                        text: response.message,
+                                        icon: "error",
+                                        buttonsStyling: false,
+                                        confirmButtonText: "Try again",
+                                        customClass: {
+                                            confirmButton: "btn btn-danger"
+                                        }
+                                    });
+                                }
                             }
                         });
-                    }, 1500);   						
+  						
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({

@@ -36,7 +36,7 @@
 				<!--begin::Wrapper-->
 				<div class="w-lg-550px p-10 p-lg-15 mx-auto">
 					<!--begin::Form-->
-					<form class="form w-100" novalidate="novalidate" id="kt_new_password_form">
+					<form class="form w-100" method="post" action="<?php echo base_url().'password_reset/update/'; ?>" novalidate="novalidate" id="kt_new_password_form">
 						<!--begin::Heading-->
 						<div class="text-center mb-10">
 							<!--begin::Title-->
@@ -84,16 +84,15 @@
 							<label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
 							<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="confirm-password" autocomplete="off" />
 						</div>
+						<input type="hidden" name="token" value="<?php if(isset($token) && $token != ''){ echo $token; } ?>">
 						<!--end::Input group=-->
-						<!--begin::Input group=-->
+						<?php if ($_SERVER['HTTP_HOST'] == 'plagiguardai') { ?>
+						<!--begin::Input group-->
 						<div class="fv-row mb-10">
-							<div class="form-check form-check-custom form-check-solid form-check-inline">
-								<input class="form-check-input" type="checkbox" name="toc" value="1" />
-								<label class="form-check-label fw-bold text-gray-700 fs-6">I Agree &amp;
-								<a href="<?php echo base_url().'terms_conditions' ?>" class="ms-1 link-primary">Terms and conditions</a>.</label>
-							</div>
+							<div class="g-recaptcha" data-sitekey="<?php echo CAPTCHA_SITE_KEY; ?>"></div>
 						</div>
-						<!--end::Input group=-->
+						<!--end::Input group-->
+						<?php } ?>
 						<!--begin::Action-->
 						<div class="text-center">
 							<button type="button" id="kt_new_password_submit" class="btn btn-lg btn-primary fw-bolder">
@@ -109,4 +108,14 @@
 				<!--end::Wrapper-->
 			</div>
 			<!--end::Content-->
+<script>var hostUrl = "assets/";</script>
+<!--begin::Javascript-->
+<!--begin::Global Javascript Bundle(used by all pages)-->
+<script src="<?php echo base_url(); ?>assets/plugins/global/plugins.bundle.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/scripts.bundle.js"></script>
+<!--end::Global Javascript Bundle-->
+<!--begin::Page Custom Javascript(used by this page)-->
+<script src="<?php echo base_url(); ?>assets/js/custom/authentication/password-reset/new-password.js"></script>
+<!--end::Page Custom Javascript-->
+<script>
 <?php $this->load->view('autentication/footer'); ?>
