@@ -106,6 +106,7 @@ class password_reset extends CI_Controller
                         "password" => $password,
                         "pass_string" => '',
                         "pass_reset" => '',
+                        "email_verified" => 'yes',
                         "updated_at" => date('y-m-d H:m:s')
                     ];
 
