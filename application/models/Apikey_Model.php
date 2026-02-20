@@ -73,12 +73,28 @@ class Apikey_Model extends CI_Model {
 	    return $this->db->where('status', 'active')->count_all_results('api_keys');
 	}
 
-	public function set_credits($key_id, $credits)
-	{
-	    $this->db->set('credits_remaining', $credits);
-	    $this->db->where('id', $key_id);
-	    return $this->db->update('api_keys');
-	}
+	// public function set_credits($key_id, $credits)
+	// {
+	//     $this->db->set('credits_remaining', $credits);
+	//     $this->db->where('id', $key_id);
+	//     return $this->db->update('api_keys');
+	// }
+
+    public function set_credits($id, $remaining)
+    {
+        if (!$this->db->conn_id) {
+            $this->load->database();
+        }
+
+        // Reconnect forcefully
+        $this->db->reconnect();
+
+        $this->db->where('id', $id);
+        return $this->db->update('api_keys', [
+            'credits_remaining' => $remaining
+        ]);
+    }
+
 
     public function getAllKeys()
     {
